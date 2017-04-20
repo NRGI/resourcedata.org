@@ -15,4 +15,4 @@ COPY scripts /root/eiti_harvester
 
 WORKDIR /root/eiti_harvester
 
-CMD python extract_summary.py
+CMD ./run_harvester.sh
