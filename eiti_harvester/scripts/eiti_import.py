@@ -1,4 +1,3 @@
-import os
 import json
 import requests
 
@@ -27,14 +26,14 @@ def api_post(action, data={}):
 def create_org(org):
     print "CREATING ORG " + org['name']
     r = api_post("organization_create", data=org)
-    print r.status_code, r.json()
+    print r
     return org['name']
 
 
 def update_org(org):
     print "UPDATING ORG " + org['name']
     r = api_post("organization_create", data=org)
-    print r.status_code, r.json()
+    print r
     return org['name']
 
 
@@ -52,23 +51,25 @@ def upsert_org(org):
 
 def create_dataset(data):
     print "CREATING DATASET " + data['name']
+    print data
     r = api_post("package_create", data=data)
-    print r.status_code, r.json()
+    print r.content
     return data['name']
 
 
 def update_dataset(data):
     print "UPDATING DATASET " + data['name']
-    r = api_post("package_update", data=data)
-    print r.status_code, r.json()
+    r = api_post("package_update", data=data).json()
+    print r
     return data['name']
 
 
 def upsert_dataset(data):
     print "UPSERTING DATASET " + data['name']
     r = api_get("package_show", data={'id': data['name']})
-    print r.status_code, r.json()
+    print r
     jsondata = r.json()
+    print jsondata
     already_exists = jsondata.get("success")
     if already_exists:
         return update_dataset(data)
@@ -115,4 +116,5 @@ for d in datasets:
 
     upsert_dataset(d)
 
-    upload_resource(d['name'], d['filename'], d.get("country", "all"))
+    upload_resource(d['name'], d['filename_company'], d["resource_title_company"])
+    upload_resource(d['name'], d['filename_government'], d["resource_title_government"])

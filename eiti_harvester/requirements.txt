@@ -1,2 +1,2 @@
 requests==2.13.0
-progressbar2==3.12.0
+Unidecode==0.4.20

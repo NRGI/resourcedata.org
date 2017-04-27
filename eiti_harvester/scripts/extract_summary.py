@@ -2,7 +2,6 @@ import os
 import re
 import json
 import requests
-import progressbar
 import unicodedata
 
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
@@ -16,25 +15,39 @@ gfs = {}
 revenues = {}
 
 
-def writeCsv(name, data):
+def writeCsv(name, company_or_govt, data):
+    filename = name + '-' + company_or_govt + '.csv';
     mode = 'a'
-    if not (name in filesAlreadyWrittenTo):
-        data.insert(0, 'country,iso3,year,start_date,end_date,company_name,name_of_recieving_agency,government_or_company,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
-        filesAlreadyWrittenTo.add(name)
+    
+    if not (filename in filesAlreadyWrittenTo):
+        print 'first time - Setting header'
+        #Split files https://github.com/NRGI/resourcedata.org/issues/13
+        if company_or_govt == 'company':
+            data.insert(0, 'country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+        else:
+            data.insert(0, 'country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+        filesAlreadyWrittenTo.add(filename)
         mode = 'w'
-    with open('./out/' + name, mode) as f:
+        
+    with open('./out/' + company_or_govt + '/' + filename, mode) as f:
         for l in data:
             f.write(l.encode('utf-8') + '\n')
 
 
-def write(meta, data):
+def write(meta, data, company_or_govt):
     countryName = meta['country']['label']
     sanitizedCountryName = sanitizeCountryName(countryName)
-    writeCsv(sanitizedCountryName + '.csv', data)
+    writeCsv(sanitizedCountryName, company_or_govt, data)
+
+    dataset_title = "EITI Summary data table for %s" % countryName
+    dataset_name = "eiti-summary-data-table-for-%s" % sanitizedCountryName
+    
+    resource_title_company = "Company payments - %s" % countryName
+    resource_title_government = "Revenues received by government agencies - %s" % countryName
 
     dataset = {
-        "title": "EITI Summary Data Table for %s" % countryName,
-        "name": "eiti-summary-data-table-for-%s" % sanitizedCountryName,
+        "title": dataset_title,
+        "name": dataset_name,
         "notes": """
     The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
 
@@ -53,7 +66,11 @@ Disclaimer: The EITI Secretariat advice that users consult the original reports 
         "maintainer": "Anders Pedersen",
         "maintainer_email": "apedersen@resourcegovernance.org",
         "category": "Accountability and Transparency",
-        "filename": './out/%s.csv' % sanitizedCountryName
+        "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
+        "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
+        "resource_title_company": resource_title_company,
+        "resource_title_government": resource_title_government
+        
     }
 
     if not (dataset in datasets):
@@ -62,12 +79,10 @@ Disclaimer: The EITI Secretariat advice that users consult the original reports 
         with open('./datasets.json', 'w') as f:
             json.dump(datasets, f)
 
-
 def sanitizeCountryName(countryName):
     normalizedCountryName = unicodedata.normalize('NFKD', countryName.lower())
     asciiCountryName = normalizedCountryName.encode('ascii', 'ignore')
     return re.sub('[^a-z]', '-', asciiCountryName)
-
 
 def getSummaryData():
     page = 1
@@ -127,15 +142,22 @@ def getLineForRevenue(d, company, company_or_govt):
 
     currency_rate = d['country']['metadata'][year]['currency_rate']
 
-    return (
+    #Split files https://github.com/NRGI/resourcedata.org/issues/13
+    returnstring = (
         countryn + ',' +  # country
-        ciso3 + ',' +  # iso3
+        ciso3 + ',' + # iso3
         year + ',"' +
-        start_date + '","' +  # start year
-        end_date + '","' +  # end year
-        orglabel + '","' +  # org name
-        rec_agency_name + '",' +  # rec agency
-        company_or_govt + ',' +
+        start_date + '","' + # start year
+        end_date + '","'# end year
+    )
+    
+    if company_or_govt == 'company':
+        returnstring += orglabel + '",'# org name
+    else:
+        returnstring += rec_agency_name + '",' # rec agency
+        
+    return (
+        returnstring +
         gfscode + ',"' +  # gfs code
         gfsdesc + '","' +  # gfs desc
         stream_name + '",' +  # stream name
@@ -153,7 +175,8 @@ i = 0
 for d in sorted(sum_data, key=lambda d: d['label']):
     i += 1
 
-    out = []
+    out_government = []
+    out_company = []
 
     country = d['country']['label']
     year = d['label'][-4:]
@@ -161,6 +184,7 @@ for d in sorted(sum_data, key=lambda d: d['label']):
     if (d['revenue_company'] or d['revenue_government']):
         print "%s/%s  %s %s" % (i, total_len, country, year)
 
+        #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
         revcompany = []
 
@@ -171,21 +195,25 @@ for d in sorted(sum_data, key=lambda d: d['label']):
 
         for revenue in revgovt:
             try:
-                out.append(getLineForRevenue(d, revenue, 'government'))
+                out_government.append(getLineForRevenue(d, revenue, 'government'))
             except Exception:
                 continue
 
         for revenue in revcompany:
             try:
-                out.append(getLineForRevenue(d, revenue, 'company'))
+                out_company.append(getLineForRevenue(d, revenue, 'company'))
             except Exception:
                 continue
-        write(d, out)
+            
+        #Split files https://github.com/NRGI/resourcedata.org/issues/13
+        write(d, out_government, 'government')
+        write(d, out_company, 'company')
     else:
         print "%s/%s  %s %s - No revenue_company or revenue_government" % (i, total_len, country, year)
 
 # now that that's all done, we'll aggregate them all into a 'total' dataset
-os.system("cat ./out/* | awk '!seen[$0]++' > ./out/all_unique.csv")
+os.system("cat ./out/company/* | awk '!seen[$0]++' > ./out/all_unique_company.csv")
+os.system("cat ./out/government/* | awk '!seen[$0]++' > ./out/all_unique_government.csv")
 
 with open('./datasets.json', 'r+') as f:
     datasets = json.load(f)
@@ -196,7 +224,12 @@ with open('./datasets.json', 'r+') as f:
         "owner_org": 'eiti',
         "license_id": "cc-by",
         "category": "Accountability and Transparency",
-        "filename": './out/all_unique.csv'
+        "filename": './out/all_unique.csv',
+        "filename_company": './out/all_unique_company.csv',
+        "filename_government": './out/all_unique_government.csv',
+        "resource_title_company": "Company payments",
+        "resource_title_government": "Revenues received by government agencies"
     })
     json.dump(datasets, f)
     f.truncate()
+
