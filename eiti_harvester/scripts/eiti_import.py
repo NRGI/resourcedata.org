@@ -1,10 +1,26 @@
 import json
 import requests
 
+failed_states = []
 
 API_HOST = os.environ['API_HOST']
 API_KEY = os.environ['API_KEY']
 
+#See https://github.com/NRGI/resourcedata.org/issues/25
+#For now this is just mapping to what's in the schema (link below), but we may need to change the schema to be ISO conformant
+ckan_names = {
+    u'Democratic Republic of Congo': u'Congo, the Democratic Republic of the',
+    u'Kyrgyz Republic': u'Kyrgyzstan',
+    u'Republic of the Congo': u'Congo, the Democratic Republic of the',
+    u'Tanzania': u'Tanzania, United Republic of',
+    u'United States of America': u'United States'
+}
+
+def mapcountry(countryname):
+    if countryname in (u'Democratic Republic of Congo', u'Kyrgyz Republic', u'Republic of the Congo', u'Tanzania', u'United States of America'):
+        return ckan_names[countryname]
+    else:
+        return countryname
 
 def api_get(action, data={}):
     print API_HOST + "/api/action/"+action
@@ -50,10 +66,15 @@ def upsert_org(org):
 
 
 def create_dataset(data):
+    #Switch to facet friendly names at https://github.com/derilinx/ckanext-nrgi-published/blob/master/ckanext/nrgi/schema.json#L766
+    data['country'] = mapcountry(data['country'])
     print "CREATING DATASET " + data['name']
     print data
     r = api_post("package_create", data=data)
     print r.content
+    jsonified = r.json()
+    if ('error' in jsonified):
+        failed_states.append(data['country'])
     return data['name']
 
 
@@ -61,6 +82,8 @@ def update_dataset(data):
     print "UPDATING DATASET " + data['name']
     r = api_post("package_update", data=data).json()
     print r
+    if ('error' in r):
+        failed_states.append(data['country'])
     return data['name']
 
 
@@ -113,8 +136,13 @@ for d in datasets:
     print d
 
     d['url'] = "https://eiti.org/api/v1.0/summary_data"
+    if ('country' in d):
+        d['country'] = mapcountry(d['country'])
 
     upsert_dataset(d)
 
     upload_resource(d['name'], d['filename_company'], d["resource_title_company"])
     upload_resource(d['name'], d['filename_government'], d["resource_title_government"])
+    
+print "The following countries caused the dataset creation to fail:"
+print failed_states
