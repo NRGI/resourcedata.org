@@ -1,0 +1,167 @@
+Q,Component,Question
+1,Licensing,How does the country legally define the ownership of subsoil extractive resources?
+2,Licensing,Does the government publicly disclose data on extractive resource reserves?
+3,Licensing,How up-to-date is the publicly disclosed data on extractive resource reserves?
+4,Licensing,Is the data disclosed on extractive resource reserves machine-readable?
+5,Taxation,Does the government publicly disclose data on the volume of extractive resource production?
+6,Taxation,How up-to-date is the publicly disclosed data on the volume of extractive resource production?
+7,Taxation,Is the data disclosed on the volume of extractive resource production machine-readable?
+8,Taxation,Does the government publicly disclose data on the value of extractive resource exports?
+9,Taxation,How up-to-date is the publicly disclosed data on the value of extractive resource exports?
+10,Taxation,Is the data disclosed on the value of extractive resource exports machine-readable?
+11,Licensing,"Does the government have an online data portal containing publicly available data on reserves, production and exports?"
+12,Licensing,"Does the online data portal contain the most recent publicly available data on reserves, production and exports?"
+13,Licensing,Is the data contained in the online data portal machine-readable?
+14,Licensing,Is the data contained in the online data portal available under an open license?
+15,Licensing,Is the government required to publicly disclose all signed licenses/contracts with extractive companies?
+16,Licensing,"From 2015 onwards, has the government publicly disclosed signed licences/contracts?"
+17,Licensing,"Has the government publicly disclosed all active licenses/contracts, regardless of when they were signed?"
+20,Licensing,Are senior public officials required to publicly disclose their financial holdings in extractive companies?
+21,Licensing,"From 2015 onwards, have senior public officials publicly disclosed their financial holdings in extractive companies?"
+22,Licensing,Do rules require public disclosure of beneficial owners of extractive companies?
+23,Licensing,"From 2015 onwards, have the beneficial owners of extractive companies been disclosed?"
+24,Licensing,Who is the licensing authority (i.e. who has the authority to grant exploration and extraction rights to companies)?
+25,Licensing,Is the licensing authority independent from the SOE?
+26,Licensing,What licensing process does the licensing authority follow?
+27,Licensing,Do rules require that licenses/contracts be allocated by competitive bidding?
+28,Licensing,Is the government required to set pre-defined criteria by which companies become qualified to participate in a licensing process?
+29,Licensing,"From 2015 onwards, did the licensing authority set minimum pre-defined criteria by which companies become qualified to participate in licensing processes?"
+30,Licensing,"Prior to each licensing process, is the licensing authority or other government agency required to disclose the license duration, royalty, production share and tax terms?"
+31,Licensing,"From 2015 onwards, and prior to each licensing process, did the licensing authority or other government agency disclose the license duration, royalty, production share and tax terms?"
+32,Licensing,"Prior to each licensing process, is the licensing authority required to disclose a list of biddable terms or negotiable terms?"
+33,Licensing,"From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose a list of biddable or negotiable terms?"
+34,Licensing,"Prior to each license processes, is the licensing authority required to disclose the rules governing the licensing process, such as auction or negotiation rules?"
+35,Licensing,"From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose the rules governing the licensing process, such as auction or negotiation rules?"
+36,Licensing,Who has the primary authority to monitor compliance with the operational aspects of licenses/contracts?
+37,Licensing,"Following each licensing process, is the licensing authority required to disclose the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?"
+38,Licensing,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?"
+39,Licensing,"Following each licensing process, is the licensing authority required to publicly disclose the identity of the winning bidder or applicant?"
+40,Licensing,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the identity of the winning bidder/applicant?"
+41,Licensing,"Following the licensing process, is the licensing authority required to publicly disclose the list of areas or blocks allocated?"
+42,Licensing,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of areas/blocks allocated?"
+43,Licensing,Are there rules that companies can follow to appeal licensing decisions?
+44,Licensing,Is the legislature required to ratify licenses/contracts?
+45,Licensing,Does a government agency maintain a publicly available registry of rights and license details (i.e. a cadastre)?
+46,Licensing,Does the publicly available registry of licenses/contracts cover areas/blocks?
+47,Licensing,Does the publicly available registry of licenses/contracts give the names of companies that hold an interest in a given area/block?
+48,Taxation,What is the fiscal system for extractive resources?
+49,Taxation,When does the country's fiscal year start and end?
+50,Taxation,Do rules specify how income tax payments should be calculated?
+51,Taxation,Do rules specify how royalties payments should be calculated?
+52,Taxation,Do rules specify how payments of state equity (or options for state equity such as carried interest) should be calculated?
+53,Taxation,Do rules specify how withholding tax payments should be calculated?
+54,Taxation,Do rules specify how the company and government production shares should be calculated?
+55,Taxation,Who is the tax authority (i.e. who has the authority to collect taxes and payments from extractive companies)?
+56,Taxation,"Is the government required to publicly disclose data on payments from extractive companies to the government (specifically, the value of the tax/payment base and the actual taxes/payments received)?"
+57,Taxation,Does the government publicly disclose data on the value of the tax/payment base?
+58,Taxation,How up-to-date is government data on the value of the tax/payment base?
+59,Taxation,Does the government publicly disclose data on the value of tax/payment receipts?
+60,Taxation,How up-to-date is government data on the value of tax/payment receipts?
+61,Taxation,Is the most recent publicly available data on tax and payment receipts disaggregated by payment type?
+62,Taxation,"Is the government required to make all payments to the national treasury or deposit them into a national resource account, aside from amounts legally retained by SOEs?"
+63,Taxation,Is the national tax authority required to audit extractive companies?
+64,Taxation,Is the national tax authority required to periodically be audited by an external body?
+65,Taxation,Was the national tax authority audited over the most recently completed audit timeframe?
+66,Local impact,Are extractive companies required to prepare an EIA and/or SIA prior to development?
+67,Local impact,Is there a requirement for the EIA and/or SIA to be publicly disclosed?
+68,Local impact,"From 2015 onwards, have EIAs and/or SIAs been publicly disclosed?"
+69,Local impact,Are extractive companies required to prepare environmental mitigation management plans prior to development?
+70,Local impact,Is there a requirement for environmental mitigation management plans to be publicly disclosed?
+71,Local impact,"From 2015 onwards, have environmental mitigation management plans been publicly disclosed?"
+72,Local impact,"Do rules require the government to set penalties (i.e. fines, license suspension or license revocation) for non-compliance with environmental mitigation management plans?"
+73,Local impact,Are there rules governing compensation to landowners or land users when project development interferes with their access to or use of land?
+74,Local impact,"From 2015 onwards, have the procedures governing compensation to landowners or land users when project development interferes with their access to or use of land been adhered to?"
+75,Local impact,Are there specific procedures governing the resettlement of land users when project development interferes with their access to or use of land?
+76,Local impact,"From 2015 onwards, have the procedures governing the resettlement of land users when project development interferes with their access to or use of land been adhered to?"
+77,Local impact,Are there rules governing rehabilitation and closure of extractive projects?
+78,Local impact,"From 2015 onwards, have the procedures governing rehabilitation and closure of extractive projects been adhered to?"
+79,State-owned enterprises,What proportion of equity shares does the government own in extractive companies?
+80,State-owned enterprises,What is the name of the largest company in which the government has a controlling share (i.e. an SOE)?
+81,State-owned enterprises,How is the largest extractive company in which the government has a controlling share (i.e. an SOE) funded?
+82,State-owned enterprises,Are there rules governing fiscal transfers between the government and the SOE?
+83,State-owned enterprises,"Over the most recently completed fiscal year, has the government followed the rules governing fiscal transfers between itself and the SOE?"
+84,State-owned enterprises,Does the government publicly disclose how much revenue it receives from the SOE?
+85,State-owned enterprises,Does the SOE publicly disclose how much revenue it transfers to the government?
+86,State-owned enterprises,Is the SOE required to publicly disclose annual reports containing information on its finances and operations?
+87,State-owned enterprises,Has the SOE publicly disclosed annual reports on its finances and operations?
+88,State-owned enterprises,Does the SOE's most recent public annual report include a balance sheet statement?
+89,State-owned enterprises,Does the SOE's most recent public annual report include a cash flow statement?
+90,State-owned enterprises,Does the SOE's most recent public annual report include an income statement?
+91,State-owned enterprises,Does the SOE publicly disclose its participation in joint ventures?
+92,State-owned enterprises,Does the SOE publicly disclose its levels of ownership in joint ventures?
+93,State-owned enterprises,Does the SOE publicly disclose the costs and revenues deriving from its participation in joint ventures?
+94,State-owned enterprises,Does the SOE publicly disclose a list of its subsidiaries?
+95,State-owned enterprises,Does the SOE publicly disclose the costs and revenues deriving from its subsidiaries?
+96,State-owned enterprises,Does the SOE publicly disclose its aggregate production volume?
+97,State-owned enterprises,Does the SOE publicly disclose its aggregate sales volume?
+98,State-owned enterprises,Do rules require a periodic audit of the SOE's financial statements by an external body?
+99,State-owned enterprises,Did an external body audit the SOE's annual financial statements over the most recently completed audit timeframe?
+100,State-owned enterprises,"From 2015 onwards, did the SOE engage in non-operational activities (e.g. payments for social services, public infrastructure, fuel subsidies, national debt servicing)?"
+101,State-owned enterprises,Has the SOE publicly disclosed the amount spent on non-operational activities?
+102,State-owned enterprises,Does the SOE receive a production share or in-kind payments from extractive companies?
+103,State-owned enterprises,How does the SOE market physical commodities?
+104,State-owned enterprises,Do rules specify how the SOE must sell its share of production?
+105,State-owned enterprises,Are there rules governing how the SOE must select buyers of its share of production?
+106,State-owned enterprises,Are there rules determining the prices at which the SOE's share of production should be sold?
+107,State-owned enterprises,Are there rules governing how the proceeds from the sale of the SOE's production share should be transferred to the government?
+108,State-owned enterprises,"Over the most recently completed fiscal year, has the SOE adhered to the rules governing the sale of its share of production?"
+109,State-owned enterprises,Is the SOE required to publicly disclose information on the sale of the government's share of production?
+110,State-owned enterprises,Does the SOE or government publicly disclose the sale volume of the government's share of production?
+111,State-owned enterprises,Does the SOE or government publicly disclose the sale value of the government's share of production?
+112,State-owned enterprises,Does the SOE or government publicly disclose the sale date of the government's share of production?
+113,State-owned enterprises,Does the SOE or government publicly disclose the names of those who have bought the government's share of production?
+114,State-owned enterprises,Is the majority of the SOE's board of directors independent of the government (i.e. at least half of all board members do not hold positions in the current central government)?
+115,State-owned enterprises,Does the SOE have a publicly available code of conduct?
+116,State-owned enterprises,"Is the SOE required to submit annual reports to the legislature on its commercial, non-commercial (i.e. regulatory) and non-operational activities (i.e. activities not related to resource extraction)?"
+117,Revenue management,Does the country have a numerical fiscal rule?
+118,Revenue management,"Over the most recently completed fiscal year, did the government adhere to the numerical fiscal rule?"
+119,Revenue management,Do rules require that an external body periodically audit the government's adherence to the numerical fiscal rule?
+120,Revenue management,Was the government's adherence to the fiscal rule audited over the most recently completed audit timeframe?
+121,Revenue management,Does the government publicly disclose projections of extractive resource revenues?
+122,Revenue management,Has the government publicly disclosed a national budget that has been enacted for the current fiscal year?
+123,Revenue management,Does the most recent enacted budget include projections (i.e. forecasts) of extractive resource revenues?
+124,Revenue management,"For the most recently completed fiscal year, did the government publicly disclose the total resource revenue received?"
+125,Revenue management,"For the most recently completed fiscal year, did the government publicly disclose total government expenditures?"
+126,Revenue management,Does the government publicly disclose the level of national debt?
+127,Revenue management,Is the most recent publicly available information on the national debt disaggregated by currency denomination (i.e. foreign or domestic)?
+128,Revenue sharing,Does the central government transfer extractive resource revenues to subnational governments?
+129,Revenue sharing,Are there specific rules governing the transfer of extractive resource revenues (i.e. are these rules distinct from those governing other types of transfers)?
+130,Revenue sharing,Do rules specify that subnational governments of producing areas should receive a higher share of extractive resource revenues than those of non-producing areas?
+131,Revenue sharing,Do rules specify which agencies are responsible for transferring extractive resource revenues to subnational governments?
+132,Revenue sharing,Do rules specify which subnational agencies receive the extractive resource revenues transferred from the central government?
+133,Revenue sharing,Do rules specify a formula governing the transfer of extractive resource revenues between the central government and subnational governments?
+134,Revenue sharing,"If there is a formula governing the transfer of extractive resource revenue between the central government and subnational governments, does this formula specify the amount of revenue received by each subnational government?"
+135,Revenue sharing,"From 2015 onwards, did the central government disclose the amount of revenues transferred to subnational governments?"
+136,Revenue sharing,How up-to-date is the information publicly disclosed by the central government on the amount of revenues transferred to subnational governments?
+137,Revenue sharing,Do rules specify different arrangements for the sharing of extractive resource revenues by revenue stream (i.e. if there are different arrangements for different taxes)?
+138,Revenue sharing,"From 2015 onwards, has the central government publicly disclosed the amount of revenue transferred by revenue stream?"
+139,Revenue sharing,Do rules specify arrangements for the sharing of extractive resource revenues by commodity?
+140,Revenue sharing,"From 2015 onwards, has the central government publicly disclosed the amount of revenue transferred by commodity?"
+141,Revenue sharing,"From 2015 onwards, has the central government adhered to formulas governing the transfer of resource revenues to subnational governments?"
+142,Revenue sharing,Do rules require that an external body periodically audit the transfers of extractive resource revenues to subnational governments?
+143,Revenue sharing,Were transfers of extractive resource revenues to subnational governments externally audited over the most recently completed audit timeframe?
+144,Sovereign wealth funds,Does the country have a natural resource fund which is funded by extractive resource revenues?
+145,Sovereign wealth funds,"If there are multiple natural resource funds, which is the largest?"
+146,Sovereign wealth funds,Are there numeric rules governing the size of withdrawals from the natural resource fund?
+147,Sovereign wealth funds,"From 2015 onwards, has the government adhered to the numeric rules governing the size of withdrawals from natural resource funds?"
+148,Sovereign wealth funds,Do rules require that withdrawals and spending from the natural resource fund pass through the national budget?
+149,Sovereign wealth funds,"From 2015 onwards, have withdrawals and spending from the natural resource fund actually passed through the national budget?"
+150,Sovereign wealth funds,Are there numeric rules governing the size of deposits into the natural resource fund?
+151,Sovereign wealth funds,"From 2015 onwards, has the government adhered to the numeric rules governing the size of deposits into the natural resource fund?"
+152,Sovereign wealth funds,Are there numeric rules governing deposits into the natural resource fund by revenue stream?
+153,Sovereign wealth funds,"From 2015 onwards, has the government adhered to the numeric rules governing deposits into the natural resource fund by revenue stream?"
+154,Sovereign wealth funds,Is the natural resource fund prohibited from investing in domestic assets without budgetary approval?
+155,Sovereign wealth funds,Is the natural resource fund prohibited from investing in certain asset classes or investment types?
+156,Sovereign wealth funds,"From 2015 onwards, has the natural resource fund adhered to rules limiting asset class or investment types?"
+157,Sovereign wealth funds,Is the natural resource fund required to produce annual financial reports?
+158,Sovereign wealth funds,Is the natural resource fund required to publicly disclose these annual financial reports?
+159,Sovereign wealth funds,Does the natural resource fund publicly disclose its annual financial reports?
+160,Sovereign wealth funds,Does the natural resource fund's most recent publicly available annual financial report specify the size of the fund?
+161,Sovereign wealth funds,Does the natural resource fund's most recent publicly available annual financial report disclose deposit and withdrawal amounts?
+162,Sovereign wealth funds,Does the natural resource fund's most recent publicly available annual financial report specify the rate of return made on its investments?
+163,Sovereign wealth funds,Does the natural resource fund's most recent publicly available annual financial report include a list of assets held?
+164,Sovereign wealth funds,Does the natural resource fund's most recent publicly available annual financial report specify the fund's asset allocation by asset class?
+165,Sovereign wealth funds,Do rules require an external body to periodically audit the natural resource fund's annual financial reports?
+166,Sovereign wealth funds,Were these annual financial reports audited over the most recently completed audit timeframe?
+167,Sovereign wealth funds,Is the legislature required to review the natural resource fund's annual financial reports?
+168,Sovereign wealth funds,"From 2015 onwards, has the legislature reviewed the natural resource fund's annual financial reports?"
