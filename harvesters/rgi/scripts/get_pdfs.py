@@ -58,6 +58,7 @@ for assessment in assessments:
                 assessment_type = "Unknown"
 
             datasets[urlify(d['title'])] = {
+                'type': 'document',
                 'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
                 'name': urlify(d['title']),
                 'owner_org': 'rgi',
