@@ -168,6 +168,9 @@ def getLineForRevenue(d, company, company_or_govt):
         companyurl  # company irl
     )
 
+# Ensure output folders exist
+os.system("mkdir -p ./out/company")
+os.system("mkdir -p ./out/government")
 
 sum_data = getSummaryData()
 total_len = len(sum_data)
