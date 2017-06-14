@@ -1,4 +1,5 @@
 import unicodecsv as csv
+import json
 
 questions = []
 
@@ -14,7 +15,7 @@ with open("questions_new.csv", "rb") as qfile:
             currentSubComponent = row[3]
         elif row[0] == "INDICATOR":
             currentIndicator = row[3]
-        elif row[0] == "QUESTION":
+        elif row[0] in ("QUESTION", "NON_SCORING"):
             lawOrPractice = row[1]
             ref = row[2]
             elName = row[3]
@@ -29,3 +30,12 @@ with open("questions_out.csv", "wb") as outfile:
     
     for question in questions:
         csvwriter.writerow(question)
+        
+with open("questions_for_schema.json", "wb") as outfile:
+    jdata = {}
+    jdata['choices'] = []
+    
+    for question in questions:
+        jdata['choices'].append({"value": question[0], "label": str(question[0]) + ": " + question[2]})
+        
+    outfile.write(json.dumps(jdata));
