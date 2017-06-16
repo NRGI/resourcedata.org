@@ -142,6 +142,7 @@ print "Writing out " + str(len(datasets)) + " datasets for CKAN"
 
 with open('./datasets2.json', 'w') as f:
     json.dump(datasets, f, indent=4, separators=(',', ': '))
-    
-with open('./complete.json', 'w') as f:
-    json.dump(complete_metadata, f, indent=4)
+
+#Optional feature!   
+#with open('./complete.json', 'w') as f:
+#    json.dump(complete_metadata, f, indent=4)

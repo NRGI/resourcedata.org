@@ -151,6 +151,8 @@ print len(datasets)
 startname = None
 started = False
 
+upsert_org({'name': 'rgi', 'title': 'Resource Governance Index', 'image_url': 'http://resourcedata.org/nrgi-logo.png'})
+
 for d in datasets:
     
     #print (datasets[d])
