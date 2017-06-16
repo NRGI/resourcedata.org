@@ -14,22 +14,32 @@ iso3 = {
 "SSD":u"South Sudan"
 }
 
+complete_metadata = {}
 question_categories = {}
-with open('./questions.csv', 'r') as f:
+question_lp = {}
+question_scoring = {}
+#Read output of import_questions.py
+with open('./questions_out.csv', 'r') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        question_categories[row['Q'].zfill(3)] = row['Component']
+        question_categories[row['Q'].zfill(3)] = row['Subcomponent']
+        question_lp[row['Q'].zfill(3)] = row['LawOrPractice']
+        question_scoring[row['Q'].zfill(3)] = row['Scoring']
 
 with open('./assessments.csv', 'r') as f:
     assessments = [l.strip().replace('"','').replace('"','') for l in f.readlines()]
 
 datasets = {}
-
+all_removals = set()
+pdfs = 0
+dropped_pdfs = 0
+duplicates = []
 
 def urlify(s):
     return s.lower().replace(' ', '-').replace(':', '')
 
 for assessment in assessments:
+    complete_metadata[assessment] = []
     #Used for skipping/testing
     #if "CIV" not in assessment:
     #    continue
@@ -39,15 +49,34 @@ for assessment in assessments:
     print '%s has %s pdfs' % (assessment, len([d for d in docs if d['mime_type'] == "application/pdf"]))
 
     for d in docs:
+        complete_metadata[assessment].append(d)
         if (d['mime_type'] == 'application/pdf'):
+            pdfs += 1
             category = ''
             questions = []
 
-            try:
-                category = question_categories[d['answers'][0][-3:]]
-                questions = [q[-3:] for q in d['answers']]
-            except:
+            law_practice_question = set()
+            scoring_question = set()
+                
+            questions_raw = [q[-3:] for q in d['answers']]
+            questions = set(questions_raw)
+            removals = []
+            for question in questions:
+                if question not in question_categories:
+                    print "Warning, question " + question + " not in list of valid questions"
+                    all_removals.add(question)
+                    removals.append(question)
+            for removal in removals:
+                questions.remove(removal)
+            if len(questions) == 0:
+                print "Warning, PDF not associated with any valid questions, dropping"
+                dropped_pdfs += 1
                 continue
+            questions = list(questions)
+            category = question_categories[questions[0]]
+            for question in questions:
+                law_practice_question.add(question_lp[question])
+                scoring_question.add(question_scoring[question])
 
             assessment_type_abbr = assessment[-2:]
             if assessment_type_abbr == "HY":
@@ -57,7 +86,7 @@ for assessment in assessments:
             else:
                 assessment_type = "Unknown"
 
-            datasets[urlify(d['title'])] = {
+            new_dataset = {
                 'type': 'document',
                 'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
                 'name': urlify(d['title']),
@@ -72,6 +101,8 @@ for assessment in assessments:
                 'year': assessment[4:8],
                 'url': API_ENDPOINT + assessment,
                 'category': category,
+                'law_practice_question': list(law_practice_question).sort(), #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
+                'scoring_question': list(scoring_question),
                 'question': questions,
                 'extras': [
                     {'key': 'spatial_text', 'value': iso3[assessment[0:3]]},
@@ -88,6 +119,29 @@ for assessment in assessments:
                     }
                 ]
             }
+            
+            if urlify(d['title']) in datasets:
+                print "Warning, dataset already exists..."
+                print "This:"
+                print new_dataset
+                print "That:"
+                print datasets[urlify(d['title'])]
+                duplicates.append(new_dataset['resources'][0]['url'] + "," + datasets[urlify(d['title'])]['resources'][0]['url'])
+            else:
+                datasets[urlify(d['title'])] = new_dataset
+            
+print "The following questions are invalid:"
+all_removals_list = list(all_removals)
+all_removals_list.sort(key=lambda x: int(x))
+print all_removals_list
+print "This led to " + str(dropped_pdfs) + " PDFs being dropped out of a total of " + str(pdfs) + " PDFs"
+print "There were " + str(len(duplicates)) + " duplicates:"
+for duplicate in duplicates:
+    print duplicate
+print "Writing out " + str(len(datasets)) + " datasets for CKAN"
 
 with open('./datasets2.json', 'w') as f:
     json.dump(datasets, f, indent=4, separators=(',', ': '))
+    
+with open('./complete.json', 'w') as f:
+    json.dump(complete_metadata, f, indent=4)

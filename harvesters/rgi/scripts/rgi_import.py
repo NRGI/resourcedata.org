@@ -6,6 +6,7 @@ import requests
 import unicodedata
 import re
 import uuid
+import os
 
 failed_states = []
 
@@ -191,7 +192,8 @@ for d in datasets:
 
     qtext = "Question "
     qset = set()
-    #Avoid duplicate question entries and throw out questions not in the schema. Not ideal.
+    #Avoid duplicate question entries and throw out questions not in the schema.
+    #Neither should happen as we catch these things in get_pdfs.py
     for question in datasets[d]['question']: #temp, already checked
         if question in qchoices:
             qset.add(question)
