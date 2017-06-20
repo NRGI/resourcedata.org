@@ -86,7 +86,7 @@ for assessment in assessments:
             else:
                 assessment_type = "Unknown"
                 
-            law_practice_question = list(law_practice_question).sort()
+            law_practice_question = list(law_practice_question)
             law_practice_question.sort()
 
             new_dataset = {
