@@ -85,6 +85,9 @@ for assessment in assessments:
                 assessment_type = "Mining"
             else:
                 assessment_type = "Unknown"
+                
+            law_practice_question = list(law_practice_question).sort()
+            law_practice_question.sort()
 
             new_dataset = {
                 'type': 'document',
@@ -101,7 +104,7 @@ for assessment in assessments:
                 'year': assessment[4:8],
                 'url': API_ENDPOINT + assessment,
                 'category': category,
-                'law_practice_question': list(law_practice_question).sort(), #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
+                'law_practice_question': law_practice_question, #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
                 'scoring_question': list(scoring_question),
                 'question': questions,
                 'extras': [
