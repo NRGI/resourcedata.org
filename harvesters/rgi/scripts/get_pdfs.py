@@ -75,7 +75,9 @@ for assessment in assessments:
             questions = list(questions)
             category = question_categories[questions[0]]
             for question in questions:
-                law_practice_question.add(question_lp[question])
+                #Neither is an OK flag for us in the question list but doesn't fit the CKAN model so well
+                if question_lp[question] != "neither":
+                    law_practice_question.add(question_lp[question])
                 scoring_question.add(question_scoring[question])
 
             assessment_type_abbr = assessment[-2:]
