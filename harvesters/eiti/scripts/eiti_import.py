@@ -119,7 +119,6 @@ def upload_resource(dataset_name, resource_path, resource_name):
                       data={
                           "package_id": dataset_name,
                           "type": "file.upload",
-                          "url": resource_path,
                           "name": resource_name,
                           "format": "csv"
                       },
