@@ -152,15 +152,15 @@ def getLineForRevenue(d, company, company_or_govt):
     )
     
     if company_or_govt == 'company':
-        returnstring += orglabel.replace("\n", "; ") + '",'# org name
+        returnstring += orglabel.replace('"', '').replace("\n", "; ").strip() + '",'# org name
     else:
-        returnstring += rec_agency_name.replace("\n", "; ") + '",' # rec agency
+        returnstring += rec_agency_name.replace('"', '').replace("\n", "; ").strip() + '",' # rec agency
         
     return (
         returnstring +
         gfscode + ',"' +  # gfs code
-        gfsdesc.replace("\n", "; ") + '","' +  # gfs desc
-        stream_name.replace("\n", "; ") + '",' +  # stream name
+        gfsdesc.replace('"', '').replace("\n", "; ").strip() + '","' +  # gfs desc
+        stream_name.replace('"', '').replace("\n", "; ").strip() + '",' +  # stream name
         currency_code + ',' +
         currency_rate + ',' +
         valreported + ',' +  # value reported by company
