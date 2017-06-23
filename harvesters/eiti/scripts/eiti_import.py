@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import json
 import requests
@@ -113,6 +114,8 @@ def patch_dataset(data):
 
 
 def upload_resource(dataset_name, resource_path, resource_name):
+    #Workaround https://github.com/ckan/ckan/issues/3632 for Cote d'Ivoire
+    resource_name = resource_name.replace(u'ô', 'o')
     print "UPLOADING RESOURCE " + resource_path[5:] + " TO DATASET " + dataset_name
 
     r = requests.post('%s/api/action/resource_create' % (API_HOST),
