@@ -14,6 +14,18 @@ organisations = {}
 gfs = {}
 revenues = {}
 
+general_notes = """
+    The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
+
+According to the EITI Standard 5.3.b: "Summary data from each EITI Report should be submitted electronically to the International Secretariat according to the standardised reporting format provided by the International Secretariat" This template should be completed in full and submitted by email by the national secretariat to the International EITI Secretariat following the publication of the report. The data will be used to populate the global EITI data repository, available on the international EITI website.
+
+NB: The data available on ResourceData is republished from the EITI API and covers one section of the Summary Data, Part 3 which is comprised of data on government revenues per revenue stream and company.
+
+Notes for consideration:
+
+Disclaimer: The EITI Secretariat advice that users consult the original reports for detailed information. Where figures are not available in US dollars, the annual average exchange rate is used. Any questions regarding the data collection and Summary Data methodology can be directed to the EITI Secretariat: data@eiti.org or by visiting [eiti.org/summary-data](http://eiti.org/summary-data)
+        """
+
 
 def writeCsv(name, company_or_govt, data):
     filename = name + '-' + company_or_govt + '.csv';
@@ -48,17 +60,7 @@ def write(meta, data, company_or_govt):
     dataset = {
         "title": dataset_title,
         "name": dataset_name,
-        "notes": """
-    The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
-
-According to the EITI Standard 5.3.b: "Summary data from each EITI Report should be submitted electronically to the International Secretariat according to the standardised reporting format provided by the International Secretariat" This template should be completed in full and submitted by email by the national secretariat to the International EITI Secretariat following the publication of the report. The data will be used to populate the global EITI data repository, available on the international EITI website.
-
-NB: The data available on ResourceData is republished from the EITI API and covers one section of the Summary Data, Part 3 which is comprised of data on government revenues per revenue stream and company.
-
-Notes for consideration:
-
-Disclaimer: The EITI Secretariat advice that users consult the original reports for detailed information. Where figures are not available in US dollars, the annual average exchange rate is used. Any questions regarding the data collection and Summary Data methodology can be directed to the EITI Secretariat: data@eiti.org or by visiting [eiti.org/summary-data](http://eiti.org/summary-data)
-        """,
+        "notes": general_notes,
         "owner_org": 'eiti',
         "country_iso3": meta['country']['iso3'],
         "country": countryName,
@@ -224,6 +226,7 @@ with open('./datasets.json', 'r+') as f:
     datasets.append({
         "title": "EITI Complete Summary Data Table",
         "name": "eiti-complete-summary-table",
+        "notes": general_notes,
         "owner_org": 'eiti',
         "license_id": "cc-by",
         "category": "Accountability and Transparency",
