@@ -1,600 +1,536 @@
 {
     "choices": [
         {
-            "label": "001: How does the country legally define the ownership of subsoil extractive resources?", 
-            "value": "001"
+            "label": "1.1.1a: Does the government publicly disclose data on extractive resource reserves?", 
+            "value": "1.1.1a"
         }, 
         {
-            "label": "002: Does the government publicly disclose data on extractive resource reserves?", 
-            "value": "002"
+            "label": "1.1.1b: How up-to-date is the publicly disclosed data on extractive resource reserves?", 
+            "value": "1.1.1b"
         }, 
         {
-            "label": "003: How up-to-date is the publicly disclosed data on extractive resource reserves?", 
-            "value": "003"
+            "label": "1.1.1c: Is the data disclosed on extractive resource reserves machine-readable?", 
+            "value": "1.1.1c"
         }, 
         {
-            "label": "004: Is the data disclosed on extractive resource reserves machine-readable?", 
-            "value": "004"
+            "label": "1.2.1a: Does the government publicly disclose data on the volume of extractive resource production?", 
+            "value": "1.2.1a"
         }, 
         {
-            "label": "005: Does the government publicly disclose data on the volume of extractive resource production?", 
-            "value": "005"
+            "label": "1.2.1b: How up-to-date is the publicly disclosed data on the volume of extractive resource production?", 
+            "value": "1.2.1b"
         }, 
         {
-            "label": "006: How up-to-date is the publicly disclosed data on the volume of extractive resource production?", 
-            "value": "006"
+            "label": "1.2.1c: Is the data disclosed on the volume of extractive resource production machine-readable?", 
+            "value": "1.2.1c"
         }, 
         {
-            "label": "007: Is the data disclosed on the volume of extractive resource production machine-readable?", 
-            "value": "007"
+            "label": "1.2.2a: Does the government publicly disclose data on the value of extractive resource exports?", 
+            "value": "1.2.2a"
         }, 
         {
-            "label": "008: Does the government publicly disclose data on the value of extractive resource exports?", 
-            "value": "008"
+            "label": "1.2.2b: How up-to-date is the publicly disclosed data on the value of extractive resource exports?", 
+            "value": "1.2.2b"
         }, 
         {
-            "label": "009: How up-to-date is the publicly disclosed data on the value of extractive resource exports?", 
-            "value": "009"
+            "label": "1.2.2c: Is the data disclosed on the value of extractive resource exports machine-readable?", 
+            "value": "1.2.2c"
         }, 
         {
-            "label": "010: Is the data disclosed on the value of extractive resource exports machine-readable?", 
-            "value": "010"
+            "label": "2.1.1a: Does the government have an online data portal containing publicly available data on reserves, production and exports?", 
+            "value": "2.1.1a"
         }, 
         {
-            "label": "011: Does the government have an online data portal containing publicly available data on reserves, production and exports?", 
-            "value": "011"
+            "label": "2.1.1b: Does the online data portal contain the most recent publicly available data on reserves, production and exports?", 
+            "value": "2.1.1b"
         }, 
         {
-            "label": "012: Does the online data portal contain the most recent publicly available data on reserves, production and exports?", 
-            "value": "012"
+            "label": "2.1.1c: Is the data contained in the online data portal machine-readable?", 
+            "value": "2.1.1c"
         }, 
         {
-            "label": "013: Is the data contained in the online data portal machine-readable?", 
-            "value": "013"
+            "label": "2.1.1d: Is the data contained in the online data portal available under an open license?", 
+            "value": "2.1.1d"
         }, 
         {
-            "label": "014: Is the data contained in the online data portal available under an open license?", 
-            "value": "014"
+            "label": "1.1.9a: Is the government required to publicly disclose all signed licenses/contracts with extractive companies?", 
+            "value": "1.1.9a"
         }, 
         {
-            "label": "015: Is the government required to publicly disclose all signed licenses/contracts with extractive companies?", 
-            "value": "015"
+            "label": "1.1.10a: From 2015 onwards, has the government publicly disclosed signed licences/contracts?", 
+            "value": "1.1.10a"
         }, 
         {
-            "label": "016: From 2015 onwards, has the government publicly disclosed signed licences/contracts?", 
-            "value": "016"
+            "label": "1.1.10b: Has the government publicly disclosed all active licenses/contracts, regardless of when they were signed?", 
+            "value": "1.1.10b"
         }, 
         {
-            "label": "017: Has the government publicly disclosed all active licenses/contracts, regardless of when they were signed?", 
-            "value": "017"
+            "label": "1.2.8a: Is the country EITI-compliant?", 
+            "value": "1.2.8a"
         }, 
         {
-            "label": "018: Is the country EITI-compliant?", 
-            "value": "018"
+            "label": "1.2.8b: How up-to-date is the data contained in the country's most recent EITI report?", 
+            "value": "1.2.8b"
         }, 
         {
-            "label": "019: How up-to-date is the data contained in the country's most recent EITI report?", 
-            "value": "019"
+            "label": "1.1.7a: Are senior public officials required to publicly disclose their financial holdings in extractive companies?", 
+            "value": "1.1.7a"
         }, 
         {
-            "label": "020: Are senior public officials required to publicly disclose their financial holdings in extractive companies?", 
-            "value": "020"
+            "label": "1.1.8a: From 2015 onwards, have senior public officials publicly disclosed their financial holdings in extractive companies?", 
+            "value": "1.1.8a"
         }, 
         {
-            "label": "021: From 2015 onwards, have senior public officials publicly disclosed their financial holdings in extractive companies?", 
-            "value": "021"
+            "label": "1.1.7b: Do rules require public disclosure of beneficial owners of extractive companies?", 
+            "value": "1.1.7b"
         }, 
         {
-            "label": "022: Do rules require public disclosure of beneficial owners of extractive companies?", 
-            "value": "022"
+            "label": "1.1.8b: From 2015 onwards, have the beneficial owners of extractive companies been disclosed?", 
+            "value": "1.1.8b"
         }, 
         {
-            "label": "023: From 2015 onwards, have the beneficial owners of extractive companies been disclosed?", 
-            "value": "023"
+            "label": "1.1.3d: Is the licensing authority independent from the SOE?", 
+            "value": "1.1.3d"
         }, 
         {
-            "label": "024: Who is the licensing authority (i.e. who has the authority to grant exploration and extraction rights to companies)?", 
-            "value": "024"
+            "label": "1.1.3a: Is the government required to set pre-defined criteria by which companies become qualified to participate in a licensing process?", 
+            "value": "1.1.3a"
         }, 
         {
-            "label": "025: Is the licensing authority independent from the SOE?", 
-            "value": "025"
+            "label": "1.1.4a: From 2015 onwards, did the licensing authority publicly disclose minimum pre-defined criteria by which companies become qualified to participate in licensing processes?", 
+            "value": "1.1.4a"
         }, 
         {
-            "label": "026: What licensing process does the licensing authority follow?", 
-            "value": "026"
+            "label": "1.1.3b: Prior to each licensing process, is the licensing authority required to disclose a list of biddable terms or negotiable terms?", 
+            "value": "1.1.3b"
         }, 
         {
-            "label": "028: Is the government required to set pre-defined criteria by which companies become qualified to participate in a licensing process?", 
-            "value": "028"
+            "label": "1.1.4b: From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose a list of biddable or negotiable terms?", 
+            "value": "1.1.4b"
         }, 
         {
-            "label": "029: From 2015 onwards, did the licensing authority publicly disclose minimum pre-defined criteria by which companies become qualified to participate in licensing processes?", 
-            "value": "029"
+            "label": "1.1.3c: Prior to each license process, is the licensing authority required to disclose the rules governing the licensing process, such as auction or negotiation rules?", 
+            "value": "1.1.3c"
         }, 
         {
-            "label": "032: Prior to each licensing process, is the licensing authority required to disclose a list of biddable terms or negotiable terms?", 
-            "value": "032"
+            "label": "1.1.4c: From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose the rules governing the licensing process, such as auction or negotiation rules?", 
+            "value": "1.1.4c"
         }, 
         {
-            "label": "033: From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose a list of biddable or negotiable terms?", 
-            "value": "033"
+            "label": "1.1.5a: Following each licensing process, is the licensing authority required to disclose\u00a0the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?", 
+            "value": "1.1.5a"
         }, 
         {
-            "label": "034: Prior to each license process, is the licensing authority required to disclose the rules governing the licensing process, such as auction or negotiation rules?", 
-            "value": "034"
+            "label": "1.1.6a: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?", 
+            "value": "1.1.6a"
         }, 
         {
-            "label": "035: From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose the rules governing the licensing process, such as auction or negotiation rules?", 
-            "value": "035"
+            "label": "1.1.5b: Following each licensing process, is the licensing authority required to publicly disclose the identity of the winning bidder or applicant?", 
+            "value": "1.1.5b"
         }, 
         {
-            "label": "036: Who has the primary authority to monitor compliance with the operational aspects of licenses/contracts?", 
-            "value": "036"
+            "label": "1.1.6b: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the identity of the winning bidder/applicant?", 
+            "value": "1.1.6b"
         }, 
         {
-            "label": "037: Following each licensing process, is the licensing authority required to disclose\u00a0the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?", 
-            "value": "037"
+            "label": "1.1.5c: Following the licensing process, is the licensing authority required to publicly disclose the list of areas or blocks allocated?", 
+            "value": "1.1.5c"
         }, 
         {
-            "label": "038: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?", 
-            "value": "038"
+            "label": "1.1.6c: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of areas/blocks allocated?", 
+            "value": "1.1.6c"
         }, 
         {
-            "label": "039: Following each licensing process, is the licensing authority required to publicly disclose the identity of the winning bidder or applicant?", 
-            "value": "039"
+            "label": "1.1.5d: Are there rules that companies can follow to appeal licensing decisions?", 
+            "value": "1.1.5d"
         }, 
         {
-            "label": "040: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the identity of the winning bidder/applicant?", 
-            "value": "040"
+            "label": "1.1.2b: Is the publicly available registry of licenses/contracts available online, offline or in paper?", 
+            "value": "1.1.2b"
         }, 
         {
-            "label": "041: Following the licensing process, is the licensing authority required to publicly disclose the list of areas or blocks allocated?", 
-            "value": "041"
+            "label": "1.1.2c: Does the publicly available registry of licenses/contracts cover areas/blocks?", 
+            "value": "1.1.2c"
         }, 
         {
-            "label": "042: From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of areas/blocks allocated?", 
-            "value": "042"
+            "label": "1.1.2d: Does the publicly available registry of licenses/contracts give the names of companies that hold an interest in a given area/block?", 
+            "value": "1.1.2d"
         }, 
         {
-            "label": "043: Are there rules that companies can follow to appeal licensing decisions?", 
-            "value": "043"
+            "label": "1.2.5a: Do rules specify the income tax rate(s) applying to extractive companies? ", 
+            "value": "1.2.5a"
         }, 
         {
-            "label": "044: Is the legislature required to ratify licenses/contracts?", 
-            "value": "044"
+            "label": "1.2.5b: Do rules specify the royalty rate(s) applying to extractive companies?", 
+            "value": "1.2.5b"
         }, 
         {
-            "label": "045: Is the publicly available registry of licenses/contracts available online, offline or in paper?", 
-            "value": "045"
+            "label": "1.2.5c: Do rules specify the level of state equity (or options for state equity such as carried interest) in extractive companies ?", 
+            "value": "1.2.5c"
         }, 
         {
-            "label": "046: Does the publicly available registry of licenses/contracts cover areas/blocks?", 
-            "value": "046"
+            "label": "1.2.5d: Do rules specify the withholding tax rate(s) applying to extractive companies payments?", 
+            "value": "1.2.5d"
         }, 
         {
-            "label": "047: Does the publicly available registry of licenses/contracts give the names of companies that hold an interest in a given area/block?", 
-            "value": "047"
+            "label": "1.2.5e: For countries using production sharing agreements, do rules specify the company and government production shares?", 
+            "value": "1.2.5e"
         }, 
         {
-            "label": "048: What is the fiscal system for extractive resources?", 
-            "value": "048"
+            "label": "1.2.3a: Is the government required to publicly disclose data on payments from extractive companies to the government?", 
+            "value": "1.2.3a"
         }, 
         {
-            "label": "049: When does the country's fiscal year start and end?", 
-            "value": "049"
+            "label": "1.2.4a: Does the government publicly disclose data on the value of tax/payment receipts?", 
+            "value": "1.2.4a"
         }, 
         {
-            "label": "050: Do rules specify the income tax rate(s) applying to extractive companies? ", 
-            "value": "050"
+            "label": "1.2.4b: How up-to-date is government data on the value of tax/payment receipts?", 
+            "value": "1.2.4b"
         }, 
         {
-            "label": "051: Do rules specify the royalty rate(s) applying to extractive companies?", 
-            "value": "051"
+            "label": "1.2.4c: Is the most recent publicly available data on tax and payment receipts disaggregated by payment type?", 
+            "value": "1.2.4c"
         }, 
         {
-            "label": "052: Do rules specify the level of state equity (or options for state equity such as carried interest) in extractive companies ?", 
-            "value": "052"
+            "label": "1.2.6a: Is the government required to make all payments to the national treasury or deposit them into a national resource account, aside from amounts legally retained by SOEs?", 
+            "value": "1.2.6a"
         }, 
         {
-            "label": "053: Do rules specify the withholding tax rate(s) applying to extractive companies payments?", 
-            "value": "053"
+            "label": "1.2.6b: Is the national tax authority required to audit extractive companies?", 
+            "value": "1.2.6b"
         }, 
         {
-            "label": "054: For countries using production sharing agreements, do rules specify the company and government production shares?", 
-            "value": "054"
+            "label": "1.2.6c: Is the national tax authority required to periodically be audited by an external body?", 
+            "value": "1.2.6c"
         }, 
         {
-            "label": "055: Who is the tax authority (i.e. who has the authority to collect taxes and payments from extractive companies)?", 
-            "value": "055"
+            "label": "1.2.7a: Was the national tax authority audited over the most recently completed audit timeframe?", 
+            "value": "1.2.7a"
         }, 
         {
-            "label": "056: Is the government required to publicly disclose data on payments from extractive companies to the government?", 
-            "value": "056"
+            "label": "1.3.1a: Are extractive companies required to prepare an EIA and/or SIA prior to development?", 
+            "value": "1.3.1a"
         }, 
         {
-            "label": "059: Does the government publicly disclose data on the value of tax/payment receipts?", 
-            "value": "059"
+            "label": "1.3.1b: Is there a requirement for the EIA and/or SIA to be publicly disclosed?", 
+            "value": "1.3.1b"
         }, 
         {
-            "label": "060: How up-to-date is government data on the value of tax/payment receipts?", 
-            "value": "060"
+            "label": "1.3.2a: From 2015 onwards, have EIAs and/or SIAs been publicly disclosed?", 
+            "value": "1.3.2a"
         }, 
         {
-            "label": "061: Is the most recent publicly available data on tax and payment receipts disaggregated by payment type?", 
-            "value": "061"
+            "label": "1.3.3a: Are extractive companies required to prepare environmental mitigation management plans prior to development?", 
+            "value": "1.3.3a"
         }, 
         {
-            "label": "062: Is the government required to make all payments to the national treasury or deposit them into a national resource account, aside from amounts legally retained by SOEs?", 
-            "value": "062"
+            "label": "1.3.3b: Is there a requirement for environmental mitigation management plans to be publicly disclosed?", 
+            "value": "1.3.3b"
         }, 
         {
-            "label": "063: Is the national tax authority required to audit extractive companies?", 
-            "value": "063"
+            "label": "1.3.4a: From 2015 onwards, have environmental mitigation management plans been publicly disclosed?", 
+            "value": "1.3.4a"
         }, 
         {
-            "label": "064: Is the national tax authority required to periodically be audited by an external body?", 
-            "value": "064"
+            "label": "1.3.5a: Do rules require the government to set penalties (i.e. fines, license suspension or license revocation) for non-compliance\u00a0with environmental mitigation management plans?", 
+            "value": "1.3.5a"
         }, 
         {
-            "label": "065: Was the national tax authority audited over the most recently completed audit timeframe?", 
-            "value": "065"
+            "label": "1.3.7a: Are there rules governing compensation\u00a0to landowners or land users when project development interferes with their access to or use of land?", 
+            "value": "1.3.7a"
         }, 
         {
-            "label": "066: Are extractive companies required to prepare an EIA and/or SIA prior to development?", 
-            "value": "066"
+            "label": "1.3.7b: Are there specific procedures governing the\u00a0resettlement\u00a0of land users when project development interferes with their access to or use of land?", 
+            "value": "1.3.7b"
         }, 
         {
-            "label": "067: Is there a requirement for the EIA and/or SIA to be publicly disclosed?", 
-            "value": "067"
+            "label": "1.3.5b: Are there rules governing rehabilitation and closure of extractive projects?", 
+            "value": "1.3.5b"
         }, 
         {
-            "label": "068: From 2015 onwards, have EIAs and/or SIAs been publicly disclosed?", 
-            "value": "068"
+            "label": "1.3.6a: From 2015 onwards, have the procedures governing\u00a0rehabilitation and closure\u00a0of extractive projects been adhered to?", 
+            "value": "1.3.6a"
         }, 
         {
-            "label": "069: Are extractive companies required to prepare environmental mitigation management plans prior to development?", 
-            "value": "069"
+            "label": "1.4.1a: Are there rules governing fiscal transfers between the government and the SOE?", 
+            "value": "1.4.1a"
         }, 
         {
-            "label": "070: Is there a requirement for environmental mitigation management plans to be publicly disclosed?", 
-            "value": "070"
+            "label": "1.4.2a: Does the government publicly disclose how much revenue it receives from the SOE?", 
+            "value": "1.4.2a"
         }, 
         {
-            "label": "071: From 2015 onwards, have environmental mitigation management plans been publicly disclosed?", 
-            "value": "071"
+            "label": "1.4.2b: Does the SOE publicly disclose how much revenue it transfers to the government?", 
+            "value": "1.4.2b"
         }, 
         {
-            "label": "072: Do rules require the government to set penalties (i.e. fines, license suspension or license revocation) for non-compliance\u00a0with environmental mitigation management plans?", 
-            "value": "072"
+            "label": "1.4.3a: Is the SOE required to publicly disclose annual reports containing information on its finances and operations?", 
+            "value": "1.4.3a"
         }, 
         {
-            "label": "073: Are there rules governing compensation\u00a0to landowners or land users when project development interferes with their access to or use of land?", 
-            "value": "073"
+            "label": "1.4.5b: Has the SOE publicly disclosed annual reports on its finances and operations?", 
+            "value": "1.4.5b"
         }, 
         {
-            "label": "075: Are there specific procedures governing the\u00a0resettlement\u00a0of land users when project development interferes with their access to or use of land?", 
-            "value": "075"
+            "label": "1.4.5c: Does the SOE's most recent public annual report include\u00a0a balance sheet statement?", 
+            "value": "1.4.5c"
         }, 
         {
-            "label": "077: Are there rules governing rehabilitation and closure of extractive projects?", 
-            "value": "077"
+            "label": "1.4.5d: Does the SOE's most recent public annual report include\u00a0a cash flow statement?", 
+            "value": "1.4.5d"
         }, 
         {
-            "label": "078: From 2015 onwards, have the procedures governing\u00a0rehabilitation and closure\u00a0of extractive projects been adhered to?", 
-            "value": "078"
+            "label": "1.4.5e: Does the SOE's most recent public annual report include\u00a0an income statement?", 
+            "value": "1.4.5e"
         }, 
         {
-            "label": "079: What proportion of equity shares does the government own in extractive companies?", 
-            "value": "079"
+            "label": "1.4.9a: Does the SOE publicly disclose\u00a0its participation in joint ventures?", 
+            "value": "1.4.9a"
         }, 
         {
-            "label": "080: What is the name of the largest company in which the government has a controlling share (i.e. an SOE)?", 
-            "value": "080"
+            "label": "1.4.9b: Does the SOE publicly disclose its\u00a0levels of ownership in joint ventures?", 
+            "value": "1.4.9b"
         }, 
         {
-            "label": "082: Are there rules governing fiscal transfers between the government and the SOE?", 
-            "value": "082"
+            "label": "1.4.9c: Does the SOE publicly disclose the\u00a0costs and revenues deriving from its participation in joint ventures?", 
+            "value": "1.4.9c"
         }, 
         {
-            "label": "084: Does the government publicly disclose how much revenue it receives from the SOE?", 
-            "value": "084"
+            "label": "1.4.9d: Does the SOE publicly disclose\u00a0a list of its subsidiaries?", 
+            "value": "1.4.9d"
         }, 
         {
-            "label": "085: Does the SOE publicly disclose how much revenue it transfers to the government?", 
-            "value": "085"
+            "label": "1.4.9e: Does the SOE publicly disclose the\u00a0costs and revenues deriving from its subsidiaries?", 
+            "value": "1.4.9e"
         }, 
         {
-            "label": "086: Is the SOE required to publicly disclose annual reports containing information on its finances and operations?", 
-            "value": "086"
+            "label": "1.4.6a: Does the SOE publicly disclose its\u00a0aggregate production volume?", 
+            "value": "1.4.6a"
         }, 
         {
-            "label": "087: Has the SOE publicly disclosed annual reports on its finances and operations?", 
-            "value": "087"
+            "label": "1.4.6b: Does the SOE publicly disclose its\u00a0aggregate sales volume?", 
+            "value": "1.4.6b"
         }, 
         {
-            "label": "088: Does the SOE's most recent public annual report include\u00a0a balance sheet statement?", 
-            "value": "088"
+            "label": "1.4.3b: Do rules require a periodic audit of the SOE's financial statements by an external body?", 
+            "value": "1.4.3b"
         }, 
         {
-            "label": "089: Does the SOE's most recent public annual report include\u00a0a cash flow statement?", 
-            "value": "089"
+            "label": "1.4.5a: Did an external body audit the SOE's annual financial statements over the most recently completed audit timeframe?", 
+            "value": "1.4.5a"
         }, 
         {
-            "label": "090: Does the SOE's most recent public annual report include\u00a0an income statement?", 
-            "value": "090"
+            "label": "1.4.4a: From 2015 onwards, did the SOE engage in non-commercial activities (e.g. payments for social services, public infrastructure, fuel subsidies, national debt servicing)?", 
+            "value": "1.4.4a"
         }, 
         {
-            "label": "091: Does the SOE publicly disclose\u00a0its participation in joint ventures?", 
-            "value": "091"
+            "label": "1.4.4b: Has the SOE publicly disclosed the amount spent on non-commercial activities?", 
+            "value": "1.4.4b"
         }, 
         {
-            "label": "092: Does the SOE publicly disclose its\u00a0levels of ownership in joint ventures?", 
-            "value": "092"
+            "label": "1.4.7a: Are there rules that govern how the SOE should select the buyers of its production?", 
+            "value": "1.4.7a"
         }, 
         {
-            "label": "093: Does the SOE publicly disclose the\u00a0costs and revenues deriving from its participation in joint ventures?", 
-            "value": "093"
+            "label": "1.4.7b: Are there rules that determine the prices at which the SOE should sell its production?", 
+            "value": "1.4.7b"
         }, 
         {
-            "label": "094: Does the SOE publicly disclose\u00a0a list of its subsidiaries?", 
-            "value": "094"
+            "label": "1.4.7c: Are there rules that govern how the proceeds from the sale of the SOE's production should be transferred to the government?", 
+            "value": "1.4.7c"
         }, 
         {
-            "label": "095: Does the SOE publicly disclose the\u00a0costs and revenues deriving from its subsidiaries?", 
-            "value": "095"
+            "label": "1.4.7d: Are there rules that require the SOE or government to publicly disclose information on the sale of production by the SOE?", 
+            "value": "1.4.7d"
         }, 
         {
-            "label": "096: Does the SOE publicly disclose its\u00a0aggregate production volume?", 
-            "value": "096"
+            "label": "1.4.8a: Does the SOE or government publicly disclose the volume of production sold by the SOE? ", 
+            "value": "1.4.8a"
         }, 
         {
-            "label": "097: Does the SOE publicly disclose its\u00a0aggregate sales volume?", 
-            "value": "097"
+            "label": "1.4.8b: Does the SOE or government publicly disclose the value of the production sold by the SOE?", 
+            "value": "1.4.8b"
         }, 
         {
-            "label": "098: Do rules require a periodic audit of the SOE's financial statements by an external body?", 
-            "value": "098"
+            "label": "1.4.8c: Does the SOE or government publicly disclose the date of the production sales executed by the SOE? ", 
+            "value": "1.4.8c"
         }, 
         {
-            "label": "099: Did an external body audit the SOE's annual financial statements over the most recently completed audit timeframe?", 
-            "value": "099"
+            "label": "1.4.8d: Does the SOE or government publicly disclose the names of the companies that bought the production sold by the SOE?", 
+            "value": "1.4.8d"
         }, 
         {
-            "label": "100: From 2015 onwards, did the SOE engage in non-operational activities (e.g. payments for social services, public infrastructure, fuel subsidies, national debt servicing)?", 
-            "value": "100"
+            "label": "1.4.10b: Is the majority of the SOE's board of directors independent of the government (i.e. at least half of all board members do not hold positions in the current central government)?", 
+            "value": "1.4.10b"
         }, 
         {
-            "label": "101: Has the SOE publicly disclosed the amount spent on non-operational activities?", 
-            "value": "101"
+            "label": "1.4.10a: Does the SOE have a publicly available code of conduct?", 
+            "value": "1.4.10a"
         }, 
         {
-            "label": "102: Does the SOE receive a production share or in-kind payments from extractive companies?", 
-            "value": "102"
+            "label": "1.4.3c: Is the SOE required to submit annual reports to the legislature on its commercial, non-commercial (i.e. regulatory) and non-operational activities (i.e. activities not related to resource extraction)?", 
+            "value": "1.4.3c"
         }, 
         {
-            "label": "105: Are there rules that govern how the SOE should select the buyers of its production?", 
-            "value": "105"
+            "label": "2.1.2a: Does the country have a numerical\u00a0fiscal rule?", 
+            "value": "2.1.2a"
         }, 
         {
-            "label": "106: Are there rules that determine the prices at which the SOE should sell its production?", 
-            "value": "106"
+            "label": "2.1.3a: Over the most recently completed fiscal year, did the government adhere to the numerical fiscal rule?", 
+            "value": "2.1.3a"
         }, 
         {
-            "label": "107: Are there rules that govern how the proceeds from the sale of the SOE's production should be transferred to the government?", 
-            "value": "107"
+            "label": "2.1.2b: Do rules require that an external body periodically monitor the government's\u00a0adherence to the numerical fiscal rule?", 
+            "value": "2.1.2b"
         }, 
         {
-            "label": "109: Are there rules that require the SOE or government to publicly disclose information on the sale of production by the SOE?", 
-            "value": "109"
+            "label": "2.1.3b: Was the government's adherence to the fiscal rule externally monitored over the most recently completed audit timeframe?", 
+            "value": "2.1.3b"
         }, 
         {
-            "label": "110: Does the SOE or government publicly disclose the volume of production sold by the SOE? ", 
-            "value": "110"
+            "label": "2.1.4a: Does the government publicly disclose projections of extractive resource revenues?", 
+            "value": "2.1.4a"
         }, 
         {
-            "label": "111: Does the SOE or government publicly disclose the value of the production sold by the SOE?", 
-            "value": "111"
+            "label": "2.1.4b: Has the government publicly disclosed a national budget that has been enacted for the current fiscal year?", 
+            "value": "2.1.4b"
         }, 
         {
-            "label": "112: Does the SOE or government publicly disclose the date of the production sales executed by the SOE? ", 
-            "value": "112"
+            "label": "2.1.4d: For the most recently completed fiscal year, did the government publicly disclose the total resource revenue received?", 
+            "value": "2.1.4d"
         }, 
         {
-            "label": "113: Does the SOE or government publicly disclose the names of the companies that bought the production sold by the SOE?", 
-            "value": "113"
+            "label": "2.1.4c: For the most recently completed fiscal year, did the government publicly disclose total government expenditures?", 
+            "value": "2.1.4c"
         }, 
         {
-            "label": "114: Is the majority of the SOE's board of directors independent of the government (i.e. at least half of all board members do not hold positions in the current central government)?", 
-            "value": "114"
+            "label": "2.1.5a: Does the government publicly disclose the level of national debt?", 
+            "value": "2.1.5a"
         }, 
         {
-            "label": "115: Does the SOE have a publicly available code of conduct?", 
-            "value": "115"
+            "label": "2.1.5b: Is the most recent publicly available information on the national debt\u00a0disaggregated by currency denomination (i.e. foreign or domestic)?", 
+            "value": "2.1.5b"
         }, 
         {
-            "label": "116: Is the SOE required to submit annual reports to the legislature on its commercial, non-commercial (i.e. regulatory) and non-operational activities (i.e. activities not related to resource extraction)?", 
-            "value": "116"
+            "label": "2.2.1a: Do rules specify which subnational agencies receive the extractive resource revenues transferred from the central government?", 
+            "value": "2.2.1a"
         }, 
         {
-            "label": "117: Does the country have a numerical\u00a0fiscal rule?", 
-            "value": "117"
+            "label": "2.2.2a: Do rules specify a formula governing the transfer of extractive resource revenues between the central government and subnational governments?", 
+            "value": "2.2.2a"
         }, 
         {
-            "label": "118: Over the most recently completed fiscal year, did the government adhere to the numerical fiscal rule?", 
-            "value": "118"
+            "label": "2.2.2b: If there is a formula governing the transfer of extractive resource revenue between the central government and subnational governments, does this formula specify the amount of revenue received by each subnational government?", 
+            "value": "2.2.2b"
         }, 
         {
-            "label": "119: Do rules require that an external body periodically monitor the government's\u00a0adherence to the numerical fiscal rule?", 
-            "value": "119"
+            "label": "2.2.3a: From 2015 onwards, did the central government disclose the amount of revenues transferred to subnational governments?", 
+            "value": "2.2.3a"
         }, 
         {
-            "label": "120: Was the government's adherence to the fiscal rule externally monitored over the most recently completed audit timeframe?", 
-            "value": "120"
+            "label": "2.2.3b: How up-to-date is the information publicly disclosed by the central government on the amount of revenues transferred to subnational governments?", 
+            "value": "2.2.3b"
         }, 
         {
-            "label": "121: Does the government publicly disclose projections of extractive resource revenues?", 
-            "value": "121"
+            "label": "2.2.3c: From 2015 onwards, has the central government publicly disclosed the amount of revenue transferred by revenue stream?", 
+            "value": "2.2.3c"
         }, 
         {
-            "label": "122: Has the government publicly disclosed a national budget that has been enacted for the current fiscal year?", 
-            "value": "122"
+            "label": "2.2.4a: Do rules require that an external body periodically audit the transfers of extractive resource revenues to subnational governments?", 
+            "value": "2.2.4a"
         }, 
         {
-            "label": "124: For the most recently completed fiscal year, did the government publicly disclose the total resource revenue received?", 
-            "value": "124"
+            "label": "2.2.5a: Were transfers of extractive resource revenues to subnational governments externally audited over the most recently completed audit timeframe?", 
+            "value": "2.2.5a"
         }, 
         {
-            "label": "125: For the most recently completed fiscal year, did the government publicly disclose total government expenditures?", 
-            "value": "125"
+            "label": "2.3.1a: Are there numeric rules governing the size of withdrawals from the sovereign wealth fund?", 
+            "value": "2.3.1a"
         }, 
         {
-            "label": "126: Does the government publicly disclose the level of national debt?", 
-            "value": "126"
+            "label": "2.3.2c: From 2015 onwards, has the government adhered to the numeric rules governing the size of withdrawals from sovereign wealth funds?", 
+            "value": "2.3.2c"
         }, 
         {
-            "label": "127: Is the most recent publicly available information on the national debt\u00a0disaggregated by currency denomination (i.e. foreign or domestic)?", 
-            "value": "127"
+            "label": "2.3.1b: Do rules require that withdrawals and spending from the sovereign wealth fund pass through the national budget?", 
+            "value": "2.3.1b"
         }, 
         {
-            "label": "128: Does the central government transfer extractive resource revenues to subnational governments?", 
-            "value": "128"
+            "label": "2.3.4d: From 2015 onwards, have withdrawals and spending from the sovereign wealth fund actually passed through the national budget?", 
+            "value": "2.3.4d"
         }, 
         {
-            "label": "129: Are there specific rules governing the transfer of extractive resource revenues (i.e. are these rules distinct from those governing other types of transfers)?", 
-            "value": "129"
+            "label": "2.3.1c: Are there numeric rules governing the size of deposits into the sovereign wealth fund?", 
+            "value": "2.3.1c"
         }, 
         {
-            "label": "130: Do rules specify that subnational governments of producing areas should receive a higher share of extractive resource revenues than those of non-producing areas?", 
-            "value": "130"
+            "label": "2.3.2d: From 2015 onwards, has the government adhered to the numeric rules governing the size of deposits into the sovereign wealth fund?", 
+            "value": "2.3.2d"
         }, 
         {
-            "label": "132: Do rules specify which subnational agencies receive the extractive resource revenues transferred from the central government?", 
-            "value": "132"
+            "label": "2.3.3a: Is the sovereign wealth fund prohibited from investing in domestic assets without budgetary approval?", 
+            "value": "2.3.3a"
         }, 
         {
-            "label": "133: Do rules specify a formula governing the transfer of extractive resource revenues between the central government and subnational governments?", 
-            "value": "133"
+            "label": "2.3.3b: Is the sovereign wealth fund prohibited from investing in certain asset classes or investment types?", 
+            "value": "2.3.3b"
         }, 
         {
-            "label": "134: If there is a formula governing the transfer of extractive resource revenue between the central government and subnational governments, does this formula specify the amount of revenue received by each subnational government?", 
-            "value": "134"
+            "label": "2.3.4e: From 2015 onwards, has the sovereign wealth fund adhered to rules limiting asset class or investment types?", 
+            "value": "2.3.4e"
         }, 
         {
-            "label": "135: From 2015 onwards, did the central government disclose the amount of revenues transferred to subnational governments?", 
-            "value": "135"
+            "label": "2.3.5a: Is the sovereign wealth fund required to produce annual financial reports?", 
+            "value": "2.3.5a"
         }, 
         {
-            "label": "136: How up-to-date is the information publicly disclosed by the central government on the amount of revenues transferred to subnational governments?", 
-            "value": "136"
+            "label": "2.3.5b: Is the sovereign wealth fund required to publicly disclose these annual financial reports?", 
+            "value": "2.3.5b"
         }, 
         {
-            "label": "138: From 2015 onwards, has the central government publicly disclosed the amount of revenue transferred by revenue stream?", 
-            "value": "138"
+            "label": "2.3.6a: Does the sovereign wealth fund publicly disclose its annual financial reports?", 
+            "value": "2.3.6a"
         }, 
         {
-            "label": "142: Do rules require that an external body periodically audit the transfers of extractive resource revenues to subnational governments?", 
-            "value": "142"
+            "label": "2.3.2a: Does the sovereign wealth fund's most recent publicly available annual financial report specify\u00a0the size of the fund?", 
+            "value": "2.3.2a"
         }, 
         {
-            "label": "143: Were transfers of extractive resource revenues to subnational governments externally audited over the most recently completed audit timeframe?", 
-            "value": "143"
+            "label": "2.3.2b: Does the sovereign wealth fund's most recent publicly available annual financial report disclose?", 
+            "value": "2.3.2b"
         }, 
         {
-            "label": "144: Does the country have a natural resource fund which is funded by extractive resource revenues?", 
-            "value": "144"
+            "label": "2.3.4a: Does the sovereign wealth fund's most recent publicly available annual financial report specify\u00a0the rate of return made on its investments?", 
+            "value": "2.3.4a"
         }, 
         {
-            "label": "145: If there are multiple natural resource funds, which is the largest?", 
-            "value": "145"
+            "label": "2.3.4b: Does the sovereign wealth fund's most recent publicly available annual financial report include a list of assets held?", 
+            "value": "2.3.4b"
         }, 
         {
-            "label": "146: Are there numeric rules governing the size of withdrawals from the sovereign wealth fund?", 
-            "value": "146"
+            "label": "2.3.4c: Does the sovereign wealth fund's most recent publicly available annual financial report specify the fund's\u00a0asset allocation by asset class?", 
+            "value": "2.3.4c"
         }, 
         {
-            "label": "147: From 2015 onwards, has the government adhered to the numeric rules governing the size of withdrawals from sovereign wealth funds?", 
-            "value": "147"
+            "label": "2.3.5c: Do rules require an external body to periodically audit the sovereign wealth fund's annual financial reports?", 
+            "value": "2.3.5c"
         }, 
         {
-            "label": "148: Do rules require that withdrawals and spending from the sovereign wealth fund pass through the national budget?", 
-            "value": "148"
+            "label": "2.3.6b: Were these annual financial reports audited over the most recently completed audit timeframe?", 
+            "value": "2.3.6b"
         }, 
         {
-            "label": "149: From 2015 onwards, have withdrawals and spending from the sovereign wealth fund actually passed through the national budget?", 
-            "value": "149"
+            "label": "2.3.5d: Is the legislature required to review the sovereign wealth fund's annual financial reports?", 
+            "value": "2.3.5d"
         }, 
         {
-            "label": "150: Are there numeric rules governing the size of deposits into the sovereign wealth fund?", 
-            "value": "150"
+            "label": "2.3.6c: From 2015 onwards, has the legislature reviewed the sovereign wealth fund's annual financial reports?", 
+            "value": "2.3.6c"
         }, 
         {
-            "label": "151: From 2015 onwards, has the government adhered to the numeric rules governing the size of deposits into the sovereign wealth fund?", 
-            "value": "151"
-        }, 
-        {
-            "label": "154: Is the sovereign wealth fund prohibited from investing in domestic assets without budgetary approval?", 
-            "value": "154"
-        }, 
-        {
-            "label": "155: Is the sovereign wealth fund prohibited from investing in certain asset classes or investment types?", 
-            "value": "155"
-        }, 
-        {
-            "label": "156: From 2015 onwards, has the sovereign wealth fund adhered to rules limiting asset class or investment types?", 
-            "value": "156"
-        }, 
-        {
-            "label": "157: Is the sovereign wealth fund required to produce annual financial reports?", 
-            "value": "157"
-        }, 
-        {
-            "label": "158: Is the sovereign wealth fund required to publicly disclose these annual financial reports?", 
-            "value": "158"
-        }, 
-        {
-            "label": "159: Does the sovereign wealth fund publicly disclose its annual financial reports?", 
-            "value": "159"
-        }, 
-        {
-            "label": "160: Does the sovereign wealth fund's most recent publicly available annual financial report specify\u00a0the size of the fund?", 
-            "value": "160"
-        }, 
-        {
-            "label": "161: Does the sovereign wealth fund's most recent publicly available annual financial report disclose?", 
-            "value": "161"
-        }, 
-        {
-            "label": "162: Does the sovereign wealth fund's most recent publicly available annual financial report specify\u00a0the rate of return made on its investments?", 
-            "value": "162"
-        }, 
-        {
-            "label": "163: Does the sovereign wealth fund's most recent publicly available annual financial report include a list of assets held?", 
-            "value": "163"
-        }, 
-        {
-            "label": "164: Does the sovereign wealth fund's most recent publicly available annual financial report specify the fund's\u00a0asset allocation by asset class?", 
-            "value": "164"
-        }, 
-        {
-            "label": "165: Do rules require an external body to periodically audit the sovereign wealth fund's annual financial reports?", 
-            "value": "165"
-        }, 
-        {
-            "label": "166: Were these annual financial reports audited over the most recently completed audit timeframe?", 
-            "value": "166"
-        }, 
-        {
-            "label": "167: Is the legislature required to review the sovereign wealth fund's annual financial reports?", 
-            "value": "167"
-        }, 
-        {
-            "label": "168: From 2015 onwards, has the legislature reviewed the sovereign wealth fund's annual financial reports?", 
-            "value": "168"
-        }, 
-        {
-            "label": "169: Does a government agency maintain a publicly available registry of rights and license details (i.e. a cadastre)?", 
-            "value": "169"
+            "label": "1.1.2a: Does a government agency maintain a publicly available registry of rights and license details (i.e. a cadaster)?", 
+            "value": "1.1.2a"
         }
     ]
 }

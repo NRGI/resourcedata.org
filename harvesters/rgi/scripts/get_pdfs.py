@@ -18,13 +18,16 @@ complete_metadata = {}
 question_categories = {}
 question_lp = {}
 question_scoring = {}
+question_label = {}
 #Read output of import_questions.py
 with open('./questions_out.csv', 'r') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        question_categories[row['Q'].zfill(3)] = row['Subcomponent']
-        question_lp[row['Q'].zfill(3)] = row['LawOrPractice']
-        question_scoring[row['Q'].zfill(3)] = row['Scoring']
+        question_categories[row['QuestionLabel']] = row['Subcomponent']
+        question_lp[row['QuestionLabel']] = row['LawOrPractice']
+        question_scoring[row['QuestionLabel']] = row['Scoring']
+        #Store this one this way to do the mapping RC API -> new question refs
+        question_label[row['Q'].zfill(3)] = row['QuestionLabel']
 
 with open('./assessments.csv', 'r') as f:
     assessments = [l.strip().replace('"','').replace('"','') for l in f.readlines()]
@@ -57,12 +60,12 @@ for assessment in assessments:
 
             law_practice_question = set()
             scoring_question = set()
-                
-            questions_raw = [q[-3:] for q in d['answers']]
+            #We now already detect a missing question here but we want to highlight it below; keep it around with the RC ref
+            questions_raw = [question_label.get(l, l) for l in [q[-3:] for q in d['answers']]]
             questions = set(questions_raw)
             removals = []
             for question in questions:
-                if question not in question_categories:
+                if question not in question_label.values():
                     print "Warning, question " + question + " not in list of valid questions"
                     all_removals.add(question)
                     removals.append(question)
@@ -90,7 +93,6 @@ for assessment in assessments:
                 
             law_practice_question = list(law_practice_question)
             law_practice_question.sort()
-
             new_dataset = {
                 'type': 'document',
                 'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
@@ -104,7 +106,7 @@ for assessment in assessments:
                 'country': [iso3[assessment[0:3]],],
                 'country_iso3': [assessment[0:3],],
                 'year': [assessment[4:8],],
-                'url': API_ENDPOINT + assessment,
+                'url': d.get('source', API_ENDPOINT + assessment),
                 'category': category,
                 'law_practice_question': law_practice_question, #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
                 'scoring_question': list(scoring_question),
