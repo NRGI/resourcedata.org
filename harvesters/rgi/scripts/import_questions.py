@@ -4,7 +4,7 @@ import json
 questions = []
 cset = set()
 
-print("The list of sub-components (categories in CKAN) will be shown for cross-checking")
+print("The list of sub-components will be shown for cross-checking")
 
 with open("questions_new_with_mapping.csv", "rb") as qfile:
     csvreader = csv.reader(qfile)

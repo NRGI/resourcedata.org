@@ -15,7 +15,7 @@ iso3 = {
 }
 
 complete_metadata = {}
-question_categories = {}
+question_subcomponents = {}
 question_lp = {}
 question_scoring = {}
 question_label = {}
@@ -23,7 +23,7 @@ question_label = {}
 with open('./questions_out.csv', 'r') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        question_categories[row['QuestionLabel']] = row['Subcomponent']
+        question_subcomponents[row['QuestionLabel']] = row['Subcomponent']
         question_lp[row['QuestionLabel']] = row['LawOrPractice']
         question_scoring[row['QuestionLabel']] = row['Scoring']
         #Store this one this way to do the mapping RC API -> new question refs
@@ -55,7 +55,7 @@ for assessment in assessments:
         complete_metadata[assessment].append(d)
         if (d['mime_type'] == 'application/pdf'):
             pdfs += 1
-            category = ''
+            subcomponent = ''
             questions = []
 
             law_practice_question = set()
@@ -76,7 +76,7 @@ for assessment in assessments:
                 dropped_pdfs += 1
                 continue
             questions = list(questions)
-            category = question_categories[questions[0]]
+            subcomponent = question_subcomponents[questions[0]]
             for question in questions:
                 #Neither is an OK flag for us in the question list but doesn't fit the CKAN model so well
                 if question_lp[question] != "neither":
@@ -92,7 +92,6 @@ for assessment in assessments:
                 assessment_type = "Unknown"
                 
             law_practice_question = list(law_practice_question)
-            law_practice_question.sort()
             new_dataset = {
                 'type': 'document',
                 'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
@@ -107,8 +106,8 @@ for assessment in assessments:
                 'country_iso3': [assessment[0:3],],
                 'year': [assessment[4:8],],
                 'url': d.get('source', API_ENDPOINT + assessment),
-                'category': category,
-                'law_practice_question': law_practice_question, #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
+                'subcomponent': subcomponent,
+                'law_practice_question': law_practice_question,
                 'scoring_question': list(scoring_question),
                 'question': questions,
                 'extras': [
