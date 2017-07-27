@@ -85,7 +85,12 @@ def update_dataset(data, existing):
     need_to_update = False
     #Test each key of data vs what's in existing; any differences, do update
     for key in data.keys():
-        if key in existing and data[key] != existing[key] and key != "owner_org": #owner_org gets returned as uuid, we have name... just don't bother
+        #print key
+        #print data[key]
+        #if key in existing: print existing[key]
+        #else: print 'NONE'
+        #owner_org gets returned as uuid, we have name... just don't bother; other things don't make it into CKAN, assume other things are new and should be added
+        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company") and (key not in existing or data[key] != existing[key]):
             need_to_update = True
             break
     
@@ -93,7 +98,8 @@ def update_dataset(data, existing):
         print "DATASET " + data['name'] + " NEEDS UPDATE, UPDATING"
         #Patch so that we don't lose resources
         data['id'] = existing['id'] #Patch needs ID
-        r = api_post("package_patch", data=data).json()
+        #TEMPORARY! Do delete resources to prevent empty resources by doing package_update
+        r = api_post("package_update", data=data).json() #instead of package_patch
         print "PATCH DATASET RESULT:"
         print r
         if ('error' in r):
@@ -110,12 +116,24 @@ def upsert_dataset(data):
     jsondata = r.json()
     already_exists = jsondata.get("success")
     if already_exists:
+        print "DATA FROM CKAN (EXISTING):"
+        print jsondata['result']
         return update_dataset(data, jsondata['result'])
     else:
         return create_dataset(data)
 
 
 def create_resource(dataset_name, resource_path, resource_name):
+    line_count = 0
+    with open('./datasets.json', 'r') as testf:
+        for line in testf:
+            line_count += 1
+            if line_count > 2:
+                break
+    if line_count == 2:
+        print "NOT UPLOADING RESOURCE (EMPTY)"
+        return
+        
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
@@ -178,20 +196,28 @@ for d in datasets:
     print "DATA AFTER UPDATE CHECK:"
     
     if not new_dataset:
+        company_done = False
+        government_done = False
         for resource in dataset['resources']:
             print resource
             if resource['name'] == d["resource_title_company"]:
+                company_done = True
                 equal = compare(resource['url'], d['filename_company'])
                 if equal:
                     print "RESOURCE UNCHANGED, NOT UPLOADING RESOURCE"
                 else:
                     update_resource(resource['id'], d['filename_company'], d["resource_title_company"])
             elif resource['name'] == d["resource_title_government"]:
+                government_done = True
                 equal = compare(resource['url'], d['filename_government'])
                 if equal:
                     print "RESOURCE UNCHANGED, NOT UPLOADING RESOURCE"
                 else:
                     update_resource(resource['id'], d['filename_government'], d["resource_title_government"])
+        if not company_done:
+            create_resource(d['name'], d['filename_company'], d["resource_title_company"])
+        if not government_done:
+            create_resource(d['name'], d['filename_government'], d["resource_title_government"])
     else:
         create_resource(d['name'], d['filename_company'], d["resource_title_company"])
         create_resource(d['name'], d['filename_government'], d["resource_title_government"])

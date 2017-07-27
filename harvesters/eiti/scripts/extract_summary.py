@@ -7,7 +7,13 @@ import unicodedata
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
 
 filesAlreadyWrittenTo = set([])
-datasets = []
+datasets = {}
+tracking = []
+allyears = set()
+allthecountries = set()
+allthecountries_list = []
+allthecountries_iso = set()
+allthecountries_iso_list = []
 
 # 'caches'
 organisations = {}
@@ -57,29 +63,36 @@ def write(meta, data, company_or_govt):
     resource_title_company = "Company payments - %s" % countryName
     resource_title_government = "Revenues received by government agencies - %s" % countryName
 
-    dataset = {
-        "title": dataset_title,
-        "name": dataset_name,
-        "notes": general_notes,
-        "owner_org": 'eiti',
-        "country_iso3": meta['country']['iso3'],
-        "country": countryName,
-        "license_id": "cc-by",
-        "maintainer": "Anders Pedersen",
-        "maintainer_email": "apedersen@resourcegovernance.org",
-        "category": "Accountability and Transparency",
-        "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
-        "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
-        "resource_title_company": resource_title_company,
-        "resource_title_government": resource_title_government
-        
-    }
-
-    if not (dataset in datasets):
-        datasets.append(dataset)
-
-        with open('./datasets.json', 'w') as f:
-            json.dump(datasets, f)
+    if not (dataset_name in tracking):
+        dataset = {
+            "title": dataset_title,
+            "name": dataset_name,
+            "year": [meta['label'][-4:]],
+            "notes": general_notes,
+            "owner_org": 'eiti',
+            "country_iso3": meta['country']['iso3'],
+            "country": countryName,
+            "license_id": "cc-by",
+            "maintainer": "Anders Pedersen",
+            "maintainer_email": "apedersen@resourcegovernance.org",
+            "category": "Accountability and Transparency",
+            "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
+            "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
+            "resource_title_company": resource_title_company,
+            "resource_title_government": resource_title_government
+        }
+        datasets[dataset_name] = dataset
+        tracking.append(dataset_name)
+        allyears.add(dataset['year'][0])
+    else:
+        yearsofar = datasets[dataset_name]['year']
+        ysf = set(yearsofar)
+        theyear = meta['label'][-4:]
+        ysf.add(theyear)
+        allyears.add(theyear)
+        yearsofar = list(ysf)
+        yearsofar.sort()
+        datasets[dataset_name]['year'] = yearsofar
 
 def sanitizeCountryName(countryName):
     normalizedCountryName = unicodedata.normalize('NFKD', countryName.lower())
@@ -181,13 +194,17 @@ os.system("mkdir -p ./out/government")
 sum_data = getSummaryData()
 total_len = len(sum_data)
 i = 0
-for d in sorted(sum_data, key=lambda d: d['label']):
+for d in sorted(sum_data, key=lambda d: d['label'])[3:8]:
     i += 1
 
     out_government = []
     out_company = []
 
     country = d['country']['label']
+    
+    allthecountries.add(country)
+    allthecountries_iso.add(d['country']['iso3'])
+    
     year = d['label'][-4:]
 
     if (d['revenue_company'] or d['revenue_government']):
@@ -224,13 +241,21 @@ for d in sorted(sum_data, key=lambda d: d['label']):
 os.system("cat ./out/company/* | awk '!seen[$0]++' > ./out/all_unique_company.csv")
 os.system("cat ./out/government/* | awk '!seen[$0]++' > ./out/all_unique_government.csv")
 
-with open('./datasets.json', 'r+') as f:
-    datasets = json.load(f)
-    f.seek(0)
-    datasets.append({
+with open('./datasets.json', 'w') as f:
+    alltheyears = list(allyears)
+    alltheyears.sort()
+    allthecountries_list = list(allthecountries)
+    allthecountries_list.sort()
+    allthecountries_iso_list = list(allthecountries_iso)
+    allthecountries_iso_list.sort()
+    
+    datasets['eiti-complete-summary-table'] = {
         "title": "EITI Complete Summary Data Table",
         "name": "eiti-complete-summary-table",
         "notes": general_notes,
+        "year": alltheyears,
+        "country": allthecountries_list,
+        "country_iso3": allthecountries_iso_list,
         "owner_org": 'eiti',
         "license_id": "cc-by",
         "category": "Accountability and Transparency",
@@ -239,7 +264,6 @@ with open('./datasets.json', 'r+') as f:
         "filename_government": './out/all_unique_government.csv',
         "resource_title_company": "Company payments",
         "resource_title_government": "Revenues received by government agencies"
-    })
-    json.dump(datasets, f)
-    f.truncate()
+    }
+    json.dump(datasets.values(), f)
 
