@@ -194,7 +194,7 @@ os.system("mkdir -p ./out/government")
 sum_data = getSummaryData()
 total_len = len(sum_data)
 i = 0
-for d in sorted(sum_data, key=lambda d: d['label'])[3:8]:
+for d in sorted(sum_data, key=lambda d: d['label']):
     i += 1
 
     out_government = []
