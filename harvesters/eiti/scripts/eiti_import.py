@@ -138,7 +138,7 @@ def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
-    print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO DATASET " + dataset_name
+    print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
 
     r = requests.post('%s/api/action/resource_update' % (API_HOST),
                       data={
