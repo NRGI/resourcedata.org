@@ -35,9 +35,9 @@ def writeCsv(name, company_or_govt, data):
         print 'first time - Setting header'
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         if company_or_govt == 'company':
-            data.insert(0, 'country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+            data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
         else:
-            data.insert(0, 'country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+            data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
         filesAlreadyWrittenTo.add(filename)
         mode = 'w'
         
@@ -103,6 +103,8 @@ def getSummaryData():
 def getLineForRevenue(d, company, company_or_govt):
     countryn = d['country']['label']
     ciso3 = d['country']['iso3']
+    created = d['created']
+    changed = d['changed']
 
     gid = company['gfs_code_id']
 
@@ -146,6 +148,8 @@ def getLineForRevenue(d, company, company_or_govt):
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     returnstring = (
+        created + ',' + 
+        changed + ',' + 
         countryn + ',' +  # country
         ciso3 + ',' + # iso3
         year + ',"' +
