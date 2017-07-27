@@ -101,9 +101,9 @@ for assessment in assessments:
                 'maintainer': 'Natural Resource Governance Institute',
                 'maintainer_email': 'index@resourcegovernance.org',
                 'version': '2017 Resource Governance Index',
-                'country': iso3[assessment[0:3]],
-                'country_iso3': assessment[0:3],
-                'year': assessment[4:8],
+                'country': [iso3[assessment[0:3]],],
+                'country_iso3': [assessment[0:3],],
+                'year': [assessment[4:8],],
                 'url': API_ENDPOINT + assessment,
                 'category': category,
                 'law_practice_question': law_practice_question, #Alphabetic - law before practice, see display snippet in CKAN extension, this is important :-)
