@@ -19,8 +19,8 @@ with open("questions_new_with_mapping.csv", "rb") as qfile:
             cset.add(row[2])
         elif row[4] == "INDICATOR":
             currentIndicator = row[2]
-        elif row[4] in ("QUESTION", "NON_SCORING"):
-            if (row[4] == "NON_SCORING"):
+        elif row[4] in ("QUESTION", "NON-SCORING"):
+            if (row[4] == "NON-SCORING"):
                 scoring = "non-scoring"
             else:
                 scoring = "scoring"

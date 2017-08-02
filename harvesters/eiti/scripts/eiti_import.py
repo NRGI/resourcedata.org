@@ -69,8 +69,6 @@ def upsert_org(org):
 
 
 def create_dataset(data):
-    #Switch to facet friendly names at https://github.com/derilinx/ckanext-nrgi-published/blob/master/ckanext/nrgi/schema.json#L766
-    data['country'] = mapcountry(data['country'])
     print "CREATING DATASET " + data['name']
     r = api_post("package_create", data=data)
     jsonified = r.json()
@@ -189,11 +187,16 @@ for d in datasets:
 
     d['url'] = "https://eiti.org/api/v1.0/summary_data"
     if ('country' in d):
-        d['country'] = mapcountry(d['country'])
+        #Switch to facet friendly names in https://github.com/derilinx/ckanext-nrgi-published/blob/master/ckanext/nrgi/schema.json
+        count = 0
+        for country in d['country']:
+            print country
+            print d['country'][count]
+            print mapcountry(country)
+            d['country'][count] = mapcountry(country)
+            count += 1
 
     new_dataset, dataset = upsert_dataset(d)
-    
-    print "DATA AFTER UPDATE CHECK:"
     
     if not new_dataset:
         company_done = False
@@ -222,5 +225,5 @@ for d in datasets:
         create_resource(d['name'], d['filename_company'], d["resource_title_company"])
         create_resource(d['name'], d['filename_government'], d["resource_title_government"])
     
-print "The following countries caused the dataset creation to fail:"
+print "The following or some of the following countries caused the dataset creation to fail:"
 print failed_states

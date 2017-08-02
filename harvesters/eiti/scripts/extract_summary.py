@@ -71,7 +71,7 @@ def write(meta, data, company_or_govt):
             "notes": general_notes,
             "owner_org": 'eiti',
             "country_iso3": meta['country']['iso3'],
-            "country": countryName,
+            "country": [countryName],
             "license_id": "cc-by",
             "maintainer": "Anders Pedersen",
             "maintainer_email": "apedersen@resourcegovernance.org",
