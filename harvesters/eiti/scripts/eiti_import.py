@@ -174,14 +174,7 @@ def compare(remote_file, local_file):
     urllib.urlretrieve(remote_file, "temp.csv")
     return filecmp.cmp("temp.csv", local_file)
 
-upsert_org({u'image_display_url': u'https://eiti.org/sites/all/themes/eiti/logo.svg', u'name': u'eiti', u'title': u'EITI'})
-
-datasets = {}
-
-with open('./datasets.json', 'r') as f:
-    datasets = json.load(f)
-
-for d in datasets:
+def import_dataset(d):
     print "DATA FROM DOWNLOAD:"
     print d
 
@@ -224,6 +217,23 @@ for d in datasets:
     else:
         create_resource(d['name'], d['filename_company'], d["resource_title_company"])
         create_resource(d['name'], d['filename_government'], d["resource_title_government"])
+
+upsert_org({u'image_display_url': u'https://eiti.org/sites/all/themes/eiti/logo.svg', u'name': u'eiti', u'title': u'EITI'})
+
+datasets = {}
+
+with open('./datasets.json', 'r') as f:
+    datasets = json.load(f)
+
+for d in datasets:
+    holdover = None
+    if d['name'] == "eiti-complete-summary-table":
+        holdover = d
+    else:
+        import_dataset(d)
+
+    if holdover:
+        import_dataset(holdover) #Do last to encourage appearing at top
     
 print "The following or some of the following countries caused the dataset creation to fail:"
 print failed_states
