@@ -96,8 +96,7 @@ def update_dataset(data, existing):
         print "DATASET " + data['name'] + " NEEDS UPDATE, UPDATING"
         #Patch so that we don't lose resources
         data['id'] = existing['id'] #Patch needs ID
-        #TEMPORARY! Do delete resources to prevent empty resources by doing package_update
-        r = api_post("package_update", data=data).json() #instead of package_patch
+        r = api_post("package_patch", data=data).json()
         print "PATCH DATASET RESULT:"
         print r
         if ('error' in r):
