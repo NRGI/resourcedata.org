@@ -224,15 +224,16 @@ datasets = {}
 with open('./datasets.json', 'r') as f:
     datasets = json.load(f)
 
+holdover = None
+
 for d in datasets:
-    holdover = None
     if d['name'] == "eiti-complete-summary-table":
         holdover = d
     else:
         import_dataset(d)
 
-    if holdover:
-        import_dataset(holdover) #Do last to encourage appearing at top
+if holdover is not None:
+    import_dataset(holdover) #Do last to encourage appearing at top
     
 print "The following or some of the following countries caused the dataset creation to fail:"
 print failed_states
