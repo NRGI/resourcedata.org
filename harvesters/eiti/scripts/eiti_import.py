@@ -15,7 +15,7 @@ API_KEY = os.environ['API_KEY']
 ckan_names = {
     u'Democratic Republic of Congo': u'Congo, the Democratic Republic of the',
     u'Kyrgyz Republic': u'Kyrgyzstan',
-    u'Republic of the Congo': u'Congo, the Democratic Republic of the',
+    u'Republic of the Congo': u'Congo',
     u'Tanzania': u'Tanzania, United Republic of',
     u'United States of America': u'United States'
 }
