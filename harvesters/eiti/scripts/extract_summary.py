@@ -120,11 +120,15 @@ def getLineForRevenue(d, company, company_or_govt):
     changed = d['changed']
 
     gid = company['gfs_code_id']
-
     if gid not in gfs:
         j = requests.get(API_ENDPOINT + 'gfs_code/' + gid).json()
+        temp_gfs_code = j['data'][0]['code']
+        for i, c in enumerate(temp_gfs_code):
+            if not c.isdigit():
+                j['data'][0]['code'] = j['data'][0]['code'][0:i] + "-" + j['data'][0]['code'][i:]
+                break
         gfs[gid] = j['data'][0]
-
+    
     cid = company['organisation_id']
     companyurl = API_ENDPOINT + 'organisation/' + cid
     if cid not in organisations:
