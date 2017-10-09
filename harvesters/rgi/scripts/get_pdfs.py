@@ -19,6 +19,7 @@ question_subcomponents = {}
 question_lp = {}
 question_scoring = {}
 question_label = {}
+question_precepts = {}
 #Read output of import_questions.py
 with open('./questions_out.csv', 'r') as f:
     reader = csv.DictReader(f)
@@ -28,6 +29,9 @@ with open('./questions_out.csv', 'r') as f:
         question_scoring[row['QuestionLabel']] = row['Scoring']
         #Store this one this way to do the mapping RC API -> new question refs
         question_label[row['Q'].zfill(3)] = row['QuestionLabel']
+        question_precepts[row['QuestionLabel']] = json.loads(row['Precepts'])
+        
+print question_precepts
 
 with open('./assessments.csv', 'r') as f:
     assessments = [l.strip().replace('"','').replace('"','') for l in f.readlines()]
@@ -52,6 +56,9 @@ for assessment in assessments:
     print '%s has %s pdfs' % (assessment, len([d for d in docs if d['mime_type'] == "application/pdf"]))
 
     for d in docs:
+        #Used for analysing what's in the data, should normally be commented out
+        #print d.get('title', "EMPTY") + "\t" + d.get('type', "EMPTY") + "\t" + d.get('year', "EMPTY") + "\t" + d.get('publisher', "EMPTY") + "\t" + d['editors'][0]['first_name'] + " " + d['editors'][0]['last_name'] + "\t" + d['authors'][0]['first_name'] + " " + d['authors'][0]['last_name'] 
+        #continue
         complete_metadata[assessment].append(d)
         if (d['mime_type'] == 'application/pdf'):
             pdfs += 1
@@ -77,11 +84,15 @@ for assessment in assessments:
                 continue
             questions = list(questions)
             subcomponent = question_subcomponents[questions[0]]
+            categories = []
             for question in questions:
                 #Neither is an OK flag for us in the question list but doesn't fit the CKAN model so well
                 if question_lp[question] != "neither":
                     law_practice_question.add(question_lp[question])
                 scoring_question.add(question_scoring[question])
+                categories.extend(question_precepts[question])
+                
+            categories = list(set(categories)) #Take unique values
 
             assessment_type_abbr = assessment[-2:]
             if assessment_type_abbr == "HY":
@@ -92,8 +103,18 @@ for assessment in assessments:
                 assessment_type = "Unknown"
                 
             law_practice_question = list(law_practice_question)
+            year = d.get('year')
+            if year:
+                year = [year,]
+            else:
+                year = []
+            
             new_dataset = {
                 'type': 'document',
+                'document_type': d.get('type', "Unknown").strip().title().replace("_", " "),
+                'publisher': d.get('publisher', "Unknown").strip(),
+                'editor': d['editors'][0]['first_name'] + " " + d['editors'][0]['last_name'].strip(),
+                'author': d['authors'][0]['first_name'] + " " + d['authors'][0]['last_name'].strip(),
                 'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
                 'name': urlify(d['title']),
                 'owner_org': 'rgi',
@@ -104,9 +125,11 @@ for assessment in assessments:
                 'version': '2017 Resource Governance Index',
                 'country': [iso3[assessment[0:3]],],
                 'country_iso3': [assessment[0:3],],
-                'year': [assessment[4:8],],
+                'assessment_year': [assessment[4:8],],
+                'year': year,
                 'url': d.get('source', API_ENDPOINT + assessment),
                 'subcomponent': subcomponent,
+                'category': categories,
                 'law_practice_question': law_practice_question,
                 'scoring_question': list(scoring_question),
                 'question': questions,

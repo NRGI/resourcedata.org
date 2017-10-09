@@ -75,7 +75,7 @@ def write(meta, data, company_or_govt):
             "license_id": "cc-by",
             "maintainer": "Anders Pedersen",
             "maintainer_email": "apedersen@resourcegovernance.org",
-            "category": "Accountability and Transparency",
+            "category": ["Precept 2: Accountability and Transparency"],
             "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
             "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
             "resource_title_company": resource_title_company,

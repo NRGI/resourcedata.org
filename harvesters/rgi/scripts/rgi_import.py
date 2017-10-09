@@ -24,6 +24,7 @@ def api_get(action, data={}):
 
 
 def api_post(action, data={}):
+    print API_HOST+"/api/action/"+action
     req = requests.post(
                 API_HOST+"/api/action/"+action,
                 verify=True,
@@ -62,11 +63,12 @@ def upsert_org(org):
 def create_dataset(data):
     print ("CREATING DATASET " + data['name'])
     r = api_post("package_create", data=data)
+    print r
     print (r.json())
     jsonified = r.json()
     if ('error' in jsonified):
         failed_states.append(data)
-    return data['name']
+    return jsonified
 
 
 def update_dataset(data):
@@ -74,31 +76,29 @@ def update_dataset(data):
     r = api_post("package_update", data=data).json()
     if ('error' in r):
         failed_states.append(data)
-    print (r)
-    return data['name']
+    return r
 
 
 def upsert_dataset(data):
     print ("UPSERTING DATASET " + data['name'])
     r = api_get("package_show", data={'id': data['name']})
-    jsondata = r.json()
-    print (jsondata)
-    already_exists = jsondata.get("success")
+    print(r)
+    try:
+        jsondata = r.json()
+        already_exists = jsondata.get("success")
+    except:
+        already_exists = False
     if already_exists:
-        return update_dataset(data)
+        updated = update_dataset(data)
+        # Workaround https://github.com/ckan/ckan/issues/3560
+        print updated
+        v = api_get("resource_view_list", data={'id': updated['result']['resources'][0]['id']}).json()
+        if len(v['result']) == 0:
+            vn = api_post("resource_view_create", data={"resource_id": updated['result']['resources'][0]['id'], "title": "PDF", "view_type": "pdf_view"})
+        return updated
     else:
         return create_dataset(data)
 
-
-def patch_dataset(data):
-    package_dict = api_get('package_show', {'name_or_id': data.get('name')})
-
-    package_dict = package_dict.json()['result']
-
-    patched = dict(package_dict)
-    patched.update(data)
-    patched['id'] = package_dict['id']
-    return update_dataset(patched)
 
 def sanitize(name):
     #Thanks Vitamin for this
