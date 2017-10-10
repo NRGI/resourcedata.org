@@ -103,11 +103,6 @@ for assessment in assessments:
                 assessment_type = "Unknown"
                 
             law_practice_question = list(law_practice_question)
-            year = d.get('year')
-            if year:
-                year = [year,]
-            else:
-                year = []
             
             new_dataset = {
                 'type': 'document',
@@ -126,7 +121,7 @@ for assessment in assessments:
                 'country': [iso3[assessment[0:3]],],
                 'country_iso3': [assessment[0:3],],
                 'assessment_year': [assessment[4:8],],
-                'year': year,
+                'year': d.get('year'),
                 'url': d.get('source', API_ENDPOINT + assessment),
                 'subcomponent': subcomponent,
                 'category': categories,
