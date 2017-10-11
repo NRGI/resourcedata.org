@@ -49,5 +49,5 @@ After the link to the hosted solr is up, we should rebuild the index, as specifi
 Connect to the CKAN container and run the following:
 ```
 cd /usr/lib/ckan/default
-./bin/paster --plugin=ckan search-index check --config=/etc/ckan/default/ckan.ini
+./bin/paster --plugin=ckan search-index rebuild --config=/etc/ckan/default/ckan.ini
 ```
