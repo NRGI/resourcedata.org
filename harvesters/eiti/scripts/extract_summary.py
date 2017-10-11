@@ -262,7 +262,7 @@ with open('./datasets.json', 'w') as f:
         "country_iso3": allthecountries_iso_list,
         "owner_org": 'eiti',
         "license_id": "cc-by",
-        "category": "Accountability and Transparency",
+        "category": ["Precept 2: Accountability and Transparency"],
         "filename": './out/all_unique.csv',
         "filename_company": './out/all_unique_company.csv',
         "filename_government": './out/all_unique_government.csv',
