@@ -1,0 +1,79 @@
+language: python
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    # Shippable API token used to trigger deploy
+    - secure: F3SP627KC8FBfNkZk6euFMbjuXrNi4pd0lc6G0b8NHXBhec9C8XdAEfMrmbZrUfPI24odzjCDYIoXzdigWRzbAUe3KaClK3nlVYC5wOIZO6uZVUPxqMpB0frsvPw+vUFvoPjfkofldrBg9s3+JEpXsIwW0AJv8/krVFqQbYo+exx8E8V+nHfLeLSSM/BgMtAoY/ZnNy8o6SaVgdhcll90AyYhnNeSz1phIT+oCNqSfZ8jgegN1EFZ361+1IPJrrwnY9cbdvFYCcobNER15VBV2OrRJlXzv5xAQJO8hnyd9P0zaCWs3ENWzteY7S4hYHNrrA/JjteZ6Ht1IyGVj/G2A==
+
+build:
+  ci:
+    # Create eiti harvester image
+    # Pull latest image to be used as cache
+    - docker pull nrgi/resourcedata.org-harvesters:eiti.$BRANCH || echo 'Cache not available'
+
+    # Use the `--cache-from` option to use the latest image in the repo as a cache for this build. Available since Docker 1.13
+    - docker build -t nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT --cache-from nrgi/resourcedata.org-harvesters:eiti.$BRANCH .
+
+    # Create the `latest` tag and force it in case the tag is already there from a previous build
+    - docker tag nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT nrgi/resourcedata.org-harvesters:eiti.$BRANCH
+
+    - docker push nrgi/resourcedata.org-harvesters:eiti.$BRANCH
+    - docker push nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT
+
+
+    # Pull latest image to be used as cache
+    - docker pull nrgi/resourcedata.org-harvesters:eiti.$BRANCH || echo 'Cache not available'
+
+    # Use the `--cache-from` option to use the latest image in the repo as a cache for this build. Available since Docker 1.13
+    - docker build -t nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT --cache-from nrgi/resourcedata.org-harvesters:eiti.$BRANCH .
+
+    # Create the `latest` tag and force it in case the tag is already there from a previous build
+    - docker tag nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT nrgi/resourcedata.org-harvesters:eiti.$BRANCH
+
+    - docker push nrgi/resourcedata.org-harvesters:eiti.$BRANCH
+    - docker push nrgi/resourcedata.org-harvesters:eiti.$BRANCH.$COMMIT
+
+    # Create rgi harvester image
+    # Pull latest image to be used as cache
+    - docker pull nrgi/resourcedata.org-harvesters:rgi.$BRANCH || echo 'Cache not available'
+
+    # Use the `--cache-from` option to use the latest image in the repo as a cache for this build. Available since Docker 1.13
+    - docker build -t nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT --cache-from nrgi/resourcedata.org-harvesters:rgi.$BRANCH .
+
+    # Create the `latest` tag and force it in case the tag is already there from a previous build
+    - docker tag nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT nrgi/resourcedata.org-harvesters:rgi.$BRANCH
+
+    - docker push nrgi/resourcedata.org-harvesters:rgi.$BRANCH
+    - docker push nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT
+
+
+    # Pull latest image to be used as cache
+    - docker pull nrgi/resourcedata.org-harvesters:rgi.$BRANCH || echo 'Cache not available'
+
+    # Use the `--cache-from` option to use the latest image in the repo as a cache for this build. Available since Docker 1.13
+    - docker build -t nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT --cache-from nrgi/resourcedata.org-harvesters:rgi.$BRANCH .
+
+    # Create the `latest` tag and force it in case the tag is already there from a previous build
+    - docker tag nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT nrgi/resourcedata.org-harvesters:rgi.$BRANCH
+
+    - docker push nrgi/resourcedata.org-harvesters:rgi.$BRANCH
+    - docker push nrgi/resourcedata.org-harvesters:rgi.$BRANCH.$COMMIT
+
+integrations:
+  hub:
+    - integrationName: nrgiDockerHub
+      type: docker
+  notifications:
+    - integrationName: email
+      type: email
+      recipients:
+        - nrgi@vitaminsoftware.com
+      branches:
+        only:
+          - master
+      on_success: change
+      on_failure: always
