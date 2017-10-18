@@ -3,6 +3,7 @@ language: python
 branches:
   only:
     - master
+    - staging
 
 env:
   global:
