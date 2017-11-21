@@ -70,7 +70,7 @@ def write(meta, data, company_or_govt):
             "year": [meta['label'][-4:]],
             "notes": general_notes,
             "owner_org": 'eiti',
-            "country_iso3": meta['country']['iso3'],
+            "country_iso3": [meta['country']['iso3']],
             "country": [countryName],
             "license_id": "cc-by",
             "maintainer": "Anders Pedersen",

@@ -87,8 +87,11 @@ def update_dataset(data, existing):
         #print data[key]
         #if key in existing: print existing[key]
         #else: print 'NONE'
+        if key in existing and type(existing[key]) == list:
+            existing[key].sort()
+            data[key].sort()
         #owner_org gets returned as uuid, we have name... just don't bother; other things don't make it into CKAN, assume other things are new and should be added
-        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company") and (key not in existing or data[key] != existing[key]):
+        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company", "resource_title_combined", "filename_combined") and (key not in existing or data[key] != existing[key]):
             need_to_update = True
             break
     
@@ -182,9 +185,9 @@ def import_dataset(d):
         #Switch to facet friendly names in https://github.com/derilinx/ckanext-nrgi-published/blob/master/ckanext/nrgi/schema.json
         count = 0
         for country in d['country']:
-            print country
-            print d['country'][count]
-            print mapcountry(country)
+            #print country
+            #print d['country'][count]
+            #print mapcountry(country)
             d['country'][count] = mapcountry(country)
             count += 1
 
@@ -194,7 +197,7 @@ def import_dataset(d):
         company_done = False
         government_done = False
         for resource in dataset['resources']:
-            print resource
+            #print resource
             if resource['name'] == d["resource_title_company"]:
                 company_done = True
                 equal = compare(resource['url'], d['filename_company'])
