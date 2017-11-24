@@ -163,7 +163,8 @@ def update_resource(resource_id, resource_path, resource_name):
                           "id": resource_id,
                           "type": "file.upload",
                           "name": resource_name,
-                          "format": "csv"
+                          "format": "csv",
+                          "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
                       },
                       headers={"Authorization": API_KEY},
                       files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
