@@ -14,6 +14,7 @@ iso3 = {
 "SSD":u"South Sudan"
 }
 
+#21.11.17 - All 36 documents that had mime type ‘text/html’ are actually PDFs. Seems that in most cases the reason for tagging them that way was that people had made a PDF out of a webpage.
 map_mime = {
     u'application/octetstream': "Unknown",
     u'application/x-download': "Unknown",
@@ -22,7 +23,7 @@ map_mime = {
     u'image/jpeg': "jpeg",
     u'image/png': "png",
     u'application/x-unknown': "Unknown",
-    u'text/html': "html",
+    u'text/html': "pdf",
     u'images/png': "png",
     u'application/x-pdf': "pdf",
     u'text/rtf': "rtf",

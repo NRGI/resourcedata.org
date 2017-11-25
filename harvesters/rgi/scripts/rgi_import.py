@@ -8,31 +8,54 @@ import re
 import uuid
 import os
 
+import time
+
 failed_states = []
 
 API_HOST = os.environ['API_HOST']
 API_KEY = os.environ['API_KEY']
 
+max_conn_attempts = 2
+
 def api_get(action, data={}):
-    req = requests.get(
-                API_HOST+"/api/action/"+action,
-                params=data,
-                verify=True,
-                headers={"Authorization": API_KEY})
-        
-    return req
+    attempts = 0
+    try:
+        print "GET: " + API_HOST+"/api/action/"+action+" - attempt #" + str(attempts+1)
+        req = requests.get(
+                    API_HOST+"/api/action/"+action,
+                    params=data,
+                    verify=True,
+                    headers={"Authorization": API_KEY})
+        r = req.json()
+        return r
+    except Exception as e: #We can either have connection errors or json errors depending on the HTTP response
+        if attempts == max_conn_attempts:
+            print "Connection failure: " + str(e) + ", giving up after " + str(attempts) + " attempts"
+            raise
+        attempts += 1
+        print "Connection failure: " + str(e) + ", backing off for 90 seconds"
+        time.sleep(90)
 
 
 def api_post(action, data={}):
-    print API_HOST+"/api/action/"+action
-    req = requests.post(
+    attempts = 0
+    try:
+        print "POST: " + API_HOST+"/api/action/"+action+" - attempt #" + str(attempts+1)
+        req = requests.post(
                 API_HOST+"/api/action/"+action,
                 verify=True,
                 json=data,
                 headers={"Authorization": API_KEY, "Content-Type": "application/json"})
-        
-    return req
-
+        r = req.json()
+        return r
+    except Exception as e: #We can either have connection errors or json errors depending on the HTTP response
+        print "Connection failure: " + str(e) + ", backing off for 90 seconds"
+        if attempts == max_conn_attempts:
+            print "Connection failure: " + str(e) + ", giving up after " + str(attempts) + " attempts"
+            raise
+        attempts += 1
+        print "Connection failure: " + str(e) + ", backing off for 90 seconds"
+        time.sleep(90)
 
 def create_org(org):
     print ("CREATING ORG " + org['name'])
@@ -51,9 +74,7 @@ def update_org(org):
 def upsert_org(org):
     r = api_get("organization_show", data={'id': org['name']})
     print (r)
-    jsondata = r.json()
-    print (jsondata)
-    already_exists = jsondata.get("success")
+    already_exists = r.get("success")
     if not already_exists:
         return create_org(org)
     else:
@@ -64,16 +85,14 @@ def create_dataset(data):
     print ("CREATING DATASET " + data['name'])
     r = api_post("package_create", data=data)
     print r
-    print (r.json())
-    jsonified = r.json()
-    if ('error' in jsonified):
+    if ('error' in r):
         failed_states.append(data)
-    return jsonified
+    return r
 
 
 def update_dataset(data):
     print ("UPDATING DATASET " + data['name'])
-    r = api_post("package_update", data=data).json()
+    r = api_post("package_update", data=data)
     if ('error' in r):
         failed_states.append(data)
     return r
@@ -83,18 +102,32 @@ def upsert_dataset(data):
     print ("UPSERTING DATASET " + data['name'])
     r = api_get("package_show", data={'id': data['name']})
     print(r)
-    try:
-        jsondata = r.json()
-        already_exists = jsondata.get("success")
-    except:
-        already_exists = False
+    already_exists = False
+    already_exists = r.get("success")
     if already_exists:
         updated = update_dataset(data)
         # Workaround https://github.com/ckan/ckan/issues/3560
         print updated
-        v = api_get("resource_view_list", data={'id': updated['result']['resources'][0]['id']}).json()
+        v = api_get("resource_view_list", data={'id': updated['result']['resources'][0]['id']})
         if len(v['result']) == 0:
-            vn = api_post("resource_view_create", data={"resource_id": updated['result']['resources'][0]['id'], "title": "PDF", "view_type": "pdf_view"})
+            format_for_view = updated['result']['resources'][0]['format'].lower()
+            if format_for_view in ('pdf', 'xls', 'xlsx', 'jpeg', 'png', 'rtf', 'docx', 'doc', 'csv'):
+                if format_for_view == 'pdf':
+                    view_title = 'PDF'
+                    view_type = 'pdf_view'
+                elif format_for_view in ('xls', 'xlsx', 'rtf', 'docx', 'doc'):
+                    view_title = 'Office'
+                    view_type = 'officedocs_view'
+                elif format_for_view in ('jpeg', 'png'):
+                    view_title = 'Image'
+                    view_type = 'image_view'
+                elif format_for_view == 'csv':
+                    if updated['result']['resources'][0]['datastore_active']:
+                        view_title = 'Table'
+                        view_type = 'datatables_view'
+                    else:
+                        return updated #Only do Table view if in datastore
+                vn = api_post("resource_view_create", data={"resource_id": updated['result']['resources'][0]['id'], "title": view_title, "view_type": view_type})
         return updated
     else:
         return create_dataset(data)
