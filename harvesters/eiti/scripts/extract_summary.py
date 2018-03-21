@@ -156,15 +156,19 @@ def getLineForRevenue(d, company, company_or_govt):
         orglabel = ''
         rec_agency_name = organisations[cid]['label']
 
-    valreported = company['original_revenue']
+    valreported = company['original_revenue'] or ''
 
-    valreportedusd = company['revenue']
+    valreportedusd = company['revenue'] or ''
 
     stream_name = revenues[rid]['label']
 
     currency_code = company['original_currency']
 
-    currency_rate = d['country']['metadata'][year]['currency_rate']
+    currency_rate = ''
+    try:
+        currency_rate = d['country']['metadata'][year]['currency_rate']
+    except: pass
+    
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     returnstring = (
