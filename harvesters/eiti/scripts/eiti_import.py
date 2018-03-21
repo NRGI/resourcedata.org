@@ -139,8 +139,8 @@ def create_resource(dataset_name, resource_path, resource_name):
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
     print "UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name
-
-    r = requests.post('%s/api/action/resource_create' % (API_HOST),
+    try:
+        r = requests.post('%s/api/action/resource_create' % (API_HOST),
                       data={
                           "package_id": dataset_name,
                           "type": "file.upload",
@@ -149,29 +149,34 @@ def create_resource(dataset_name, resource_path, resource_name):
                       },
                       headers={"Authorization": API_KEY},
                       files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
-    
-    print "CREATE RESOURCE RESULT:"
-    print r.json()
-    
+
+        print "CREATE RESOURCE RESULT:"
+        print r.json()
+    except Exception as msg:
+        print  "Exception uploading resource %s: %s" % (resource_path, msg)
+        
 def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
     print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
 
-    r = requests.post('%s/api/action/resource_update' % (API_HOST),
-                      data={
-                          "id": resource_id,
-                          "type": "file.upload",
-                          "name": resource_name,
-                          "format": "csv",
-                          "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
-                      },
-                      headers={"Authorization": API_KEY},
-                      files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
-    
-    print "UPDATE RESOURCE RESULT:"
-    print r.json()
+    try:
+        r = requests.post('%s/api/action/resource_update' % (API_HOST),
+                          data={
+                              "id": resource_id,
+                              "type": "file.upload",
+                              "name": resource_name,
+                              "format": "csv",
+                              "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
+                          },
+                          headers={"Authorization": API_KEY},
+                          files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
+
+        print "UPDATE RESOURCE RESULT:"
+        print r.json()
+    except Exception as msg:
+        print  "Exception uploading resource %s: %s" % (resource_path, msg)
 
 
 def compare(remote_file, local_file):
