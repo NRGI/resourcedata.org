@@ -6,6 +6,8 @@ import unicodedata
 
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
 
+session = requests.Session()
+
 filesAlreadyWrittenTo = set([])
 datasets = {}
 tracking = []
@@ -105,7 +107,8 @@ def getSummaryData():
     data = []
 
     while (done is False):
-        d = requests.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
+        print("Getting summary page %s"% page)
+        d = session.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
         if len(d) == 0:
             done = True
         data.extend(d)
@@ -121,7 +124,7 @@ def getLineForRevenue(d, company, company_or_govt):
 
     gid = company['gfs_code_id']
     if gid not in gfs:
-        j = requests.get(API_ENDPOINT + 'gfs_code/' + gid).json()
+        j = session.get(API_ENDPOINT + 'gfs_code/' + gid).json()
         temp_gfs_code = j['data'][0]['code']
         for i, c in enumerate(temp_gfs_code):
             if not c.isdigit():
@@ -132,13 +135,13 @@ def getLineForRevenue(d, company, company_or_govt):
     cid = company['organisation_id']
     companyurl = API_ENDPOINT + 'organisation/' + cid
     if cid not in organisations:
-        j = requests.get(companyurl).json()
+        j = session.get(companyurl).json()
         organisations[cid] = j['data'][0]
 
     rid = company['id']
     revurl = API_ENDPOINT + 'revenue/' + rid
     if rid not in revenues:
-        j = requests.get(revurl).json()
+        j = session.get(revurl).json()
         revenues[rid] = j['data'][0]
 
     gfscode = gfs[gid]['code']
