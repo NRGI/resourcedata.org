@@ -199,9 +199,9 @@ def gatherCountry(d):
     year = d['label'][-4:]
 
     if (d['revenue_company'] or d['revenue_government']):
-        print "%s %s" % (country, year)
 
         sanitizedCountryName = sanitizeCountryName(country)
+        print "%s %s" % (sanitizedCountryName, year)
         filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
         path = os.path.join('./out', "government" , filename)
 
