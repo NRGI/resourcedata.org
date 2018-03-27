@@ -109,8 +109,9 @@ def getSummaryData():
 def getLineForRevenue(d, company, company_or_govt):
     countryn = d['country']['label']
     ciso3 = d['country']['iso3']
-    created = d['created']
-    changed = d['changed']
+    # api returns spurious timestamps in the date created/changed.
+    created = "%sT00:00:00+0000" % d['created'].split('T')[0]
+    changed = "%sT00:00:00+0000" % d['changed'].split('T')[0]
     year = d['label'][-4:]
 
     gid = company['gfs_code_id']
