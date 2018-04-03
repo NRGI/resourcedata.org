@@ -11,7 +11,7 @@ import combine
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
 
 # Number of threads, 0 to disable
-MULTITHREAD = 7
+MULTITHREAD = 0
 
 # Use HTTP keepalive
 session = requests.Session()
