@@ -4,6 +4,7 @@ import json
 import requests
 import urllib
 import filecmp
+import datetime
 
 failed_states = []
 
@@ -87,8 +88,11 @@ def update_dataset(data, existing):
         #print data[key]
         #if key in existing: print existing[key]
         #else: print 'NONE'
+        if key in existing and type(existing[key]) == list:
+            existing[key].sort()
+            data[key].sort()
         #owner_org gets returned as uuid, we have name... just don't bother; other things don't make it into CKAN, assume other things are new and should be added
-        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company") and (key not in existing or data[key] != existing[key]):
+        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company", "resource_title_combined", "filename_combined") and (key not in existing or data[key] != existing[key]):
             need_to_update = True
             break
     
@@ -135,8 +139,8 @@ def create_resource(dataset_name, resource_path, resource_name):
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
     print "UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name
-
-    r = requests.post('%s/api/action/resource_create' % (API_HOST),
+    try:
+        r = requests.post('%s/api/action/resource_create' % (API_HOST),
                       data={
                           "package_id": dataset_name,
                           "type": "file.upload",
@@ -145,28 +149,34 @@ def create_resource(dataset_name, resource_path, resource_name):
                       },
                       headers={"Authorization": API_KEY},
                       files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
-    
-    print "CREATE RESOURCE RESULT:"
-    print r.json()
-    
+
+        print "CREATE RESOURCE RESULT:"
+        print r.json()
+    except Exception as msg:
+        print  "Exception uploading resource %s: %s" % (resource_path, msg)
+        
 def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
     
     print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
 
-    r = requests.post('%s/api/action/resource_update' % (API_HOST),
-                      data={
-                          "id": resource_id,
-                          "type": "file.upload",
-                          "name": resource_name,
-                          "format": "csv"
-                      },
-                      headers={"Authorization": API_KEY},
-                      files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
-    
-    print "UPDATE RESOURCE RESULT:"
-    print r.json()
+    try:
+        r = requests.post('%s/api/action/resource_update' % (API_HOST),
+                          data={
+                              "id": resource_id,
+                              "type": "file.upload",
+                              "name": resource_name,
+                              "format": "csv",
+                              "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
+                          },
+                          headers={"Authorization": API_KEY},
+                          files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
+
+        print "UPDATE RESOURCE RESULT:"
+        print r.json()
+    except Exception as msg:
+        print  "Exception uploading resource %s: %s" % (resource_path, msg)
 
 
 def compare(remote_file, local_file):
@@ -182,9 +192,9 @@ def import_dataset(d):
         #Switch to facet friendly names in https://github.com/derilinx/ckanext-nrgi-published/blob/master/ckanext/nrgi/schema.json
         count = 0
         for country in d['country']:
-            print country
-            print d['country'][count]
-            print mapcountry(country)
+            #print country
+            #print d['country'][count]
+            #print mapcountry(country)
             d['country'][count] = mapcountry(country)
             count += 1
 
@@ -194,7 +204,7 @@ def import_dataset(d):
         company_done = False
         government_done = False
         for resource in dataset['resources']:
-            print resource
+            #print resource
             if resource['name'] == d["resource_title_company"]:
                 company_done = True
                 equal = compare(resource['url'], d['filename_company'])

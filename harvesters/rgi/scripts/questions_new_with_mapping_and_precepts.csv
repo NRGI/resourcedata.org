@@ -1,0 +1,221 @@
+Precept1,Precept2,Precept3,REF,REFERENCE_NUMBER,ELEMENT_NAME,QUESTION,TYPE,LAW_OR_PRACTICE
+NA,NA,NA,NA,1,Value realization,NA,COMPONENT,NA
+NA,NA,NA,NA,1.1000000000000001,Licensing,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,1.1.1,Reserves disclosure,NA,INDICATOR,Practice
+NA,NA,"Precept 1: Strategy, Consultation and Institutions",2,1.1.1a,Reserves volume disclosure,Does the government publicly disclose data on extractive resource reserves?,QUESTION,Practice_Q
+NA,NA,"Precept 1: Strategy, Consultation and Institutions",3,1.1.1b,Reserves disclosure timeliness,How up-to-date is the publicly disclosed data on extractive resource reserves?,QUESTION,Practice_Q
+NA,NA,"Precept 1: Strategy, Consultation and Institutions",4,1.1.1c,Reserves disclosure machine-readability,Is the data disclosed on extractive resource reserves machine-readable?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.1.2,Cadaster,NA,INDICATOR,Practice
+NA,NA,NA,169,1.1.2a,Cadaster coverage,Does a government agency maintain a publicly available registry of rights and license details (i.e. a cadaster)?,QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,45,1.1.2b,Cadaster platform,"Is the publicly available registry of licenses/contracts available online, offline or in paper?",QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,46,1.1.2c,Cadaster block coverage,Does the publicly available registry of licenses/contracts cover areas/blocks?,QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,47,1.1.2d,Cadaster interest holders,Does the publicly available registry of licenses/contracts give the names of companies that hold an interest in a given area/block?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.1.3,Pre-licensing round rules,NA,INDICATOR,Law
+NA,NA,Precept 3:Exploration and License Allocation,28,1.1.3a,Qualification criteria requirement,Is the government required to set pre-defined criteria by which companies become qualified to participate in a licensing process?,QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,32,1.1.3b,Biddable terms disclosure requirement,"Prior to each licensing process, is the licensing authority required to disclose a list of biddable terms or negotiable terms?",QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,34,1.1.3c,Licensing process requirement,"Prior to each license process, is the licensing authority required to disclose the rules governing the licensing process, such as auction or negotiation rules?",QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,25,1.1.3d,Licensing authority independence,Is the licensing authority independent from the SOE?,QUESTION,Law_Q
+NA,NA,NA,NA,1.1.4,Pre-licensing round practice,NA,INDICATOR,Practice
+NA,NA,Precept 3:Exploration and License Allocation,29,1.1.4a,Qualification criteria disclosure,"From 2015 onwards, did the licensing authority publicly disclose minimum pre-defined criteria by which companies become qualified to participate in licensing processes?",QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,33,1.1.4b,Biddable terms disclosure,"From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose a list of biddable or negotiable terms?",QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,35,1.1.4c,Licensing process rule disclosure,"From 2015 onwards, and prior to each licensing process, did the licensing authority actually disclose the rules governing the licensing process, such as auction or negotiation rules?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.1.5,Post-licensing round rules,NA,INDICATOR,Law
+NA,NA,Precept 3:Exploration and License Allocation,37,1.1.5a,License applicant disclosure requirement,"Following each licensing process, is the licensing authority required to disclose†the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?",QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,39,1.1.5b,License winner disclosure requirement,"Following each licensing process, is the licensing authority required to publicly disclose the identity of the winning bidder or applicant?",QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,41,1.1.5c,Block allocation disclosure requirement,"Following the licensing process, is the licensing authority required to publicly disclose the list of areas or blocks allocated?",QUESTION,Law_Q
+NA,NA,Precept 3:Exploration and License Allocation,43,1.1.5d,Licensing decision appeal requirement,Are there rules that companies can follow to appeal licensing decisions?,QUESTION,Law_Q
+NA,NA,NA,NA,1.1.6,Post-licensing round practice,NA,INDICATOR,Practice
+NA,NA,Precept 3:Exploration and License Allocation,38,1.1.6a,License applicant disclosure,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of companies that submitted license applications (in the case of a first-come, first served; or negotiation round) or bids (in the case of an auction)?",QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,40,1.1.6b,License winner disclosure,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the identity of the winning bidder/applicant?",QUESTION,Practice_Q
+NA,NA,Precept 3:Exploration and License Allocation,42,1.1.6c,Block allocation disclosure,"From 2015 onwards, and after each licensing process, did the licensing authority actually disclose the list of areas/blocks allocated?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.1.7,Financial interest disclosure rules,NA,INDICATOR,Law
+NA,Precept 2:Accountability and Transparency,Precept 3:Exploration and License Allocation,20,1.1.7a,Public officials asset disclosure requirement,Are senior public officials required to publicly disclose their financial holdings in extractive companies?,QUESTION,Law_Q
+NA,Precept 2:Accountability and Transparency,Precept 3:Exploration and License Allocation,22,1.1.7b,Beneficial ownership requirement,Do rules require public disclosure of beneficial owners of extractive companies?,QUESTION,Law_Q
+NA,NA,NA,NA,1.1.8,Financial interest disclosure practice,NA,INDICATOR,Practice
+NA,Precept 3:Exploration and License Allocation,Precept 2:Accountability and Transparency,21,1.1.8a,Public officials asset disclosure,"From 2015 onwards, have senior public officials publicly disclosed their financial holdings in extractive companies?",QUESTION,Practice_Q
+NA,Precept 3:Exploration and License Allocation,Precept 2:Accountability and Transparency,23,1.1.8b,Beneficial ownership disclosure,"From 2015 onwards, have the beneficial owners of extractive companies been disclosed?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.1.9,Contract disclosure rules,NA,INDICATOR,Law
+NA,Precept 2:Accountability and Transparency,Precept 3:Exploration and License Allocation,15,1.1.9a,Contract disclosure requirement,Is the government required to publicly disclose all signed licenses/contracts with extractive companies?,QUESTION,Law_Q
+NA,NA,NA,NA,1.1.10,Contract disclosure,NA,INDICATOR,Practice
+NA,Precept 3:Exploration and License Allocation,Precept 2:Accountability and Transparency,16,1.1.10a,Contract disclosure timeliness,"From 2015 onwards, has the government publicly disclosed signed licences/contracts?",QUESTION,Practice_Q
+NA,Precept 3:Exploration and License Allocation,Precept 2:Accountability and Transparency,17,1.1.10b,Historical contract disclosure,"Has the government publicly disclosed all active licenses/contracts, regardless of when they were signed?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.2,Taxation,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,1.2.1,Production disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 4:Taxation,5,1.2.1a,Production volume disclosure,Does the government publicly disclose data on the volume of extractive resource production?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,6,1.2.1b,Production disclosure timeliness,How up-to-date is the publicly disclosed data on the volume of extractive resource production?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,7,1.2.1c,Production disclosure machine-readability,Is the data disclosed on the volume of extractive resource production machine-readable?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.2.2,Export disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 4:Taxation,8,1.2.2a,Export value disclosure,Does the government publicly disclose data on the value of extractive resource exports?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,9,1.2.2b,Export disclosure timeliness,How up-to-date is the publicly disclosed data on the value of extractive resource exports?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,10,1.2.2c,Export disclosure machine-readability,Is the data disclosed on the value of extractive resource exports machine-readable?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.2.3,Company payment rules,NA,INDICATOR,Law
+NA,NA,Precept 4:Taxation,56,1.2.3a,Payment disclosure requirement,Is the government required to publicly disclose data on payments from extractive companies to the government?,QUESTION,Law_Q
+NA,NA,NA,NA,1.2.4,Company payment disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 4:Taxation,59,1.2.4a,Payment disclosure,Does the government publicly disclose data on the value of tax/payment receipts?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,60,1.2.4b,Payment disclosure timeliness,How up-to-date is government data on the value of tax/payment receipts?,QUESTION,Practice_Q
+NA,NA,Precept 4:Taxation,61,1.2.4c,Payment disclosure disaggregation,Is the most recent publicly available data on tax and payment receipts disaggregated by payment type?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.2.5,Taxation rules,NA,INDICATOR,Law
+NA,NA,Precept 4:Taxation,50,1.2.5a,Income tax rate rule,Do rules specify the income tax rate(s) applying to extractive companies?,QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,51,1.2.5b,Royalty rate rule,Do rules specify the royalty rate(s) applying to extractive companies?,QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,52,1.2.5c,State equity rule,Do rules specify the level of state equity (or options for state equity such as carried interest) in extractive companies ?,QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,53,1.2.5d,Withholding tax rate rule,Do rules specify the withholding tax rate(s) applying to extractive companies payments?,QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,54,1.2.5e,Production sharing arrangement rule,"For countries using production sharing agreements, do rules specify the company and government production shares?",QUESTION,Law_Q
+NA,NA,NA,NA,1.2.6,Tax authority rules,NA,INDICATOR,Law
+NA,NA,Precept 4:Taxation,62,1.2.6a,Payment deposit requirement,"Is the government required to make all payments to the national treasury or deposit them into a national resource account, aside from amounts legally retained by SOEs?",QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,63,1.2.6b,Taxpayer audit requirement,Is the national tax authority required to audit extractive companies?,QUESTION,Law_Q
+NA,NA,Precept 4:Taxation,64,1.2.6c,Tax authority audit requirement,Is the national tax authority required to periodically be audited by an external body?,QUESTION,Law_Q
+NA,NA,NA,NA,1.2.7,Tax authority practice,NA,INDICATOR,Practice
+NA,NA,Precept 4:Taxation,65,1.2.7a,Tax authority audit timeframe,Was the national tax authority audited over the most recently completed audit timeframe?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.2.8,EITI affiliation and reporting,NA,INDICATOR,Practice
+NA,Precept 12:Role of International Community,Precept 2:Accountability and Transparency,18,1.2.8a,EITI affiliation,Is the country EITI-compliant?,QUESTION,Practice_Q
+NA,Precept 12:Role of International Community,Precept 2:Accountability and Transparency,19,1.2.8b,EITI report timeliness,How up-to-date is the data contained in the country's most recent EITI report?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.3,Local impact,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,1.3.1,EIA/SIA rules,NA,INDICATOR,Law
+NA,NA,Precept 5:Local Effects,66,1.3.1a,EIA/SIA requirement,Are extractive companies required to prepare an EIA and/or SIA prior to development?,QUESTION,Law_Q
+NA,NA,Precept 5:Local Effects,67,1.3.1b,EIA/SIA disclosure requirement,Is there a requirement for the EIA and/or SIA to be publicly disclosed?,QUESTION,Law_Q
+NA,NA,NA,NA,1.3.2,EIA/SIA disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 5:Local Effects,68,1.3.2a,EIA/SIA disclosure practice,"From 2015 onwards, have EIAs and/or SIAs been publicly disclosed?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.3.3,Environmental mitigation plan rules,NA,INDICATOR,Law
+NA,NA,Precept 5:Local Effects,69,1.3.3a,Environmental mitigation plan requirement,Are extractive companies required to prepare environmental mitigation management plans prior to development?,QUESTION,Law_Q
+NA,NA,Precept 5:Local Effects,70,1.3.3b,Environmental mitigation plan disclosure requirement,Is there a requirement for environmental mitigation management plans to be publicly disclosed?,QUESTION,Law_Q
+NA,NA,NA,NA,1.3.4,Environmental mitigation plan disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 5:Local Effects,71,1.3.4a,Environmental mitigation plan disclosure practice,"From 2015 onwards, have environmental mitigation management plans been publicly disclosed?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.3.5,Environmental compliance rules,NA,INDICATOR,Law
+NA,NA,Precept 5:Local Effects,72,1.3.5a,Environmental penalty requirement,"Do rules require the government to set penalties (i.e. fines, license suspension or license revocation) for non-compliance†with environmental mitigation management plans?",QUESTION,Law_Q
+NA,NA,Precept 5:Local Effects,77,1.3.5b,Project closure requirement,Are there rules governing rehabilitation and closure of extractive projects?,QUESTION,Law_Q
+NA,NA,NA,NA,1.3.6,Environmental compliance practice,NA,INDICATOR,Practice
+NA,NA,Precept 5:Local Effects,78,1.3.6a,Project closure compliance,"From 2015 onwards, have the procedures governing†rehabilitation and closure†of extractive projects been adhered to?",QUESTION,Practice_Q
+NA,NA,NA,NA,1.3.7,Compensation to land users and owners rules,NA,INDICATOR,Law
+NA,NA,Precept 5:Local Effects,73,1.3.7a,Compensation requirement,Are there rules governing compensation†to landowners or land users when project development interferes with their access to or use of land?,QUESTION,Law_Q
+NA,NA,Precept 5:Local Effects,75,1.3.7b,Resettlement requirement,Are there specific procedures governing the†resettlement†of land users when project development interferes with their access to or use of land?,QUESTION,Law_Q
+NA,NA,NA,NA,1.4,State-owned enterprises,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,1.4.1,SOE-government transfers rules,NA,INDICATOR,Law
+NA,NA,Precept 6:Nationally Owned Resource Companies,82,1.4.1a,SOE-government transfers governance rule,Are there rules governing fiscal transfers between the government and the SOE?,QUESTION,Law_Q
+NA,NA,NA,NA,1.4.2,SOE-government transfers disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,84,1.4.2a,Government-SOE receipt disclosure,Does the government publicly disclose how much revenue it receives from the SOE?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,85,1.4.2b,SOE-government transfer disclosure,Does the SOE publicly disclose how much revenue it transfers to the government?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.3,SOE financial reporting rules,NA,INDICATOR,Law
+NA,NA,Precept 6:Nationally Owned Resource Companies,86,1.4.3a,SOE annual report disclosure requirement,Is the SOE required to publicly disclose annual reports containing information on its finances and operations?,QUESTION,Law_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,98,1.4.3b,SOE financial audit requirement,Do rules require a periodic audit of the SOE's financial statements by an external body?,QUESTION,Law_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,116,1.4.3c,SOE report legislative review requirement,"Is the SOE required to submit annual reports to the legislature on its commercial, non-commercial (i.e. regulatory) and non-operational activities (i.e. activities not related to resource extraction)?",QUESTION,Law_Q
+NA,NA,NA,NA,1.4.4,SOE non-commercial activity practice,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,100,1.4.4a,SOE non-commercial activity,"From 2015 onwards, did the SOE engage in non-commercial activities (e.g. payments for social services, public infrastructure, fuel subsidies, national debt servicing)?",QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,101,1.4.4b,SOE non-commercial spending,Has the SOE publicly disclosed the amount spent on non-commercial activities?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.5,SOE financial reporting practice,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,99,1.4.5a,SOE audit timeframe,Did an external body audit the SOE's annual financial statements over the most recently completed audit timeframe?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,87,1.4.5b,SOE annual report disclosure,Has the SOE publicly disclosed annual reports on its finances and operations?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,88,1.4.5c,SOE balance sheet disclosure,Does the SOE's most recent public annual report include†a balance sheet statement?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,89,1.4.5d,SOE cash flow statement disclosure,Does the SOE's most recent public annual report include†a cash flow statement?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,90,1.4.5e,SOE income statement disclosure,Does the SOE's most recent public annual report include†an income statement?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.6,SOE production disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,96,1.4.6a,SOE production volume disclosure,Does the SOE publicly disclose its†aggregate production volume?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,97,1.4.6b,SOE sales volume disclosure,Does the SOE publicly disclose its†aggregate sales volume?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.7,Commodity sale rules,NA,INDICATOR,Law
+NA,NA,Precept 6:Nationally Owned Resource Companies,105,1.4.7a,SOE production buyer selection rule,Are there rules that govern how the SOE should select the buyers of its production?,QUESTION,Law_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,106,1.4.7b,SOE production sale price rule,Are there rules that determine the prices at which the SOE should sell its production?,QUESTION,Law_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,107,1.4.7c,SOE sales proceed transfer rule,Are there rules that govern how the proceeds from the sale of the SOE's production should be transferred to the government?,QUESTION,Law_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,109,1.4.7d,SOE sales disclosure rule,Are there rules that require the SOE or government to publicly disclose information on the sale of production by the SOE?,QUESTION,Law_Q
+NA,NA,NA,NA,1.4.8,Commodity sale disclosures,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,110,1.4.8a,SOE sold production volume disclosure,Does the SOE or government publicly disclose the volume of production sold by the SOE?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,111,1.4.8b,SOE sold production value disclosure,Does the SOE or government publicly disclose the value of the production sold by the SOE?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,112,1.4.8c,SOE production sale date disclosure,Does the SOE or government publicly disclose the date of the production sales executed by the SOE?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,113,1.4.8d,SOE production buyers disclosure,Does the SOE or government publicly disclose the names of the companies that bought the production sold by the SOE?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.9,SOE joint ventures and subsidiaries disclosure,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,91,1.4.9a,SOE joint ventures disclosure,Does the SOE publicly disclose†its participation in joint ventures?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,92,1.4.9b,SOE joint venture participatory interest disclosure,Does the SOE publicly disclose its†levels of ownership in joint ventures?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,93,1.4.9c,SOE joint venture cost and revenue disclosure,Does the SOE publicly disclose the†costs and revenues deriving from its participation in joint ventures?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,94,1.4.9d,SOE subsidiaries disclosure,Does the SOE publicly disclose†a list of its subsidiaries?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,95,1.4.9e,SOE subsidiaries cost and revenue disclosure,Does the SOE publicly disclose the†costs and revenues deriving from its subsidiaries?,QUESTION,Practice_Q
+NA,NA,NA,NA,1.4.10,SOE corporate governance practice,NA,INDICATOR,Practice
+NA,NA,Precept 6:Nationally Owned Resource Companies,115,1.4.10a,SOE code of conduct,Does the SOE have a publicly available code of conduct?,QUESTION,Practice_Q
+NA,NA,Precept 6:Nationally Owned Resource Companies,114,1.4.10b,SOE board of directors independence,Is the majority of the SOE's board of directors independent of the government (i.e. at least half of all board members do not hold positions in the current central government)?,QUESTION,Practice_Q
+NA,NA,NA,NA,2,Revenue management,NA,COMPONENT,NA
+NA,NA,NA,NA,2.1,National budgeting,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,2.1.1,Online data portal,NA,INDICATOR,Practice
+"Precept 1: Strategy, Consultation and Institutions",Precept 2:Accountability and Transparency,Precept 9:Government Spending,11,2.1.1a,Online data portal coverage,"Does the government have an online data portal containing publicly available data on reserves, production and exports?",QUESTION,Practice_Q
+"Precept 1: Strategy, Consultation and Institutions",Precept 2:Accountability and Transparency,Precept 9:Government Spending,12,2.1.1b,Online data portal timeliness,"Does the online data portal contain the most recent publicly available data on reserves, production and exports?",QUESTION,Practice_Q
+"Precept 1: Strategy, Consultation and Institutions",Precept 2:Accountability and Transparency,Precept 9:Government Spending,13,2.1.1c,Online data portal machine-readability,Is the data contained in the online data portal machine-readable?,QUESTION,Practice_Q
+"Precept 1: Strategy, Consultation and Institutions",Precept 2:Accountability and Transparency,Precept 9:Government Spending,14,2.1.1d,Online data portal open license,Is the data contained in the online data portal available under an open license?,QUESTION,Practice_Q
+NA,NA,NA,NA,2.1.2,Fiscal rules,NA,INDICATOR,Law
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,117,2.1.2a,Fiscal rule existence,Does the country have a numerical†fiscal rule?,QUESTION,Law_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,119,2.1.2b,Fiscal rule monitoring requirement,Do rules require that an external body periodically monitor the government's†adherence to the numerical fiscal rule?,QUESTION,Law_Q
+NA,NA,NA,NA,2.1.3,Fiscal rule practice,NA,INDICATOR,Practice
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,118,2.1.3a,Fiscal rule adherence,"Over the most recently completed fiscal year, did the government adhere to the numerical fiscal rule?",QUESTION,Practice_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,120,2.1.3b,Fiscal rule monitoring timeframe,Was the government's adherence to the fiscal rule externally monitored over the most recently completed audit timeframe?,QUESTION,Practice_Q
+NA,NA,NA,NA,2.1.4,National budget disclosure,NA,INDICATOR,Practice
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,121,2.1.4a,Revenue projections disclosure,Does the government publicly disclose projections of extractive resource revenues?,QUESTION,Practice_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,122,2.1.4b,Budget disclosure,Has the government publicly disclosed a national budget that has been enacted for the current fiscal year?,QUESTION,Practice_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,125,2.1.4c,Government expenditure disclosure,"For the most recently completed fiscal year, did the government publicly disclose total government expenditures?",QUESTION,Practice_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,124,2.1.4d,Resource revenue disclosure,"For the most recently completed fiscal year, did the government publicly disclose the total resource revenue received?",QUESTION,Practice_Q
+NA,NA,NA,NA,2.1.5,National debt disclosure,NA,INDICATOR,Practice
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,126,2.1.5a,Debt level disclosure,Does the government publicly disclose the level of national debt?,QUESTION,Practice_Q
+Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,Precept 9:Government Spending,127,2.1.5b,Debt currency denomination,Is the most recent publicly available information on the national debt†disaggregated by currency denomination (i.e. foreign or domestic)?,QUESTION,Practice_Q
+NA,NA,NA,NA,2.2000000000000002,Subnational resource revenue sharing,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,2.2.1,Subnational transfer agency rules,NA,INDICATOR,Law
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,132,2.2.1a,Subnational agency rule,Do rules specify which subnational agencies receive the extractive resource revenues transferred from the central government?,QUESTION,Law_Q
+NA,NA,NA,NA,2.2.2,Subnational transfer rules,NA,INDICATOR,Law
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,133,2.2.2a,Revenue sharing formula,Do rules specify a formula governing the transfer of extractive resource revenues between the central government and subnational governments?,QUESTION,Law_Q
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,134,2.2.2b,Revenue share amount specification,"If there is a formula governing the transfer of extractive resource revenue between the central government and subnational governments, does this formula specify the amount of revenue received by each subnational government?",QUESTION,Law_Q
+NA,NA,NA,NA,2.2.3,Subnational transfer disclosure,NA,INDICATOR,Practice
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,135,2.2.3a,Revenues shared disclosure,"From 2015 onwards, did the central government disclose the amount of revenues transferred to subnational governments?",QUESTION,Practice_Q
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,136,2.2.3b,Revenues shared disclosure timeliness,How up-to-date is the information publicly disclosed by the central government on the amount of revenues transferred to subnational governments?,QUESTION,Practice_Q
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,138,2.2.3c,Revenues shared disclosure by revenue stream,"From 2015 onwards, has the central government publicly disclosed the amount of revenue transferred by revenue stream?",QUESTION,Practice_Q
+NA,NA,NA,NA,2.2.4,Subnational transfer audit rule,NA,INDICATOR,Law
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,142,2.2.4a,Transfer audit requirement,Do rules require that an external body periodically audit the transfers of extractive resource revenues to subnational governments?,QUESTION,Law_Q
+NA,NA,NA,NA,2.2.5,Subnational transfer audit practice,NA,INDICATOR,Practice
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,143,2.2.5a,Transfer audit timeframe,Were transfers of extractive resource revenues to subnational governments externally audited over the most recently completed audit timeframe?,QUESTION,Practice_Q
+NA,NA,NA,NA,2.2999999999999998,Sovereign wealth funds,NA,SUB-COMPONENT,NA
+NA,NA,NA,NA,2.3.1,SWF deposit and withdrawal rules,NA,INDICATOR,Law
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,146,2.3.1a,SWF withdrawal rule,Are there numeric rules governing the size of withdrawals from the sovereign wealth fund?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,148,2.3.1b,SWF national budget review requirement,Do rules require that withdrawals and spending from the sovereign wealth fund pass through the national budget?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,150,2.3.1c,SWF deposit rule,Are there numeric rules governing the size of deposits into the sovereign wealth fund?,QUESTION,Law_Q
+NA,NA,NA,NA,2.3.2,SWF deposit and withdrawal practice,NA,INDICATOR,Practice
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,160,2.3.2a,SWF size of fund disclosure,Does the sovereign wealth fund's most recent publicly available annual financial report specify†the size of the fund?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,161,2.3.2b,SWF deposit and withdrawal amounts disclosure,Does the sovereign wealth fund's most recent publicly available annual financial report disclose?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,147,2.3.2c,SWF withdrawal rule adherence,"From 2015 onwards, has the government adhered to the numeric rules governing the size of withdrawals from sovereign wealth funds?",QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,151,2.3.2d,SWF deposit rule adherence,"From 2015 onwards, has the government adhered to the numeric rules governing the size of deposits into the sovereign wealth fund?",QUESTION,Practice_Q
+NA,NA,NA,NA,2.3.3,SWF investment rules,NA,INDICATOR,Law
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,154,2.3.3a,SWF domestic investment rule,Is the sovereign wealth fund prohibited from investing in domestic assets without budgetary approval?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,155,2.3.3b,SWF asset class rule,Is the sovereign wealth fund prohibited from investing in certain asset classes or investment types?,QUESTION,Law_Q
+NA,NA,NA,NA,2.3.4,SWF investment practice,NA,INDICATOR,Practice
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,162,2.3.4a,SWF rate of return disclosure,Does the sovereign wealth fund's most recent publicly available annual financial report specify†the rate of return made on its investments?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,163,2.3.4b,SWF assets held disclosure,Does the sovereign wealth fund's most recent publicly available annual financial report include a list of assets held?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,164,2.3.4c,SWF asset class disclosure,Does the sovereign wealth fund's most recent publicly available annual financial report specify the fund's†asset allocation by asset class?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,149,2.3.4d,SWF national budget review practice,"From 2015 onwards, have withdrawals and spending from the sovereign wealth fund actually passed through the national budget?",QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,156,2.3.4e,SWF asset class rule adherence,"From 2015 onwards, has the sovereign wealth fund adhered to rules limiting asset class or investment types?",QUESTION,Practice_Q
+NA,NA,NA,NA,2.3.5,SWF financial reporting rules,NA,INDICATOR,Law
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,157,2.3.5a,SWF annual financial reporting requirement,Is the sovereign wealth fund required to produce annual financial reports?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,158,2.3.5b,SWF financial report disclosure rule,Is the sovereign wealth fund required to publicly disclose these annual financial reports?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,165,2.3.5c,SWF financial audit requirement,Do rules require an external body to periodically audit the sovereign wealth fund's annual financial reports?,QUESTION,Law_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,167,2.3.5d,SWF legislative review requirement,Is the legislature required to review the sovereign wealth fund's annual financial reports?,QUESTION,Law_Q
+NA,NA,NA,NA,2.3.6,SWF financial reporting practice,NA,INDICATOR,Practice
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,159,2.3.6a,SWF financial report disclosure,Does the sovereign wealth fund publicly disclose its annual financial reports?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,166,2.3.6b,SWF financial audit timeframe,Were these annual financial reports audited over the most recently completed audit timeframe?,QUESTION,Practice_Q
+NA,Precept 7:Revenue Distribution,Precept 8:Revenue Volatility,168,2.3.6c,SWF legislative review,"From 2015 onwards, has the legislature reviewed the sovereign wealth fund's annual financial reports?",QUESTION,Practice_Q
+NA,NA,NA,NA,3,Enabling environment,NA,COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.1,Voice and accountability,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.2,Government effectiveness,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.3,Regulatory quality,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.4,Rule of law,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.5,Control of corruption,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.6,Political stability and absence of violence,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.7,Open data,NA,SUB-COMPONENT,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.7.1,Open data inventory,NA,INDICATOR,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.7.2,Open data barometer,NA,INDICATOR,NA
+NA,NA,Precept 2:Accountability and Transparency,NA,3.7.3,Open data index,NA,INDICATOR,NA
+NA,NA,"Precept 1: Strategy, Consultation and Institutions",1,1.1a,Resources ownership definition,How does the country legally define the ownership of subsoil extractive resources?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,"Precept 1: Strategy, Consultation and Institutions",24,1.1b,Licensing authority,Who is the licensing authority (i.e. who has the authority to grant exploration and extraction rights to companies)?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,Precept 3:Exploration and License Allocation,26,1.1c,Licensing process,What licensing process does the licensing authority follow?,NON-SCORING,Information only - does not contribute to country score
+NA,Precept 2:Accountability and Transparency,Precept 3:Exploration and License Allocation,36,1.1.10c,License compliance authority,Who has the primary authority to monitor compliance with the operational aspects of licenses/contracts?,NON-SCORING,Information only - does not contribute to country score
+NA,Precept 2:Accountability and Transparency,Precept 3:Exploration and License Allocation,44,1.1.10d,License ratification,Is the legislature required to ratify licenses/contracts?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,Precept 4:Taxation,48,1.2a,Extractives fiscal system,What is the fiscal system for extractive resources?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,Precept 4:Taxation,55,1.2.5f,Tax authority,Who is the tax authority (i.e. who has the authority to collect taxes and payments from extractive companies)?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,Precept 6:Nationally Owned Resource Companies,79,1.4a,Government equity shares,What proportion of equity shares does the government own in extractive companies?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,Precept 6:Nationally Owned Resource Companies,102,1.4b,SOE production sharing,Does the SOE receive a production share or in-kind payments from extractive companies?,NON-SCORING,Information only - does not contribute to country score
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,128,2.2a,Subnational resource revenue transfer,Does the central government transfer extractive resource revenues to subnational governments?,NON-SCORING,Information only - does not contribute to country score
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,129,2.2b,Subnational resource revenue transfer rules,Are there specific rules governing the transfer of extractive resource revenues (i.e. are these rules distinct from those governing other types of transfers)?,NON-SCORING,Information only - does not contribute to country score
+Precept 5:Local Effects,Precept 7:Revenue Distribution,Precept 9:Government Spending,130,2.2c,Subnational resource revenue transfer shares,Do rules specify that subnational governments of producing areas should receive a higher share of extractive resource revenues than those of non-producing areas?,NON-SCORING,Information only - does not contribute to country score
+NA,Precept 2:Accountability and Transparency,Precept 8:Revenue Volatility,144,2.3a,Sovereign wealth fund existence,Does the country have a natural resource fund which is funded by extractive resource revenues?,NON-SCORING,Information only - does not contribute to country score
+NA,NA,NA,49,2.1a,Fiscal year,When does the country's fiscal year start and end?,NON-SCORING,NA
+NA,NA,NA,80,1.4c,Largest SOE,What is the name of the largest company in which the government has a controlling share (i.e. an SOE)?,NON-SCORING,NA
+NA,NA,NA,145,2.3b,Largest sovereign wealth fund,"If there are multiple natural resource funds, which is the largest?",NON-SCORING,NA

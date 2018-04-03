@@ -14,6 +14,31 @@ iso3 = {
 "SSD":u"South Sudan"
 }
 
+#21.11.17 - All 36 documents that had mime type ‘text/html’ are actually PDFs. Seems that in most cases the reason for tagging them that way was that people had made a PDF out of a webpage.
+map_mime = {
+    u'application/octetstream': "Unknown",
+    u'application/x-download': "Unknown",
+    u'application/x-msexcel': "xls",
+    u'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': "xlsx",
+    u'image/jpeg': "jpeg",
+    u'image/png': "png",
+    u'application/x-unknown': "Unknown",
+    u'text/html': "pdf",
+    u'images/png': "png",
+    u'application/x-pdf': "pdf",
+    u'text/rtf': "rtf",
+    u'application/save': "Unknown",
+    u'application/vnd.fdf': "pdf",
+    u'application/vnd.openxmlformats-officedocument.wordprocessingml.document': "docx",
+    u'application/octet-stream': "Unknown",
+    u'text/csv': "csv",
+    u'application/vnd.ms-excel': "xls",
+    u'text/pdf': "pdf",
+    u'application/force-download': "Unknown",
+    u'application/pdf': "pdf",
+    u'application/msword': "doc"
+}
+
 complete_metadata = {}
 question_subcomponents = {}
 question_lp = {}
@@ -38,6 +63,7 @@ with open('./assessments.csv', 'r') as f:
 
 datasets = {}
 all_removals = set()
+all_formats = set()
 pdfs = 0
 dropped_pdfs = 0
 duplicates = []
@@ -53,14 +79,15 @@ for assessment in assessments:
     r = requests.get(API_ENDPOINT + assessment)
     docs = r.json()
 
-    print '%s has %s pdfs' % (assessment, len([d for d in docs if d['mime_type'] == "application/pdf"]))
+    print '%s has %s files' % (assessment, len([d for d in docs]))# if d['mime_type'] == "application/pdf"]))
 
     for d in docs:
         #Used for analysing what's in the data, should normally be commented out
         #print d.get('title', "EMPTY") + "\t" + d.get('type', "EMPTY") + "\t" + d.get('year', "EMPTY") + "\t" + d.get('publisher', "EMPTY") + "\t" + d['editors'][0]['first_name'] + " " + d['editors'][0]['last_name'] + "\t" + d['authors'][0]['first_name'] + " " + d['authors'][0]['last_name'] 
         #continue
         complete_metadata[assessment].append(d)
-        if (d['mime_type'] == 'application/pdf'):
+        if True:#(d['mime_type'] == 'application/pdf'):
+            all_formats.add(d['mime_type'])
             pdfs += 1
             subcomponent = ''
             questions = []
@@ -79,7 +106,7 @@ for assessment in assessments:
             for removal in removals:
                 questions.remove(removal)
             if len(questions) == 0:
-                print "Warning, PDF not associated with any valid questions, dropping"
+                print "Warning, file not associated with any valid questions, dropping"
                 dropped_pdfs += 1
                 continue
             questions = list(questions)
@@ -110,7 +137,7 @@ for assessment in assessments:
                 'publisher': d.get('publisher', "Unknown").strip(),
                 'editor': d['editors'][0]['first_name'] + " " + d['editors'][0]['last_name'].strip(),
                 'author': d['authors'][0]['first_name'] + " " + d['authors'][0]['last_name'].strip(),
-                'title': d['title'] + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
+                'title': d['title'],# + " (" + assessment_type + ", " + iso3[assessment[0:3]] + ", " + assessment[4:8] + ")",
                 'name': urlify(d['title']),
                 'owner_org': 'rgi',
                 'license_id': 'cc-by',
@@ -136,6 +163,7 @@ for assessment in assessments:
                     {
                         'name': d['title'],
                         'url': d['s3_url'],
+                        'format': map_mime[d['mime_type']],
                         'license': 'https://creativecommons.org/licenses/by/4.0/',
                         'answers': d['answers'],
                         'questions': d['questions'],
@@ -158,7 +186,7 @@ print "The following questions are invalid:"
 all_removals_list = list(all_removals)
 all_removals_list.sort(key=lambda x: int(x))
 print all_removals_list
-print "This led to " + str(dropped_pdfs) + " PDFs being dropped out of a total of " + str(pdfs) + " PDFs"
+print "This led to " + str(dropped_pdfs) + " files being dropped out of a total of " + str(pdfs) + " files"
 print "There were " + str(len(duplicates)) + " duplicates:"
 for duplicate in duplicates:
     print duplicate
@@ -170,3 +198,5 @@ with open('./datasets2.json', 'w') as f:
 #Optional feature!   
 #with open('./complete.json', 'w') as f:
 #    json.dump(complete_metadata, f, indent=4)
+
+print all_formats
