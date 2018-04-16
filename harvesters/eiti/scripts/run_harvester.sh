@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 mkdir ./out
 python ./extract_summary.py

@@ -262,7 +262,7 @@ def main():
     os.system("mkdir -p ./out/government")
     os.system("mkdir -p ./out/datasets")
 
-    sum_data = getSummaryData()
+    sum_data = [d for d in getSummaryData() if d.get('country', None)]
     total_len = len(sum_data)
     i = 0
 
