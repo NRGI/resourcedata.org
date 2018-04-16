@@ -3,17 +3,18 @@ import re
 import json
 import requests
 import unicodedata
+import sys
+import multiprocessing
+import ssl
+import combine
 
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
 
-filesAlreadyWrittenTo = set([])
-datasets = {}
-tracking = []
-allyears = set()
-allthecountries = set()
-allthecountries_list = []
-allthecountries_iso = set()
-allthecountries_iso_list = []
+# Number of threads, 0 to disable
+MULTITHREAD = 0
+
+# Use HTTP keepalive
+session = requests.Session()
 
 # 'caches'
 organisations = {}
@@ -33,37 +34,38 @@ Disclaimer: The EITI Secretariat advice that users consult the original reports 
         """
 
 
-def writeCsv(name, company_or_govt, data):
-    filename = name + '-' + company_or_govt + '.csv';
-    mode = 'a'
-    
-    if not (filename in filesAlreadyWrittenTo):
-        print 'first time - Setting header'
-        #Split files https://github.com/NRGI/resourcedata.org/issues/13
-        if company_or_govt == 'company':
-            data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
-        else:
-            data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
-        filesAlreadyWrittenTo.add(filename)
-        mode = 'w'
-        
-    with open('./out/' + company_or_govt + '/' + filename, mode) as f:
+def writeCsv(name, company_or_govt, year, data):
+    filename = "%s-%s-%s.csv" % (name, company_or_govt, year)
+    mode = 'w'
+
+    path = os.path.join('./out', company_or_govt , filename)
+
+    #Split files https://github.com/NRGI/resourcedata.org/issues/13
+    if company_or_govt == 'company':
+        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+    else:
+        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+
+    with open(path, mode) as f:
         for l in data:
             f.write(l.encode('utf-8') + '\n')
 
 
 def write(meta, data, company_or_govt):
     countryName = meta['country']['label']
+    year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
-    writeCsv(sanitizedCountryName, company_or_govt, data)
+
+    writeCsv(sanitizedCountryName, company_or_govt, year, data)
 
     dataset_title = "EITI Summary data table for %s" % countryName
     dataset_name = "eiti-summary-data-table-for-%s" % sanitizedCountryName
-    
+
     resource_title_company = "Company payments - %s" % countryName
     resource_title_government = "Revenues received by government agencies - %s" % countryName
 
-    if not (dataset_name in tracking):
+    path = '%s-%s.json' %(sanitizedCountryName, year)
+    with open(os.path.join('./out/datasets', path), 'w') as f:
         dataset = {
             "title": dataset_title,
             "name": dataset_name,
@@ -81,18 +83,8 @@ def write(meta, data, company_or_govt):
             "resource_title_company": resource_title_company,
             "resource_title_government": resource_title_government
         }
-        datasets[dataset_name] = dataset
-        tracking.append(dataset_name)
-        allyears.add(dataset['year'][0])
-    else:
-        yearsofar = datasets[dataset_name]['year']
-        ysf = set(yearsofar)
-        theyear = meta['label'][-4:]
-        ysf.add(theyear)
-        allyears.add(theyear)
-        yearsofar = list(ysf)
-        yearsofar.sort()
-        datasets[dataset_name]['year'] = yearsofar
+        json.dump(dataset, f)
+    return
 
 def sanitizeCountryName(countryName):
     normalizedCountryName = unicodedata.normalize('NFKD', countryName.lower())
@@ -105,7 +97,8 @@ def getSummaryData():
     data = []
 
     while (done is False):
-        d = requests.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
+        print("Getting summary page %s"% page)
+        d = session.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
         if len(d) == 0:
             done = True
         data.extend(d)
@@ -116,12 +109,14 @@ def getSummaryData():
 def getLineForRevenue(d, company, company_or_govt):
     countryn = d['country']['label']
     ciso3 = d['country']['iso3']
-    created = d['created']
-    changed = d['changed']
+    # api returns spurious timestamps in the date created/changed.
+    created = "%sT00:00:00+0000" % d['created'].split('T')[0]
+    changed = "%sT00:00:00+0000" % d['changed'].split('T')[0]
+    year = d['label'][-4:]
 
     gid = company['gfs_code_id']
     if gid not in gfs:
-        j = requests.get(API_ENDPOINT + 'gfs_code/' + gid).json()
+        j = session.get(API_ENDPOINT + 'gfs_code/' + gid).json()
         temp_gfs_code = j['data'][0]['code']
         for i, c in enumerate(temp_gfs_code):
             if not c.isdigit():
@@ -132,13 +127,13 @@ def getLineForRevenue(d, company, company_or_govt):
     cid = company['organisation_id']
     companyurl = API_ENDPOINT + 'organisation/' + cid
     if cid not in organisations:
-        j = requests.get(companyurl).json()
+        j = session.get(companyurl).json()
         organisations[cid] = j['data'][0]
 
     rid = company['id']
     revurl = API_ENDPOINT + 'revenue/' + rid
     if rid not in revenues:
-        j = requests.get(revurl).json()
+        j = session.get(revurl).json()
         revenues[rid] = j['data'][0]
 
     gfscode = gfs[gid]['code']
@@ -153,15 +148,19 @@ def getLineForRevenue(d, company, company_or_govt):
         orglabel = ''
         rec_agency_name = organisations[cid]['label']
 
-    valreported = company['original_revenue']
+    valreported = company['original_revenue'] or ''
 
-    valreportedusd = company['revenue']
+    valreportedusd = company['revenue'] or ''
 
     stream_name = revenues[rid]['label']
 
     currency_code = company['original_currency']
 
-    currency_rate = d['country']['metadata'][year]['currency_rate']
+    currency_rate = ''
+    try:
+        currency_rate = d['country']['metadata'][year]['currency_rate']
+    except: pass
+    
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     returnstring = (
@@ -191,28 +190,26 @@ def getLineForRevenue(d, company, company_or_govt):
         companyurl  # company irl
     )
 
-# Ensure output folders exist
-os.system("mkdir -p ./out/company")
-os.system("mkdir -p ./out/government")
 
-sum_data = getSummaryData()
-total_len = len(sum_data)
-i = 0
-for d in sorted(sum_data, key=lambda d: d['label']):
-    i += 1
-
+def gatherCountry(d):
     out_government = []
     out_company = []
 
     country = d['country']['label']
-    
-    allthecountries.add(country)
-    allthecountries_iso.add(d['country']['iso3'])
-    
+
     year = d['label'][-4:]
 
     if (d['revenue_company'] or d['revenue_government']):
-        print "%s/%s  %s %s" % (i, total_len, country, year)
+
+        sanitizedCountryName = sanitizeCountryName(country)
+        print "%s %s" % (sanitizedCountryName, year)
+        filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
+        path = os.path.join('./out', "government" , filename)
+
+        if os.path.exists(path):
+            print "%s %s exists: continuing" %(sanitizedCountryName, year)
+            return
+
 
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
@@ -226,48 +223,106 @@ for d in sorted(sum_data, key=lambda d: d['label']):
         for revenue in revgovt:
             try:
                 out_government.append(getLineForRevenue(d, revenue, 'government'))
-            except Exception:
+                #print out_government[-1]
+            except KeyboardInterrupt:
+                raise
+            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+                continue
+            except KeyError:
+                continue
+            except Exception as msg:
+                print msg
+                raise
                 continue
 
         for revenue in revcompany:
             try:
                 out_company.append(getLineForRevenue(d, revenue, 'company'))
-            except Exception:
+                #print out_company[-1]
+            except KeyboardInterrupt:
+                raise
+            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
                 continue
-            
+            except KeyError:
+                continue
+            except Exception as msg:
+                print msg
+                raise
+                continue
+
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         write(d, out_government, 'government')
         write(d, out_company, 'company')
     else:
-        print "%s/%s  %s %s - No revenue_company or revenue_government" % (i, total_len, country, year)
+        print "%s %s - No revenue_company or revenue_government" % (country, year)
 
-# now that that's all done, we'll aggregate them all into a 'total' dataset
-os.system("cat ./out/company/* | awk '!seen[$0]++' > ./out/all_unique_company.csv")
-os.system("cat ./out/government/* | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+def main():
+    # Ensure output folders exist
+    os.system("mkdir -p ./out/company")
+    os.system("mkdir -p ./out/government")
+    os.system("mkdir -p ./out/datasets")
 
-with open('./datasets.json', 'w') as f:
-    alltheyears = list(allyears)
-    alltheyears.sort()
-    allthecountries_list = list(allthecountries)
-    allthecountries_list.sort()
-    allthecountries_iso_list = list(allthecountries_iso)
-    allthecountries_iso_list.sort()
-    
-    datasets['eiti-complete-summary-table'] = {
-        "title": "EITI Complete Summary Data Table",
-        "name": "eiti-complete-summary-table",
-        "notes": general_notes,
-        "year": alltheyears,
-        "country": allthecountries_list,
-        "country_iso3": allthecountries_iso_list,
-        "owner_org": 'eiti',
-        "license_id": "cc-by",
-        "category": ["Precept 2: Accountability and Transparency"],
-        "filename": './out/all_unique.csv',
-        "filename_company": './out/all_unique_company.csv',
-        "filename_government": './out/all_unique_government.csv',
-        "resource_title_company": "Company payments",
-        "resource_title_government": "Revenues received by government agencies"
-    }
-    json.dump(datasets.values(), f)
+    sum_data = [d for d in getSummaryData() if d.get('country', None)]
+    total_len = len(sum_data)
+    i = 0
 
+    allthecountries = set()
+    allthecountries_list = []
+    allthecountries_iso = set()
+    allthecountries_iso_list = []
+
+    for d in sorted(sum_data, key=lambda d: d['label']):
+        country = d['country']['label']
+
+        allthecountries.add(country)
+        allthecountries_iso.add(d['country']['iso3'])
+
+    if MULTITHREAD:
+        p = multiprocessing.Pool(MULTITHREAD)
+        p.map(gatherCountry, sum_data)
+    else:
+        for d in sorted(sum_data, key=lambda d: d['label']):
+            gatherCountry(d)
+
+    combine.combine_csv('./out/company')
+    combine.combine_csv('./out/government')
+    datasets = combine.combine_datasets('./out/datasets')
+
+    # now that that's all done, we'll aggregate them all into a 'total' dataset
+    os.system("cat ./out/company/*company.csv | awk '!seen[$0]++' > ./out/all_unique_company.csv")
+    os.system("cat ./out/government/*government.csv | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+
+    year_set = set()
+    for d in datasets.values():
+        year_set.update(d['year'])
+
+    with open('./datasets.json', 'w') as f:
+        alltheyears = list(year_set)
+        alltheyears.sort()
+        allthecountries_list = list(allthecountries)
+        allthecountries_list.sort()
+        allthecountries_iso_list = list(allthecountries_iso)
+        allthecountries_iso_list.sort()
+
+        datasets['eiti-complete-summary-table'] = {
+            "title": "EITI Complete Summary Data Table",
+            "name": "eiti-complete-summary-table",
+            "notes": general_notes,
+            "year": alltheyears,
+            "country": allthecountries_list,
+            "country_iso3": allthecountries_iso_list,
+            "owner_org": 'eiti',
+            "license_id": "cc-by",
+            "category": ["Precept 2: Accountability and Transparency"],
+            "filename": './out/all_unique.csv',
+            "filename_company": './out/all_unique_company.csv',
+            "filename_government": './out/all_unique_government.csv',
+            "resource_title_company": "Company payments",
+            "resource_title_government": "Revenues received by government agencies"
+        }
+        json.dump(datasets.values(), f)
+
+    return 0
+
+if __name__=='__main__':
+    sys.exit(main())
