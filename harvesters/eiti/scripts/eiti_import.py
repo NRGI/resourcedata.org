@@ -84,18 +84,25 @@ def update_dataset(data, existing):
     need_to_update = False
     #Test each key of data vs what's in existing; any differences, do update
     for key in data.keys():
-        #print key
-        #print data[key]
-        #if key in existing: print existing[key]
-        #else: print 'NONE'
+
+        # owner_org gets returned as uuid, we have name... just don't bother;
+        # other things don't make it into CKAN, assume other things are new
+        # and should be added
+
+        if key in ("owner_org", "filename_government", "resource_title_government",
+                   "resource_title_company", "filename_company",
+                   "resource_title_combined", "filename_combined",
+                   "filename"):
+            continue
+
         if key in existing and type(existing[key]) == list:
             existing[key].sort()
             data[key].sort()
-        #owner_org gets returned as uuid, we have name... just don't bother; other things don't make it into CKAN, assume other things are new and should be added
-        if key not in ("owner_org", "filename_government", "resource_title_government", "resource_title_company", "filename_company", "resource_title_combined", "filename_combined") and (key not in existing or data[key] != existing[key]):
+
+        if key not in existing or data[key] != existing[key]:
             need_to_update = True
             break
-    
+
     if need_to_update:
         print "DATASET " + data['name'] + " NEEDS UPDATE, UPDATING"
         #Patch so that we don't lose resources
@@ -245,5 +252,6 @@ for d in datasets:
 if holdover is not None:
     import_dataset(holdover) #Do last to encourage appearing at top
     
-print "The following or some of the following countries caused the dataset creation to fail:"
-print failed_states
+if failed_states:
+    print "The following or some of the following countries caused the dataset creation to fail:"
+    print failed_states
