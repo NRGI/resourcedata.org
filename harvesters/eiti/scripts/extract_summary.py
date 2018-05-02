@@ -50,7 +50,10 @@ def writeCsv(name, company_or_govt, year, data):
         for l in data:
             f.write(l.encode('utf-8') + '\n')
 
+def dataset_name_fromCountry(countryName):
+    return "eiti-summary-data-table-for-%s" % sanitizeCountryName(countryName)
 
+            
 def write(meta, data, company_or_govt):
     countryName = meta['country']['label']
     year = meta['label'][-4:]
@@ -59,7 +62,7 @@ def write(meta, data, company_or_govt):
     writeCsv(sanitizedCountryName, company_or_govt, year, data)
 
     dataset_title = "EITI Summary data table for %s" % countryName
-    dataset_name = "eiti-summary-data-table-for-%s" % sanitizedCountryName
+    dataset_name = dataset_name_fromCountry(countryName)
 
     resource_title_company = "Company payments - %s" % countryName
     resource_title_government = "Revenues received by government agencies - %s" % countryName
@@ -93,16 +96,16 @@ def sanitizeCountryName(countryName):
 
 def getSummaryData():
     page = 1
-    done = False
     data = []
 
-    while (done is False):
+    while True:
         print("Getting summary page %s"% page)
         d = session.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
         if len(d) == 0:
-            done = True
+            break
         data.extend(d)
         page += 1
+
     return data
 
 
@@ -256,13 +259,28 @@ def gatherCountry(d):
     else:
         print "%s %s - No revenue_company or revenue_government" % (country, year)
 
-def main():
+def setup_directories():
     # Ensure output folders exist
     os.system("mkdir -p ./out/company")
     os.system("mkdir -p ./out/government")
     os.system("mkdir -p ./out/datasets")
 
+def combine_files():
+    combine.combine_csv('./out/company')
+    combine.combine_csv('./out/government')
+    datasets = combine.combine_datasets('./out/datasets')
+
+    # now that that's all done, we'll aggregate them all into a 'total' dataset
+    os.system("cat ./out/company/*company.csv | awk '!seen[$0]++' > ./out/all_unique_company.csv")
+    os.system("cat ./out/government/*government.csv | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+
+    return datasets
+
+def main():
+    setup_directories()
+
     sum_data = [d for d in getSummaryData() if d.get('country', None)]
+
     total_len = len(sum_data)
     i = 0
 
@@ -284,13 +302,7 @@ def main():
         for d in sorted(sum_data, key=lambda d: d['label']):
             gatherCountry(d)
 
-    combine.combine_csv('./out/company')
-    combine.combine_csv('./out/government')
-    datasets = combine.combine_datasets('./out/datasets')
-
-    # now that that's all done, we'll aggregate them all into a 'total' dataset
-    os.system("cat ./out/company/*company.csv | awk '!seen[$0]++' > ./out/all_unique_company.csv")
-    os.system("cat ./out/government/*government.csv | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+    datasets = combine_files()
 
     year_set = set()
     for d in datasets.values():

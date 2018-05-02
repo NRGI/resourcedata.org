@@ -6,6 +6,8 @@ import urllib
 import filecmp
 import datetime
 
+session = requests.Session()
+
 failed_states = []
 
 API_HOST = os.environ['API_HOST']
@@ -28,8 +30,8 @@ def mapcountry(countryname):
         return countryname
 
 def api_get(action, data={}):
-    print API_HOST + "/api/action/"+action
-    return requests.get(
+    #print API_HOST + "/api/action/"+action
+    return session.get(
         API_HOST+"/api/action/"+action,
         params=data,
         verify=True,
@@ -37,7 +39,7 @@ def api_get(action, data={}):
 
 
 def api_post(action, data={}):
-    return requests.post(
+    return session.post(
         API_HOST+"/api/action/"+action,
         verify=True,
         json=data,
@@ -101,6 +103,7 @@ def update_dataset(data, existing):
 
         if key not in existing or data[key] != existing[key]:
             need_to_update = True
+            print "Dataset %s key: %s is different" % (data['name'],key)
             break
 
     if need_to_update:
@@ -117,16 +120,29 @@ def update_dataset(data, existing):
         print "DATASET " + data['name'] + " UNCHANGED"
         return False, existing
 
+#Cache the datasets
+DATASET_CACHE = {}
+
+def get_dataset(name):
+    if name in DATASET_CACHE:
+        return DATASET_CACHE[name]
+
+    r = api_get("package_show", data={'id': name})
+    jsondata = r.json()
+    if jsondata.get("success"):
+        DATASET_CACHE[name] = jsondata['result']
+        return DATASET_CACHE[name]
+    # don't cache failures?
+    return {}
+
 
 def upsert_dataset(data):
     print "UPSERTING DATASET " + data['name']
-    r = api_get("package_show", data={'id': data['name']})
-    jsondata = r.json()
-    already_exists = jsondata.get("success")
-    if already_exists:
+    existing = get_dataset(data['name'])
+    if existing:
         print "DATA FROM CKAN (EXISTING):"
-        print jsondata['result']
-        return update_dataset(data, jsondata['result'])
+        print existing
+        return update_dataset(data, existing)
     else:
         return create_dataset(data)
 
@@ -234,24 +250,30 @@ def import_dataset(d):
         create_resource(d['name'], d['filename_company'], d["resource_title_company"])
         create_resource(d['name'], d['filename_government'], d["resource_title_government"])
 
-upsert_org({u'image_display_url': u'https://eiti.org/sites/all/themes/eiti/logo.svg', u'name': u'eiti', u'title': u'EITI'})
 
-datasets = {}
+def main():
+    upsert_org({u'image_display_url': u'https://eiti.org/sites/all/themes/eiti/logo.svg', u'name': u'eiti', u'title': u'EITI'})
 
-with open('./datasets.json', 'r') as f:
-    datasets = json.load(f)
+    datasets = {}
 
-holdover = None
+    with open('./datasets.json', 'r') as f:
+        datasets = json.load(f)
 
-for d in datasets:
-    if d['name'] == "eiti-complete-summary-table":
-        holdover = d
-    else:
-        import_dataset(d)
+    holdover = None
 
-if holdover is not None:
-    import_dataset(holdover) #Do last to encourage appearing at top
-    
-if failed_states:
-    print "The following or some of the following countries caused the dataset creation to fail:"
-    print failed_states
+    for d in datasets:
+        if d['name'] == "eiti-complete-summary-table":
+            holdover = d
+        else:
+            import_dataset(d)
+
+    if holdover is not None:
+        import_dataset(holdover) #Do last to encourage appearing at top
+
+    if failed_states:
+        print "The following or some of the following countries caused the dataset creation to fail:"
+        print failed_states
+
+
+if __name__== '__main__':
+    main()
