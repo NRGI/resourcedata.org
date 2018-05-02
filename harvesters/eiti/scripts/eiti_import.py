@@ -119,16 +119,29 @@ def update_dataset(data, existing):
         print "DATASET " + data['name'] + " UNCHANGED"
         return False, existing
 
+#Cache the datasets
+DATASET_CACHE = {}
+
+def get_dataset(name):
+    if name in DATASET_CACHE:
+        return DATASET_CACHE[name]
+
+    r = api_get("package_show", data={'id': name})
+    jsondata = r.json()
+    if jsondata.get("success"):
+        DATASET_CACHE[name] = jsondata['result']
+        return DATASET_CACHE[name]
+    # don't cache failures?
+    return {}
+
 
 def upsert_dataset(data):
     print "UPSERTING DATASET " + data['name']
-    r = api_get("package_show", data={'id': data['name']})
-    jsondata = r.json()
-    already_exists = jsondata.get("success")
-    if already_exists:
+    existing = get_dataset(data['name'])
+    if existing:
         print "DATA FROM CKAN (EXISTING):"
-        print jsondata['result']
-        return update_dataset(data, jsondata['result'])
+        print existing
+        return update_dataset(data, existing)
     else:
         return create_dataset(data)
 
