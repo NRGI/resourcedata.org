@@ -259,13 +259,28 @@ def gatherCountry(d):
     else:
         print "%s %s - No revenue_company or revenue_government" % (country, year)
 
-def main():
+def setup_directories():
     # Ensure output folders exist
     os.system("mkdir -p ./out/company")
     os.system("mkdir -p ./out/government")
     os.system("mkdir -p ./out/datasets")
 
+def combine_files():
+    combine.combine_csv('./out/company')
+    combine.combine_csv('./out/government')
+    datasets = combine.combine_datasets('./out/datasets')
+
+    # now that that's all done, we'll aggregate them all into a 'total' dataset
+    os.system("cat ./out/company/*company.csv | awk '!seen[$0]++' > ./out/all_unique_company.csv")
+    os.system("cat ./out/government/*government.csv | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+
+    return datasets
+
+def main():
+    setup_directories()
+
     sum_data = [d for d in getSummaryData() if d.get('country', None)]
+
     total_len = len(sum_data)
     i = 0
 
@@ -287,13 +302,7 @@ def main():
         for d in sorted(sum_data, key=lambda d: d['label']):
             gatherCountry(d)
 
-    combine.combine_csv('./out/company')
-    combine.combine_csv('./out/government')
-    datasets = combine.combine_datasets('./out/datasets')
-
-    # now that that's all done, we'll aggregate them all into a 'total' dataset
-    os.system("cat ./out/company/*company.csv | awk '!seen[$0]++' > ./out/all_unique_company.csv")
-    os.system("cat ./out/government/*government.csv | awk '!seen[$0]++' > ./out/all_unique_government.csv")
+    datasets = combine_files()
 
     year_set = set()
     for d in datasets.values():
