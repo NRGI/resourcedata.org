@@ -6,6 +6,8 @@ import urllib
 import filecmp
 import datetime
 
+session = requests.Session()
+
 failed_states = []
 
 API_HOST = os.environ['API_HOST']
@@ -28,8 +30,8 @@ def mapcountry(countryname):
         return countryname
 
 def api_get(action, data={}):
-    print API_HOST + "/api/action/"+action
-    return requests.get(
+    #print API_HOST + "/api/action/"+action
+    return session.get(
         API_HOST+"/api/action/"+action,
         params=data,
         verify=True,
@@ -37,7 +39,7 @@ def api_get(action, data={}):
 
 
 def api_post(action, data={}):
-    return requests.post(
+    return session.post(
         API_HOST+"/api/action/"+action,
         verify=True,
         json=data,
