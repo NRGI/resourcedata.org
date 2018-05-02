@@ -96,16 +96,16 @@ def sanitizeCountryName(countryName):
 
 def getSummaryData():
     page = 1
-    done = False
     data = []
 
-    while (done is False):
+    while True:
         print("Getting summary page %s"% page)
         d = session.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
         if len(d) == 0:
-            done = True
+            break
         data.extend(d)
         page += 1
+
     return data
 
 
