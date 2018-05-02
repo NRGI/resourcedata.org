@@ -50,7 +50,10 @@ def writeCsv(name, company_or_govt, year, data):
         for l in data:
             f.write(l.encode('utf-8') + '\n')
 
+def dataset_name_fromCountry(countryName):
+    return "eiti-summary-data-table-for-%s" % sanitizeCountryName(countryName)
 
+            
 def write(meta, data, company_or_govt):
     countryName = meta['country']['label']
     year = meta['label'][-4:]
@@ -59,7 +62,7 @@ def write(meta, data, company_or_govt):
     writeCsv(sanitizedCountryName, company_or_govt, year, data)
 
     dataset_title = "EITI Summary data table for %s" % countryName
-    dataset_name = "eiti-summary-data-table-for-%s" % sanitizedCountryName
+    dataset_name = dataset_name_fromCountry(countryName)
 
     resource_title_company = "Company payments - %s" % countryName
     resource_title_government = "Revenues received by government agencies - %s" % countryName
