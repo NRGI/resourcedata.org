@@ -30,6 +30,9 @@ def update_recent(dt):
 
     MOST_RECENT_CHANGE = max(dt, MOST_RECENT_CHANGE)
 
+def pr_safe(s):
+    return extract_summary.sanitizeCountryName(s)
+
 def checkForUpdates(summary):
     """ Checks the metadata and the years to see if we need to harvest
 
@@ -48,31 +51,31 @@ def checkForUpdates(summary):
 
     dataset = eiti_import.get_dataset(dataset_name)
     if not dataset:
-        print "New country spotted: %s" % (country)
+        print "New country spotted: %s" % (pr_safe(country))
         return True
 
     # check if there's any point in checking this...
     if not (summary.get('revenue_government',None)
             or summary.get('revenue_company',None)):
-        print "No company or government data, skipping %s, %s" % (country, year)
+        print "No company or government data, skipping %s, %s" % (pr_safe(country), year)
         return False
 
     # check changed, year
     if not (year in dataset['year']):
-        print "New year spotted for %s, %s" %(country, year)
+        print "New year spotted for %s, %s" %(pr_safe(country), year)
         return True
 
     dataset_modified = parseIsoTs(dataset['metadata_modified'])
 
     if summary_modified >= dataset_modified:
         print "Summary data has been updated for %s, %s: on %s, existing %s" %(
-            country, year,
+            pr_safe(country), year,
             time.strftime('%Y-%m-%d', summary_modified),
             time.strftime('%Y-%m-%d', dataset_modified))
         return True
 
     print "No change for %s, %s last updated %s" % (
-        country, year, time.strftime('%Y-%m-%d', summary_modified))
+        pr_safe(country), year, time.strftime('%Y-%m-%d', summary_modified))
     return False
 
 
