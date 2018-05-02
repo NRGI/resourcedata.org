@@ -103,6 +103,7 @@ def update_dataset(data, existing):
 
         if key not in existing or data[key] != existing[key]:
             need_to_update = True
+            print "Dataset %s key: %s is different" % (data['name'],key)
             break
 
     if need_to_update:
