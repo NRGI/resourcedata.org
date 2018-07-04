@@ -284,17 +284,6 @@ def main():
     total_len = len(sum_data)
     i = 0
 
-    allthecountries = set()
-    allthecountries_list = []
-    allthecountries_iso = set()
-    allthecountries_iso_list = []
-
-    for d in sorted(sum_data, key=lambda d: d['label']):
-        country = d['country']['label']
-
-        allthecountries.add(country)
-        allthecountries_iso.add(d['country']['iso3'])
-
     if MULTITHREAD:
         p = multiprocessing.Pool(MULTITHREAD)
         p.map(gatherCountry, sum_data)
@@ -311,18 +300,14 @@ def main():
     with open('./datasets.json', 'w') as f:
         alltheyears = list(year_set)
         alltheyears.sort()
-        allthecountries_list = list(allthecountries)
-        allthecountries_list.sort()
-        allthecountries_iso_list = list(allthecountries_iso)
-        allthecountries_iso_list.sort()
 
         datasets['eiti-complete-summary-table'] = {
             "title": "EITI Complete Summary Data Table",
             "name": "eiti-complete-summary-table",
             "notes": general_notes,
             "year": alltheyears,
-            "country": allthecountries_list,
-            "country_iso3": allthecountries_iso_list,
+            "country": [],
+            "country_iso3": [],
             "owner_org": 'eiti',
             "license_id": "cc-by",
             "category": ["Precept 2: Accountability and Transparency"],
