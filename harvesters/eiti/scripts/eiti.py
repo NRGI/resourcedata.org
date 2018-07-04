@@ -109,20 +109,14 @@ def update_complete_dataset(filtered_summaries):
 
 
     for summary in filtered_summaries:
-        country = hoist_country(summary)
-        country_iso3 = summary['country']['iso3']
         year = summary['label'][-4:]
 
         if not year in dataset['year']:
             dataset['year'].append(year)
-        if not country in dataset['country']:
-            dataset['country'].append(country)
-        if not country_iso3 in dataset['country_iso3']:
-            dataset['country_iso3'].append(country_iso3)
 
     dataset['year'].sort()
-    dataset['country'].sort()
-    dataset['country_iso3'].sort()
+    dataset['country'] = []
+    dataset['country_iso3'] = []
 
     return dataset
 
