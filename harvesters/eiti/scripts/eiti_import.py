@@ -100,6 +100,10 @@ def update_dataset(data, existing):
         if key in existing and type(existing[key]) == list:
             existing[key].sort()
             data[key].sort()
+            if tuple(existing[key]) != tuple(data[key]):
+                need_to_update = True
+                print "Dataset %s key: %s is different" % (data['name'],key)
+                break
 
         if key not in existing or data[key] != existing[key]:
             need_to_update = True
@@ -131,7 +135,7 @@ def get_dataset(name):
     jsondata = r.json()
     if jsondata.get("success"):
         DATASET_CACHE[name] = jsondata['result']
-        return DATASET_CACHE[name]
+        return DATASET_CACHE[name].copy()
     # don't cache failures?
     return {}
 
