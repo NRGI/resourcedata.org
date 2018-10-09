@@ -9,6 +9,7 @@
 import time
 import requests
 import json
+import os
 
 import eiti_import
 import extract_summary
@@ -122,35 +123,42 @@ def update_complete_dataset(filtered_summaries):
 
 
 def main():
+    update_all = os.environ.get('UPDATE_ALL',None)
+
     # SummaryData returns a list of datasets, each one a country/year pair
     summaries = extract_summary.getSummaryData()
 
-    # Check which countries to update
-    countries_to_update = set([hoist_country(s) for s in summaries if checkForUpdates(s)])
-
-    print "Most recent upstream change: %s" % time.strftime('%Y-%m-%d', MOST_RECENT_CHANGE)
-
-    if len(countries_to_update):
-        print "There are %d countries that need updating" % len(countries_to_update)
-        print "\n".join(countries_to_update)
+    if update_all:
+        for summary in summaries:
+            extract_summary.gatherCountry(summary)
+        filtered_summaries = summaries
     else:
-        print "There are no changes to report"
-        return
+        # Check which countries to update
+        countries_to_update = set([hoist_country(s) for s in summaries if checkForUpdates(s)])
 
-    # Grab all the data for each country that needs updated.
-    filtered_summaries = [s for s in summaries if hoist_country(s) in countries_to_update]
+        print "Most recent upstream change: %s" % time.strftime('%Y-%m-%d', MOST_RECENT_CHANGE)
+
+        if len(countries_to_update):
+            print "There are %d countries that need updating" % len(countries_to_update)
+            print "\n".join(countries_to_update)
+        else:
+            print "There are no changes to report"
+            return
+
+        # Grab all the data for each country that needs updated.
+        filtered_summaries = [s for s in summaries if hoist_country(s) in countries_to_update]
 
 
-    unchanged_countries = set([hoist_country(s) for s in summaries
-                               if hoist_country(s) not in countries_to_update])
+        unchanged_countries = set([hoist_country(s) for s in summaries
+                                   if hoist_country(s) not in countries_to_update])
 
-    extract_summary.setup_directories()
+        extract_summary.setup_directories()
 
-    for country in unchanged_countries:
-        gather_csvs(country)
+        for country in unchanged_countries:
+            gather_csvs(country)
 
-    for summary in filtered_summaries:
-        extract_summary.gatherCountry(summary)
+        for summary in filtered_summaries:
+            extract_summary.gatherCountry(summary)
 
     #combine the files, pop in the eiti combined dataset table
     datasets = extract_summary.combine_files()
