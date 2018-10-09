@@ -8,6 +8,8 @@ import multiprocessing
 import ssl
 import combine
 
+import csv
+
 API_ENDPOINT = "https://eiti.org/api/v1.0/"
 
 # Number of threads, 0 to disable
@@ -36,29 +38,39 @@ Disclaimer: The EITI Secretariat advice that users consult the original reports 
 
 def writeCsv(name, company_or_govt, year, data):
     filename = "%s-%s-%s.csv" % (name, company_or_govt, year)
-    mode = 'w'
+    mode = 'wb'
 
     path = os.path.join('./out', company_or_govt , filename)
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     if company_or_govt == 'company':
-        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url,commodities'.split(','))
     else:
-        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url')
+        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url'.split(','))
 
     with open(path, mode) as f:
-        for l in data:
-            f.write(l.encode('utf-8') + '\n')
+        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        try:
+            writer.writerows(data)
+        except Exception as msg:
+            print msg
+            print type(data)
+            print len(data)
+            print data
+
 
 def dataset_name_fromCountry(countryName):
     return "eiti-summary-data-table-for-%s" % sanitizeCountryName(countryName)
 
-            
+
 def write(meta, data, company_or_govt):
     countryName = meta['country']['label']
     year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
 
+    if not len(data):
+        print "empty data for %s %s, %s" % (sanitizedCountryName, year, company_or_govt)
+        return
     writeCsv(sanitizedCountryName, company_or_govt, year, data)
 
     dataset_title = "EITI Summary data table for %s" % countryName
@@ -126,7 +138,7 @@ def getLineForRevenue(d, company, company_or_govt):
                 j['data'][0]['code'] = j['data'][0]['code'][0:i] + "-" + j['data'][0]['code'][i:]
                 break
         gfs[gid] = j['data'][0]
-    
+
     cid = company['organisation_id']
     companyurl = API_ENDPOINT + 'organisation/' + cid
     if cid not in organisations:
@@ -145,11 +157,11 @@ def getLineForRevenue(d, company, company_or_govt):
     end_date = d['year_end']
 
     if company_or_govt == 'company':
-        orglabel = organisations[cid]['label']
+        orglabel = organisations[cid]['label'].encode('utf-8')
         rec_agency_name = ''
     else:
         orglabel = ''
-        rec_agency_name = organisations[cid]['label']
+        rec_agency_name = organisations[cid]['label'].encode('utf-8')
 
     valreported = company['original_revenue'] or ''
 
@@ -163,35 +175,35 @@ def getLineForRevenue(d, company, company_or_govt):
     try:
         currency_rate = d['country']['metadata'][year]['currency_rate']
     except: pass
-    
+
+    entity_name = ''
+    if company_or_govt == 'company':
+        entity_name = orglabel.replace('"', '').replace("\n", "; ").strip()
+        commodities = (",".join(organisations[cid].get('commodities',None) or []),)
+    else:
+        entity_name = rec_agency_name.replace('"', '').replace("\n", "; ").strip()
+        commodities = tuple()
+
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
-    returnstring = (
-        created + ',' + 
-        changed + ',' + 
-        countryn + ',' +  # country
-        ciso3 + ',' + # iso3
-        year + ',"' +
-        start_date + '","' + # start year
-        end_date + '","'# end year
-    )
-    
-    if company_or_govt == 'company':
-        returnstring += orglabel.replace('"', '').replace("\n", "; ").strip() + '",'# org name
-    else:
-        returnstring += rec_agency_name.replace('"', '').replace("\n", "; ").strip() + '",' # rec agency
-        
     return (
-        returnstring +
-        gfscode + ',"' +  # gfs code
-        gfsdesc.replace('"', '').replace("\n", "; ").strip() + '","' +  # gfs desc
-        stream_name.replace('"', '').replace("\n", "; ").strip() + '",' +  # stream name
-        currency_code + ',' +
-        currency_rate + ',' +
-        valreported + ',' +  # value reported by company
-        valreportedusd + ',' +  # value reported by company in usd
-        companyurl  # company irl
-    )
+        created,
+        changed,
+        countryn.encode('utf-8'),
+        ciso3,
+        year,
+        start_date,
+        end_date,
+        entity_name,
+        gfscode,
+        gfsdesc.replace('"', '').replace("\n", "; ").strip().encode('utf-8'),
+        stream_name.replace('"', '').replace("\n", "; ").strip().encode('utf-8'),
+        currency_code,
+        currency_rate,
+        valreported,
+        valreportedusd,
+        companyurl,
+        ) + commodities
 
 
 def gatherCountry(d):
