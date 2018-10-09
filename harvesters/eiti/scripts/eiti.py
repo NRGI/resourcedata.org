@@ -128,6 +128,7 @@ def main():
     # SummaryData returns a list of datasets, each one a country/year pair
     summaries = extract_summary.getSummaryData()
 
+    extract_summary.setup_directories()
     if update_all:
         for summary in summaries:
             extract_summary.gatherCountry(summary)
@@ -151,8 +152,6 @@ def main():
 
         unchanged_countries = set([hoist_country(s) for s in summaries
                                    if hoist_country(s) not in countries_to_update])
-
-        extract_summary.setup_directories()
 
         for country in unchanged_countries:
             gather_csvs(country)
