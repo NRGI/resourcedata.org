@@ -177,7 +177,7 @@ def getLineForRevenue(d, company, company_or_govt):
     if company_or_govt == 'company':
         entity_name = orglabel.replace('"', '').replace("\n", "; ").strip()
         company_extras = (",".join(organisations[cid].get('commodities',None) or []).encode('utf-8'),
-                          (organisations[cid].get('identification', '') or '').encode('utf-8'))
+                          (organisations[cid].get('identification', '') or '').replace("\n", ",").encode('utf-8'))
     else:
         entity_name = rec_agency_name.replace('"', '').replace("\n", "; ").strip()
         company_extras = tuple()
