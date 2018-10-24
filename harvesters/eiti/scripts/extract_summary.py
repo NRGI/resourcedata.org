@@ -44,7 +44,7 @@ def writeCsv(name, company_or_govt, year, data):
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     if company_or_govt == 'company':
-        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url,commodities'.split(','))
+        data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,company_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url,commodities,company_identification'.split(','))
     else:
         data.insert(0, 'created,changed,country,iso3,year,start_date,end_date,government_agency_name,gfs_code,gfs_description,name_of_revenue_stream,currency_code,currency_rate,value_reported,value_reported_as_USD,reporting_url'.split(','))
 
@@ -179,10 +179,11 @@ def getLineForRevenue(d, company, company_or_govt):
     entity_name = ''
     if company_or_govt == 'company':
         entity_name = orglabel.replace('"', '').replace("\n", "; ").strip()
-        commodities = (",".join(organisations[cid].get('commodities',None) or []),)
+        company_extras = (",".join(organisations[cid].get('commodities',None) or []).encode('utf-8'),
+                          (organisations[cid].get('identification', '') or '').encode('utf-8'))
     else:
         entity_name = rec_agency_name.replace('"', '').replace("\n", "; ").strip()
-        commodities = tuple()
+        company_extras = tuple()
 
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
@@ -203,7 +204,7 @@ def getLineForRevenue(d, company, company_or_govt):
         valreported,
         valreportedusd,
         companyurl,
-        ) + commodities
+        ) + company_extras
 
 
 def gatherCountry(d):
