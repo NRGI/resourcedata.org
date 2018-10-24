@@ -68,9 +68,6 @@ def write(meta, data, company_or_govt):
     year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
 
-    if not len(data):
-        print "empty data for %s %s, %s" % (sanitizedCountryName, year, company_or_govt)
-        return
     writeCsv(sanitizedCountryName, company_or_govt, year, data)
 
     dataset_title = "EITI Summary data table for %s" % countryName
