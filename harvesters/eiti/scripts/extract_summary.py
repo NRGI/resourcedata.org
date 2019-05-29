@@ -13,8 +13,23 @@ API_ENDPOINT = "https://eiti.org/api/v1.0/"
 # Number of threads, 0 to disable
 MULTITHREAD = 0
 
-# Use HTTP keepalive
-session = requests.Session()
+
+class _session(object):
+    """ Had an issue where we were getting connection errors because something was closing the 
+        connection, and requests wasn't handling it well. So, backup and retry once without 
+        the session.
+    """
+    def __init__(self):
+        # Use HTTP keepalive
+        self._session = requests.Session()
+    def get(self, url):
+        try:
+            return self._session.get(url)
+        except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+            print "Connection error, backing off and retrying: %s" % url
+            return requests.get(url)
+        
+session = _session()
 
 # 'caches'
 organisations = {}
@@ -212,8 +227,7 @@ def gatherCountry(d):
         if os.path.exists(path):
             print "%s %s exists: continuing" %(sanitizedCountryName, year)
             return
-
-
+        
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
         revcompany = []
@@ -229,7 +243,10 @@ def gatherCountry(d):
                 #print out_government[-1]
             except KeyboardInterrupt:
                 raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+                print "Failed getting a revenue"
+                import inspect; print inspect.trace()
+                print msg
                 continue
             except KeyError:
                 continue
@@ -244,7 +261,9 @@ def gatherCountry(d):
                 #print out_company[-1]
             except KeyboardInterrupt:
                 raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+                print "Failed getting a company"
+                print msg
                 continue
             except KeyError:
                 continue
