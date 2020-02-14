@@ -79,7 +79,7 @@ def dataset_name_fromCountry(countryName):
 
 
 def write(meta, data, company_or_govt):
-    countryName = meta['country']['label']
+    countryName = meta['label'][:-6]
     year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
 
@@ -134,7 +134,7 @@ def getSummaryData():
 
 
 def getLineForRevenue(d, company, company_or_govt):
-    countryn = d['country']['label']
+    countryn = d['label'][:-6]
     ciso3 = d['country']['iso3']
     # api returns spurious timestamps in the date created/changed.
     created = "%sT00:00:00+0000" % d['created'].split('T')[0]
@@ -223,7 +223,7 @@ def gatherCountry(d):
     out_government = []
     out_company = []
 
-    country = d['country']['label']
+    country = d['label'][:-6]
 
     year = d['label'][-4:]
 
