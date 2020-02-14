@@ -161,10 +161,10 @@ def create_resource(dataset_name, resource_path, resource_name):
     if line_count == 2:
         print "NOT UPLOADING RESOURCE (EMPTY)"
         return
-        
+
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
-    
+
     print "UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name
     try:
         r = requests.post('%s/api/action/resource_create' % (API_HOST),
@@ -181,11 +181,11 @@ def create_resource(dataset_name, resource_path, resource_name):
         print r.json()
     except Exception as msg:
         print  "Exception uploading resource %s: %s" % (resource_path, msg)
-        
+
 def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
-    
+
     print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
 
     try:
@@ -226,7 +226,7 @@ def import_dataset(d):
             count += 1
 
     new_dataset, dataset = upsert_dataset(d)
-    
+
     if not new_dataset:
         company_done = False
         government_done = False

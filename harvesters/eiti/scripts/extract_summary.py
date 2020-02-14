@@ -17,8 +17,8 @@ MULTITHREAD = 0
 
 
 class _session(object):
-    """ Had an issue where we were getting connection errors because something was closing the 
-        connection, and requests wasn't handling it well. So, backup and retry once without 
+    """ Had an issue where we were getting connection errors because something was closing the
+        connection, and requests wasn't handling it well. So, backup and retry once without
         the session.
     """
     def __init__(self):
@@ -30,7 +30,7 @@ class _session(object):
         except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
             print "Connection error, backing off and retrying: %s" % url
             return requests.get(url)
-        
+
 session = _session()
 
 # 'caches'
@@ -237,7 +237,7 @@ def gatherCountry(d):
         if os.path.exists(path):
             print "%s %s exists: continuing" %(sanitizedCountryName, year)
             return
-        
+
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
         revcompany = []
