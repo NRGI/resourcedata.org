@@ -20,11 +20,12 @@ ckan_names = {
     u'Kyrgyz Republic': u'Kyrgyzstan',
     u'Republic of the Congo': u'Congo',
     u'Tanzania': u'Tanzania, United Republic of',
-    u'United States of America': u'United States'
+    u'United States of America': u'United States',
+    'S\xe3o Tom\xe9 and Pr\xedncipe': u'Sao Tome and Principe',
 }
 
 def mapcountry(countryname):
-    if countryname in (u'Democratic Republic of Congo', u'Kyrgyz Republic', u'Republic of the Congo', u'Tanzania', u'United States of America'):
+    if ckan_names.get(countryname):
         return ckan_names[countryname]
     else:
         return countryname
