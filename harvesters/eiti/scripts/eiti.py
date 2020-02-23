@@ -21,7 +21,7 @@ def parseIsoTs(ts):
     return time.strptime(ts.split('T')[0], '%Y-%m-%d')
 
 def hoist_country(summary):
-    return summary['country']['label']
+    return summary['label'][:-6]
 
 def update_recent(dt):
     global MOST_RECENT_CHANGE
