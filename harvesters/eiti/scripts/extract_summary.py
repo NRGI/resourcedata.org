@@ -17,8 +17,8 @@ MULTITHREAD = 0
 
 
 class _session(object):
-    """ Had an issue where we were getting connection errors because something was closing the 
-        connection, and requests wasn't handling it well. So, backup and retry once without 
+    """ Had an issue where we were getting connection errors because something was closing the
+        connection, and requests wasn't handling it well. So, backup and retry once without
         the session.
     """
     def __init__(self):
@@ -30,7 +30,7 @@ class _session(object):
         except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
             print "Connection error, backing off and retrying: %s" % url
             return requests.get(url)
-        
+
 session = _session()
 
 # 'caches'
@@ -79,7 +79,7 @@ def dataset_name_fromCountry(countryName):
 
 
 def write(meta, data, company_or_govt):
-    countryName = meta['country']['label']
+    countryName = meta['label'][:-6]
     year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
 
@@ -134,7 +134,7 @@ def getSummaryData():
 
 
 def getLineForRevenue(d, company, company_or_govt):
-    countryn = d['country']['label']
+    countryn = d['label'][:-6]
     ciso3 = d['country']['iso3']
     # api returns spurious timestamps in the date created/changed.
     created = "%sT00:00:00+0000" % d['created'].split('T')[0]
@@ -223,7 +223,7 @@ def gatherCountry(d):
     out_government = []
     out_company = []
 
-    country = d['country']['label']
+    country = d['label'][:-6]
 
     year = d['label'][-4:]
 
@@ -237,7 +237,7 @@ def gatherCountry(d):
         if os.path.exists(path):
             print "%s %s exists: continuing" %(sanitizedCountryName, year)
             return
-        
+
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
         revcompany = []
