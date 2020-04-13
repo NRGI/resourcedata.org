@@ -21,11 +21,11 @@ ckan_names = {
     u'Republic of the Congo': u'Congo',
     u'Tanzania': u'Tanzania, United Republic of',
     u'United States of America': u'United States',
-    'S\xe3o Tom\xe9 and Pr\xedncipe': u'Sao Tome and Principe',
+    u'S\xe3o Tom\xe9 and Pr\xedncipe': u'Sao Tome and Principe',
 }
 
 def mapcountry(countryname):
-    if ckan_names.get(countryname):
+    if ckan_names.get(unicode(countryname)):
         return ckan_names[countryname]
     else:
         return countryname
@@ -208,8 +208,11 @@ def update_resource(resource_id, resource_path, resource_name):
 
 
 def compare(remote_file, local_file):
-    urllib.urlretrieve(remote_file, "temp.csv")
-    return filecmp.cmp("temp.csv", local_file)
+    if remote_file and local_file:
+        urllib.urlretrieve(remote_file, "temp.csv")
+        return filecmp.cmp("temp.csv", local_file)
+    print("Datasets cannot be compared: missing remote file or local_file.")
+    return True
 
 def import_dataset(d):
     print "DATA FROM DOWNLOAD:"
@@ -223,6 +226,7 @@ def import_dataset(d):
             #print country
             #print d['country'][count]
             #print mapcountry(country)
+
             d['country'][count] = mapcountry(country)
             count += 1
 
