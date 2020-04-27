@@ -93,24 +93,25 @@ def write(meta, data, company_or_govt):
 
     path = '%s-%s.json' %(sanitizedCountryName, year)
     with open(os.path.join('./out/datasets', path), 'w') as f:
-        dataset = {
-            "title": dataset_title,
-            "name": dataset_name,
-            "year": [meta['label'][-4:]],
-            "notes": general_notes,
-            "owner_org": 'eiti',
-            "country_iso3": [meta['country']['iso3']],
-            "country": [countryName],
-            "license_id": "cc-by",
-            "maintainer": "Anders Pedersen",
-            "maintainer_email": "apedersen@resourcegovernance.org",
-            "category": ["Precept 2: Accountability and Transparency"],
-            "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
-            "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
-            "resource_title_company": resource_title_company,
-            "resource_title_government": resource_title_government
-        }
-        json.dump(dataset, f)
+        if 'country' in meta:
+            dataset = {
+                "title": dataset_title,
+                "name": dataset_name,
+                "year": [meta['label'][-4:]],
+                "notes": general_notes,
+                "owner_org": 'eiti',
+                "country_iso3": [meta['country']['iso3']],
+                "country": [countryName],
+                "license_id": "cc-by",
+                "maintainer": "Anders Pedersen",
+                "maintainer_email": "apedersen@resourcegovernance.org",
+                "category": ["Precept 2: Accountability and Transparency"],
+                "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
+                "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
+                "resource_title_company": resource_title_company,
+                "resource_title_government": resource_title_government
+            }
+            json.dump(dataset, f)
     return
 
 def sanitizeCountryName(countryName):

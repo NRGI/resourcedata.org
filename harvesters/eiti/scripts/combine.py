@@ -21,12 +21,16 @@ def combine_datasets(path):
     files = sorted([f for f in os.listdir(path) if f.endswith('.json')])
     datasets = {}
     for name, bunch in itertools.groupby(files, lambda x: x[:-10]):
-        with open(os.path.join(path, bunch.next()), 'r') as f:
-            dataset = json.load(f)
-        years = [fname[-9:-5] for fname in bunch]
-        dataset['year'].extend(years)
-        print dataset['year']
-        datasets[dataset['name']]=dataset
+        filename = os.path.join(path, bunch.next())
+        try:
+            with open(filename, 'r') as f:
+                dataset = json.load(f)
+            years = [fname[-9:-5] for fname in bunch]
+            dataset['year'].extend(years)
+            print dataset['year']
+            datasets[dataset['name']]=dataset
+        except ValueError:
+            print("JSON file {} does not contain valid json content, skipping.".format(filename))
 
     return datasets
     #with open(os.path.join('dataset.json'), 'w') as f:
