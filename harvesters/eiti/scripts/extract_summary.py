@@ -230,13 +230,15 @@ def gatherCountry(d):
 
     if (d['revenue_company'] or d['revenue_government']):
 
-        sanitizedCountryName = sanitizeCountryName(country)
-        print "%s %s" % (sanitizedCountryName, year)
-        filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
+        countryName = sanitizeCountryName(country)
+        if countryName.strip() == '' and year.strip()=='':
+            return
+        print "%s %s" % (countryName, year)
+        filename = "%s-%s-%s.csv" % (countryName, "government", year)
         path = os.path.join('./out', "government" , filename)
 
         if os.path.exists(path):
-            print "%s %s exists: continuing" %(sanitizedCountryName, year)
+            print "%s %s exists: continuing" %(countryName, year)
             return
 
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
