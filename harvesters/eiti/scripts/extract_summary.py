@@ -297,6 +297,13 @@ def setup_directories():
     os.system("mkdir -p ./out/government")
     os.system("mkdir -p ./out/datasets")
 
+
+def store_summaries(summaries):
+    with open('./out/summaries.json', 'w') as f:
+        json.dump(summaries, f)
+    pass
+
+
 def combine_files():
     combine.combine_csv('./out/company')
     combine.combine_csv('./out/government')
