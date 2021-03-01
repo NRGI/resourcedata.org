@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  harvester:
+    build: ./
+    volumes:
+      - ./scripts:/root/eiti_harvester
+    environment:
+      # TODO: read these from an .env file to avoid leaking API keys to the repo.
+      API_HOST: https://staging.resourcedata.org
+      API_KEY: <fill in with staging API KEY>
+      PYTHONIOENCODING: utf8
+      PYTHONUNBUFFERED: 'true'
+      # Set to true after first run to read slow to download EITI data from disk cache.
+      USE_CACHED_SUMMARIES: 'true'

@@ -23,6 +23,9 @@ def parseIsoTs(ts):
 def hoist_country(summary):
     return summary['label'][:-6]
 
+def hoist_year(summary):
+    return summary['label'][-4:]
+
 def update_recent(dt):
     global MOST_RECENT_CHANGE
 
@@ -125,12 +128,21 @@ def update_complete_dataset(filtered_summaries):
 
 
 def main():
-    update_all = os.environ.get('UPDATE_ALL',None)
-
-    # SummaryData returns a list of datasets, each one a country/year pair
-    summaries = extract_summary.getSummaryData()
+    update_all = os.environ.get('UPDATE_ALL', None)
+    use_cached_summaries = os.environ.get('USE_CACHED_SUMMARIES', None)
 
     extract_summary.setup_directories()
+
+    if use_cached_summaries:
+        print('Loading cached summaries from ./out/summaries.json')
+        with open('./out/summaries.json') as f:
+            summaries = json.load(f)
+    else:
+        # SummaryData returns a list of datasets, each one a country/year pair
+        summaries = extract_summary.getSummaryData()
+        # Cache summaries on disk
+        extract_summary.store_summaries(summaries)
+
     if update_all:
         for summary in summaries:
             extract_summary.gatherCountry(summary)
