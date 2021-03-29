@@ -12,7 +12,7 @@ import json
 import os
 
 import eiti_import
-import extract_summary
+import extract_summary_v2 as extract_summary
 
 session = requests.Session()
 MOST_RECENT_CHANGE = None

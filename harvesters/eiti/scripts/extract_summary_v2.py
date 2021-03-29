@@ -12,6 +12,8 @@ import csv
 
 import eiti_api_v2 as api
 
+MULTITHREAD=8
+
 general_notes = """
     The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
 
@@ -107,26 +109,27 @@ def getLineForRevenue(summary, revenue, company_or_govt):
     countryn = summary.country.label
     ciso3 = summary.country.iso3
     # api returns spurious timestamps in the date created/changed.
-    created = "%sT00:00:00+0000" % summary.created.split('T')[0]
-    changed = "%sT00:00:00+0000" % summary.changed.split('T')[0]
+    created = summary.created
+    changed = summary.changed
     year = summary.label[-4:]
 
 
     gfscode = formatGfsCode(revenue.gfs.code)
     gfsdesc = revenue.gfs.label
-    start_date = revenue.year_start
-    end_date = revenue.year_end
+    start_date = summary.year_start
+    end_date = summary.year_end
 
 
     org = revenue.organisation
+    if not org:
+        # some of the linked data
+        # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org. 
+        return
     entity_name = org.label.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
 
     valreported = revenue.get('original_revenue', '')
-
     valreportedusd = revenue.revenue
-
     stream_name = revenue.label
-
     currency_code = revenue.currency
 
     currency_rate = ''
@@ -134,13 +137,10 @@ def getLineForRevenue(summary, revenue, company_or_govt):
         currency_rate = d['country']['metadata'][year]['currency_rate']
     except: pass
 
-    entity_name = ''
     if company_or_govt == 'company':
-        entity_name = orglabel.replace('"', '').replace("\n", "; ").strip()
         company_extras = (",".join(org.get('commodities',None) or []).encode('utf-8'),
                           (org.get('identification', '') or '').replace("\n", ",").encode('utf-8'))
     else:
-        entity_name = rec_agency_name.replace('"', '').replace("\n", "; ").strip()
         company_extras = tuple()
 
 
@@ -161,7 +161,7 @@ def getLineForRevenue(summary, revenue, company_or_govt):
         currency_rate,
         valreported,
         valreportedusd,
-        companyurl,
+        org.self,
         ) + company_extras
 
 
@@ -186,21 +186,14 @@ def gatherCountry(summary):
 
 
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
-        revgovt = []
-        revcompany = []
-        try:
-            revgovt = summary.revenue_government or []
-        except:
-            pass
-        try:
-            revcompay = summary.revenue_company or []
-        except:
-            pass
-
+        revgovt = summary.revenue_government or []
+        revcompay = summary.revenue_company or []
 
         for revenue in revgovt:
             try:
-                out_government.append(getLineForRevenue(summary, revenue, 'government'))
+                record = getLineForRevenue(summary, revenue, 'government')
+                if record:
+                    out_government.append(record)
                 #print out_government[-1]
             except KeyboardInterrupt:
                 raise
@@ -215,7 +208,9 @@ def gatherCountry(summary):
 
         for revenue in revcompany:
             try:
-                out_company.append(getLineForRevenue(summary, revenue, 'company'))
+                record = getLineForRevenue(summary, revenue, 'company')
+                if record:
+                    out_company.append(record)
                 #print out_company[-1]
             except KeyboardInterrupt:
                 raise
@@ -234,6 +229,10 @@ def gatherCountry(summary):
     else:
         print "%s %s - No revenue_company or revenue_government" % (country, year)
 
+def gatherCountry_asJson(json_dict):
+    data_dict = json.loads(json_dict)
+    return gatherCountry(api.SummaryData(data_dict))
+        
 def setup_directories():
     # Ensure output folders exist
     os.system("mkdir -p ./out/company")
@@ -272,7 +271,7 @@ def main():
 
     if MULTITHREAD:
         p = multiprocessing.Pool(MULTITHREAD)
-        p.map(gatherCountry, sum_data)
+        p.map(gatherCountry_asJson, [s.to_json() for s in sum_data])
     else:
         for d in sorted(sum_data, key=lambda d: d['label']):
             gatherCountry(d)
@@ -312,4 +311,9 @@ def main():
     return 0
 
 if __name__=='__main__':
-    sys.exit(main())
+    if len(sys.argv) > 1:
+        summary = api.summary_data_obj_fromId(sys.argv[1])
+        gatherCountry(summary)
+        sys.exit(0)
+    else:
+        sys.exit(main())
