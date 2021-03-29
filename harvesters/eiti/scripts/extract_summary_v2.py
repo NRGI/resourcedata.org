@@ -12,7 +12,7 @@ import csv
 
 import logging
 log = logging.getLogger(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 import eiti_api_v2 as api

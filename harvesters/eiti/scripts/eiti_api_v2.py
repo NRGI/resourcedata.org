@@ -5,7 +5,7 @@ import json
 import logging
 log = logging.getLogger(__name__)
 
-log.setLevel(logging.DEBUG)
+#log.setLevel(logging.DEBUG)
 
 ENDPOINT = "https://eiti.org/api/v2.0/"
 
@@ -68,7 +68,7 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
             #     }
             #   ]
             # }
-            log.error("_single_request: obj_id is none for type: %s", obj_type)
+            log.warning("_single_request: obj_id is none for type: %s", obj_type)
             return {}
         url = os.path.join(ENDPOINT, obj_type, obj_id)
 
