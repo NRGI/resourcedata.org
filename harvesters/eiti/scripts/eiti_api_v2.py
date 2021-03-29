@@ -2,13 +2,21 @@ import requests
 import os
 import json
 
+import logging
+log = logging.getLogger(__name__)
 
-ENDPOINT = "https://staging.eiti.org/api/v2.0/"
+log.setLevel(logging.DEBUG)
+
+ENDPOINT = "https://eiti.org/api/v2.0/"
 
 
 session = requests.Session()
 cache = {}
 
+def clear_cache():
+    """ useful for testing """
+    cache.clear()
+    
 class UnexpectedResponse(Exception): pass
 
 def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
@@ -25,11 +33,49 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
     """
 
     if not url:
+        if obj_id is None:
+            # some of the linked data
+            # (e.g. https://eiti.org/api/v2.0/revenue/479968) has
+            # nulls for some of the items We're going to swallow this
+            # info and return a bare dict, which will then make an
+            # empty LinkedObj with null values.
+            # {
+            #   "self": {
+            #     "href": "https:\/\/eiti.org\/api\/v2.0\/revenue\/479968",
+            #     "title": "Self"
+            #   },
+            #   "data": [
+            #     {
+            #       "comments": null,
+            #       "unit": null,
+            #       "in_kind_volume": null,
+            #       "payment_made_in_kind": null,
+            #       "reporting_currency": null,
+            #       "reported_by_project": null,
+            #       "goverment_entity": null,
+            #       "levied_on_project": null,
+            #       "project_name": null,
+            #       "sector": null,
+            #       "summary_data": "https:\/\/eiti.org\/api\/v2.0\/summary_data\/AF2009",
+            #       "currency": "USD",
+            #       "revenue": 0,
+            #       "organisation": null,
+            #       "gfs": "https:\/\/eiti.org\/api\/v2.0\/gfs_code\/1112E2",
+            #       "type": "agency",
+            #       "self": "https:\/\/eiti.org\/api\/v2.0\/revenue\/479968",
+            #       "label": "",
+            #       "id": 479968
+            #     }
+            #   ]
+            # }
+            log.error("_single_request: obj_id is none for type: %s", obj_type)
+            return {}
         url = os.path.join(ENDPOINT, obj_type, obj_id)
 
     if url in cache:
         return cache[url]
 
+    log.debug("_single_request: getting %s", url)
     r = session.get(url, params=kwargs)
     r.raise_for_status()
 
@@ -54,6 +100,7 @@ def _collection_request(url=None, obj_type=None, **kwargs):
     if not url:
         url = os.path.join(ENDPOINT, obj_type)
 
+    log.debug("_collection_request: getting %s", url)
     r = session.get(url, params=kwargs)
     r.raise_for_status()
 
@@ -98,18 +145,26 @@ def revenue(url=None, rid=None):
     return _single_request(url=url, obj_type='revenue', obj_id=rid)
 
 def summary_data(url=None, sid=None):
-    return _single_request(url=url, obj_type='summary_data', obj_id=sid)
+    return _munge_summary(_single_request(url=url, obj_type='summary_data', obj_id=sid))
 
 def all_summary_data():
-    return _slurp('summary_data')
+    return {k:_munge_summary(v) for k,v in _slurp('summary_data').items()}
 
 def all_summary_data_obj():
-    return [SummaryData(s) for s in _slurp('summary_data')]
+    return [SummaryData(s) for s in all_summary_data().values()]
 
 def pp(item):
     print json.dumps(item, indent=2)
 
+def _munge_summary(summary):
+    # api returns supurious timestamps in date created/changed
+    created = "%sT00:00:00+0000" % summary['created'].split('T')[0]
+    changed = "%sT00:00:00+0000" % summary['changed'].split('T')[0]
+    summary['created'] = created
+    summary['changed'] = changed
+    return summary
 
+    
 class LinkedObj(object):
 #    _wraps = { 'field_name': function_to_resolve  }
     _wraps = {}
@@ -144,6 +199,12 @@ class LinkedObj(object):
     def __repr__(self):
         return json.dumps(self.data_dict)
 
+    def __bool__(self):
+        return bool(self.data_dict)
+
+    def __nonzero__(self):
+        return bool(self.data_dict)
+    
     # dict interface
     def __contains__(self, att):
         return att in self.data_dict
@@ -163,7 +224,8 @@ class LinkedObj(object):
         return self.data_dict.items()
     def values(self):
         return self.data_dict.values()
-
+    def to_json(self):
+        return json.dumps(self.data_dict)
 
 
 class Revenue(LinkedObj): pass
