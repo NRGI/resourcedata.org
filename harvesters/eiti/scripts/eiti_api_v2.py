@@ -73,6 +73,7 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
         url = os.path.join(ENDPOINT, obj_type, obj_id)
 
     if url in cache:
+        log.debug("_single_request: cached value for %s", url)
         return cache[url]
 
     log.debug("_single_request: getting %s", url)
@@ -81,6 +82,7 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
 
     try:
         cache[url] = r.json()['data'][0]
+        log.debug("_cache: size: %s", len(cache))
         return dict(cache[url])
     except Exception as msg:
         raise UnexpectedResponse(msg)
@@ -112,6 +114,7 @@ def _collection_request(url=None, obj_type=None, **kwargs):
 def _cache(collection):
     for elt in collection:
         cache[elt['self']] = elt
+    log.debug("_cache: size: %s", len(cache))
 
 def _slurp(obj_type, **kwargs):
     items = _collection_request(obj_type=obj_type, **kwargs)
@@ -135,14 +138,23 @@ def gfs_codes():
 def gfs_code(url=None, cid=None):
     return _single_request(url=url, obj_type='gfs_code', obj_id=cid)
 
+def gfs_codes_forSummary(summary_id):
+    return _slurp('gfs_code', **{'filter[summary_data]':summary_id})
+
 def organisation(url=None, oid=None):
     return _single_request(url=url, obj_type='organisation', obj_id=oid)
 
 def organisation_forCountry(country_id):
     return _slurp('organisation', **{'filter[country]':country_id})
 
+def organisation_forSummary(summary_id):
+    return _slurp('organisation', **{'filter[summary_data]':summary_id})
+
 def revenue(url=None, rid=None):
     return _single_request(url=url, obj_type='revenue', obj_id=rid)
+
+def revenue_forSummary(summary_id):
+    return _slurp('revenue', **{'filter[summary_data]':summary_id})
 
 def summary_data(url=None, sid=None):
     return _munge_summary(_single_request(url=url, obj_type='summary_data', obj_id=sid))

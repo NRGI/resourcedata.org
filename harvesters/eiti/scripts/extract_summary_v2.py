@@ -123,7 +123,7 @@ def getLineForRevenue(summary, revenue, company_or_govt):
     org = revenue.organisation
     if not org:
         # some of the linked data
-        # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org. 
+        # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org.
         return
     entity_name = org.label.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
 
@@ -168,6 +168,10 @@ def getLineForRevenue(summary, revenue, company_or_govt):
 def gatherCountry(summary):
     out_government = []
     out_company = []
+
+    # precache these
+    org_list = api.organisation_forSummary(summary.id)
+    revenue_list = api.revenue_forSummary(summary.id)
 
     country = summary.country.label
 
@@ -232,7 +236,7 @@ def gatherCountry(summary):
 def gatherCountry_asJson(json_dict):
     data_dict = json.loads(json_dict)
     return gatherCountry(api.SummaryData(data_dict))
-        
+
 def setup_directories():
     # Ensure output folders exist
     os.system("mkdir -p ./out/company")
@@ -312,6 +316,8 @@ def main():
 
 if __name__=='__main__':
     if len(sys.argv) > 1:
+        setup_directories()
+        api.gfs_codes()
         summary = api.summary_data_obj_fromId(sys.argv[1])
         gatherCountry(summary)
         sys.exit(0)
