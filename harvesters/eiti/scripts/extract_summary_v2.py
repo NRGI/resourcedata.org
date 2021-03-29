@@ -191,7 +191,7 @@ def gatherCountry(summary):
 
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = summary.revenue_government or []
-        revcompay = summary.revenue_company or []
+        revcompany = summary.revenue_company or []
 
         for revenue in revgovt:
             try:
