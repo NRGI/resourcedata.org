@@ -118,18 +118,24 @@ def getLineForRevenue(summary, revenue, company_or_govt):
     changed = summary.changed
     year = summary.label[-4:]
 
+    org = revenue.organisation
+    if not org:
+        # some of the linked data
+        # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org.
+        if revenue.revenue != 0:
+            log.error("getLineForRevenue: org is null: %s", revenue.self)
+        return
+    gfs = revenue.gfs
+    if not gfs:
+        if revenue.revenue != 0:
+            log.error("getLineForRevenue: gfs is null: %s", revenue.self)
+        return
 
     gfscode = formatGfsCode(revenue.gfs.code)
     gfsdesc = revenue.gfs.label
     start_date = summary.year_start
     end_date = summary.year_end
 
-
-    org = revenue.organisation
-    if not org:
-        # some of the linked data
-        # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org.
-        return
     entity_name = org.label.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
 
     valreported = revenue.get('original_revenue', '')
@@ -174,69 +180,78 @@ def gatherCountry(summary):
     out_government = []
     out_company = []
 
-    # precache these
-    org_list = api.organisation_forSummary(summary.id)
-    revenue_list = api.revenue_forSummary(summary.id)
-
     country = summary.country.label
-
     year = summary.label[-4:]
 
-    if ('revenue_company' in summary or 'revenue_government' in summary):
+    if not ('revenue_company' in summary or 'revenue_government' in summary):
+        log.info("gatherCountry: %s %s - No revenue_company or revenue_government", country, year)
+        return
 
-        sanitizedCountryName = sanitizeCountryName(country)
-        print "%s %s" % (sanitizedCountryName, year)
-        filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
-        path = os.path.join('./out', "government" , filename)
+    sanitizedCountryName = sanitizeCountryName(country)
+    log.info("gatherCountry: %s %s", sanitizedCountryName, year)
+    filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
+    path = os.path.join('./out', "government" , filename)
 
-        if os.path.exists(path):
-            print "%s %s exists: continuing" %(sanitizedCountryName, year)
-            return
+    if os.path.exists(path):
+        print "%s %s exists: continuing" %(sanitizedCountryName, year)
+        return
 
+    # precache these
+    try:
+        org_list = api.organisation_forSummary(summary.id)
+    except requests.exceptions.HTTPError:
+        # some summaries don't have this info, if this doesn't work, it's probably
+        # going to be empty anyway
+        log.error("gatherCountry: Exception getting org_list for: %s", summary.id)
+    try:
+        revenue_list = api.revenue_forSummary(summary.id)
+    except requests.exceptions.HTTPError:
+        log.error("gatherCountry: Exception getting revenue_list for: %s", summary.id)
 
-        #Split files https://github.com/NRGI/resourcedata.org/issues/13
-        revgovt = summary.revenue_government or []
-        revcompany = summary.revenue_company or []
+    #Split files https://github.com/NRGI/resourcedata.org/issues/13
+    revgovt = summary.revenue_government or []
+    revcompany = summary.revenue_company or []
 
-        for revenue in revgovt:
-            try:
-                record = getLineForRevenue(summary, revenue, 'government')
-                if record:
-                    out_government.append(record)
-                #print out_government[-1]
-            except KeyboardInterrupt:
-                raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
-                continue
-            except KeyError:
-                continue
-            except Exception as msg:
-                print msg
-                raise
-                continue
+    for revenue in revgovt:
+        if not revenue: continue
+        try:
+            record = getLineForRevenue(summary, revenue, 'government')
+            if record:
+                out_government.append(record)
+            #print out_government[-1]
+        except KeyboardInterrupt:
+            raise
+        except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            continue
+        except KeyError:
+            continue
+        except Exception as msg:
+            log.error("gatherCountry: Exception in government: %s", msg)
+            raise
+            continue
 
-        for revenue in revcompany:
-            try:
-                record = getLineForRevenue(summary, revenue, 'company')
-                if record:
-                    out_company.append(record)
-                #print out_company[-1]
-            except KeyboardInterrupt:
-                raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
-                continue
-            except KeyError:
-                continue
-            except Exception as msg:
-                print msg
-                raise
-                continue
+    for revenue in revcompany:
+        if not revenue: continue
+        try:
+            record = getLineForRevenue(summary, revenue, 'company')
+            if record:
+                out_company.append(record)
+            #print out_company[-1]
+        except KeyboardInterrupt:
+            raise
+        except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            continue
+        except KeyError:
+            continue
+        except Exception as msg:
+            log.error("gatherCountry: Exception in company: %s", msg)
+            raise
+            continue
 
-        #Split files https://github.com/NRGI/resourcedata.org/issues/13
-        write(summary, out_government, 'government')
-        write(summary, out_company, 'company')
-    else:
-        print "%s %s - No revenue_company or revenue_government" % (country, year)
+    #Split files https://github.com/NRGI/resourcedata.org/issues/13
+    write(summary, out_government, 'government')
+    write(summary, out_company, 'company')
+
 
 def gatherCountry_asJson(json_dict):
     data_dict = json.loads(json_dict)

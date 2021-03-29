@@ -78,7 +78,13 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
 
     log.debug("_single_request: getting %s", url)
     r = session.get(url, params=kwargs)
-    r.raise_for_status()
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as msg:
+        if r.status_code == 422:
+            log.error("_single_request: Error 422 on %s, returning {}", url)
+            return {}
+        raise
 
     try:
         cache[url] = r.json()['data'][0]
