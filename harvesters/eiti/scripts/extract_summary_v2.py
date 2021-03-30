@@ -17,7 +17,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 import eiti_api_v2 as api
 
-MULTITHREAD=8
+MULTITHREAD=0
 
 general_notes = """
     The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
