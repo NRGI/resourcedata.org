@@ -68,7 +68,7 @@ def _single_request(url=None, obj_type=None, obj_id=None, **kwargs):
             #     }
             #   ]
             # }
-            log.warning("_single_request: obj_id is none for type: %s", obj_type)
+            log.debug("_single_request: obj_id is none for type: %s", obj_type)
             return {}
         url = os.path.join(ENDPOINT, obj_type, obj_id)
 

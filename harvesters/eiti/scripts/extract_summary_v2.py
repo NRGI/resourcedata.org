@@ -110,6 +110,9 @@ def formatGfsCode(orig):
             return orig[0:i] + "-" + orig[i:]
     return orig
 
+def _formatName(s):
+    return s.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
+
 def getLineForRevenue(summary, revenue, company_or_govt):
     countryn = summary.country.label
     ciso3 = summary.country.iso3
@@ -118,25 +121,30 @@ def getLineForRevenue(summary, revenue, company_or_govt):
     changed = summary.changed
     year = summary.label[-4:]
 
+    # If the org or gfs is missing, and the revenue is not 0, then we will
+    # continue with the missing data. The values in the CSV will be blank
+    # for those items.
+
     org = revenue.organisation
     if not org:
         # some of the linked data
         # (e.g. https://eiti.org/api/v2.0/revenue/479968) has a bare org.
-        if revenue.revenue != 0:
-            log.error("getLineForRevenue: org is null: %s", revenue.self)
-        return
+        if revenue.revenue == 0:
+            log.info("getLineForRevenue: org is null: %s", revenue.self)
+            return
+
     gfs = revenue.gfs
     if not gfs:
-        if revenue.revenue != 0:
-            log.error("getLineForRevenue: gfs is null: %s", revenue.self)
-        return
+        if revenue.revenue == 0:
+            log.info("getLineForRevenue: gfs is null: %s", revenue.self)
+            return
 
-    gfscode = formatGfsCode(revenue.gfs.code)
-    gfsdesc = revenue.gfs.label
+    gfscode = formatGfsCode(gfs.get('code',''))
+    gfsdesc = _formatName(gfs.get('label',''))
     start_date = summary.year_start
     end_date = summary.year_end
 
-    entity_name = org.label.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
+    entity_name = _formatName(org.get('label',''))
 
     valreported = revenue.get('original_revenue', '')
     valreportedusd = revenue.revenue
@@ -148,11 +156,10 @@ def getLineForRevenue(summary, revenue, company_or_govt):
         currency_rate = d['country']['metadata'][year]['currency_rate']
     except: pass
 
+    company_extras = tuple()
     if company_or_govt == 'company':
         company_extras = (",".join(org.get('commodities',None) or []).encode('utf-8'),
                           (org.get('identification', '') or '').replace("\n", ",").encode('utf-8'))
-    else:
-        company_extras = tuple()
 
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
@@ -166,13 +173,13 @@ def getLineForRevenue(summary, revenue, company_or_govt):
         end_date,
         entity_name,
         gfscode,
-        gfsdesc.replace('"', '').replace("\n", "; ").strip().encode('utf-8'),
-        stream_name.replace('"', '').replace("\n", "; ").strip().encode('utf-8'),
+        gfsdesc,
+        _formatName(stream_name),
         currency_code,
         currency_rate,
         valreported,
         valreportedusd,
-        org.self,
+        org.get('self', '')
         ) + company_extras
 
 
