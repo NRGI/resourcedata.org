@@ -249,8 +249,10 @@ class LinkedObj(object):
 class Revenue(LinkedObj): pass
 class Organisation(LinkedObj): pass
 class GfsCode(LinkedObj): pass
-class SummaryData(LinkedObj): pass
 class Country(LinkedObj): pass
+class SummaryData(LinkedObj):
+    def hasRevenue(self):
+        return self.data_dict.get('revenue_government',[]) or self.data_dict.get('revenue_company', [])
 
 def asObj(func, cls):
     def wrapped(*args, **kwargs):
