@@ -23,9 +23,16 @@ def combine_datasets(path):
     for name, bunch in itertools.groupby(files, lambda x: x[:-10]):
         with open(os.path.join(path, bunch.next()), 'r') as f:
             dataset = json.load(f)
-        years = [fname[-9:-5] for fname in bunch]
-        dataset['year'].extend(years)
+        for fname in bunch:
+            with open(os.path.join(path, fname), 'r') as f:
+                additional_dataset = json.load(f)
+                dataset['year'].extend(additional_dataset['year'])
+                dataset['created'] = min(dataset['created'], additional_dataset['created'])
+                dataset['last_updated'] = max(dataset['last_updated'], additional_dataset['last_updated'])
+                
         print dataset['year']
+        dataset['created'] = dataset['created'].split('T')[0]
+        dataset['last_updated'] = dataset['last_updated'].split('T')[0]
         datasets[dataset['name']]=dataset
 
     return datasets

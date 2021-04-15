@@ -20,8 +20,6 @@ import eiti_api_v2 as api
 MULTITHREAD=0
 
 general_notes = """
-    The data is published using the Summary Data Template, Version 1.1 as of 05 March 2015.
-
 According to the EITI Standard 5.3.b: "Summary data from each EITI Report should be submitted electronically to the International Secretariat according to the standardised reporting format provided by the International Secretariat" This template should be completed in full and submitted by email by the national secretariat to the International EITI Secretariat following the publication of the report. The data will be used to populate the global EITI data repository, available on the international EITI website.
 
 NB: The data available on ResourceData is republished from the EITI API and covers one section of the Summary Data, Part 3 which is comprised of data on government revenues per revenue stream and company.
@@ -83,8 +81,11 @@ def write(meta, data, company_or_govt):
             "country_iso3": [meta['country']['iso3']],
             "country": [countryName],
             "license_id": "cc-by",
-            "maintainer": "Anders Pedersen",
-            "maintainer_email": "apedersen@resourcegovernance.org",
+            'topic': ["Open data", "Revenue sharing", "Global initiatives"],
+            'last_updated': meta.changed,
+            'created': meta.created,
+            "maintainer": "Tommy Morrison",
+            "maintainer_email": "tmorrison@resourcegovernance.org",
             "category": ["Precept 2: Accountability and Transparency"],
             "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
             "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
@@ -331,6 +332,7 @@ def main():
             "owner_org": 'eiti',
             "license_id": "cc-by",
             "category": ["Precept 2: Accountability and Transparency"],
+            'topic': ["Open data", "Revenue sharing", "Global initiatives"],
             "filename": './out/all_unique.csv',
             "filename_company": './out/all_unique_company.csv',
             "filename_government": './out/all_unique_government.csv',
