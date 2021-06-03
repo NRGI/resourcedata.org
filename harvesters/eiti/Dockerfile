@@ -1,11 +1,4 @@
-FROM alpine
-
-RUN apk --no-cache add \
- curl \
- python
-
-RUN curl -q https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
- && python get-pip.py
+from python:3.8
 
 COPY requirements.txt /tmp/requirements.txt
 WORKDIR /tmp
