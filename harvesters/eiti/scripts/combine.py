@@ -12,11 +12,14 @@ def combine_csv(path):
             with open(os.path.join(path, next(bunch)), 'r') as source:
                 combined.write(source.read())
             for source_path in bunch:
-                with open(os.path.join(path, source_path), 'r') as source:
-                    next(source)
-                    for l in source:
-                        combined.write(l)
-
+                try:
+                    with open(os.path.join(path, source_path), 'r') as source:
+                        next(source)
+                        for l in source:
+                            combined.write(l)
+                except StopIteration:
+                    pass
+                
 def combine_datasets(path):
     files = sorted([f for f in os.listdir(path) if f.endswith('.json')])
     datasets = {}

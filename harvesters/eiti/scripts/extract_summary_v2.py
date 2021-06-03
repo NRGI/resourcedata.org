@@ -32,7 +32,7 @@ Disclaimer: The EITI Secretariat advice that users consult the original reports 
 
 def writeCsv(name, company_or_govt, year, data):
     filename = "%s-%s-%s.csv" % (name, company_or_govt, year)
-    mode = 'wb'
+    mode = 'w'
 
     path = os.path.join('./out', company_or_govt , filename)
 
@@ -112,7 +112,7 @@ def formatGfsCode(orig):
     return orig
 
 def _formatName(s):
-    return s.encode('utf-8').replace('"', '').replace("\n", "; ").strip()
+    return s.replace('"', '').replace("\n", "; ").strip()
 
 def getLineForRevenue(summary, revenue, company_or_govt):
     countryn = summary.country.label
@@ -159,15 +159,15 @@ def getLineForRevenue(summary, revenue, company_or_govt):
 
     company_extras = tuple()
     if company_or_govt == 'company':
-        company_extras = (",".join(org.get('commodities',None) or []).encode('utf-8'),
-                          (org.get('identification', '') or '').replace("\n", ",").encode('utf-8'))
+        company_extras = (",".join(org.get('commodities',None) or []),
+                          (org.get('identification', '') or '').replace("\n", ","))
 
 
     #Split files https://github.com/NRGI/resourcedata.org/issues/13
     return (
         created,
         changed,
-        countryn.encode('utf-8'),
+        countryn,
         ciso3,
         year,
         start_date,

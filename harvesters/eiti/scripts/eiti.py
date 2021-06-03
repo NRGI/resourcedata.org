@@ -90,6 +90,9 @@ def gather_csvs(country):
     dataset = eiti_import.get_dataset(dataset_name)
     for resource in dataset['resources']:
         url = resource['url']
+        if not url:
+            print ("EMPTY url: %s" % json.dumps(resource, indent=2))
+            continue
         print("Getting %s" % url)
         resp = session.get(url)
         with open(fileName_fromUrl(country, url), 'wb') as f:

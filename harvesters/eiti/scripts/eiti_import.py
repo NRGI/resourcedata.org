@@ -167,15 +167,16 @@ def create_resource(dataset_name, resource_path, resource_name):
     
     print("UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name)
     try:
-        r = requests.post('%s/api/action/resource_create' % (API_HOST),
-                      data={
-                          "package_id": dataset_name,
-                          "type": "file.upload",
-                          "name": resource_name,
-                          "format": "csv"
-                      },
-                      headers={"Authorization": API_KEY},
-                      files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
+        with open(resource_path, 'rb') as f:
+            r = requests.post('%s/api/action/resource_create' % (API_HOST),
+                          data={
+                              "package_id": dataset_name,
+                              "type": "file.upload",
+                              "name": resource_name,
+                              "format": "csv"
+                          },
+                          headers={"Authorization": API_KEY},
+                          files={'upload':(friendly_resource_name + '.csv', f)})
 
         print("CREATE RESOURCE RESULT:")
         print(r.json())
@@ -189,16 +190,17 @@ def update_resource(resource_id, resource_path, resource_name):
     print("UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id)
 
     try:
-        r = requests.post('%s/api/action/resource_update' % (API_HOST),
-                          data={
-                              "id": resource_id,
-                              "type": "file.upload",
-                              "name": resource_name,
-                              "format": "csv",
-                              "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
-                          },
-                          headers={"Authorization": API_KEY},
-                          files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
+        with open(resource_path, 'rb') as f:
+            r = requests.post('%s/api/action/resource_update' % (API_HOST),
+                              data={
+                                  "id": resource_id,
+                                  "type": "file.upload",
+                                  "name": resource_name,
+                                  "format": "csv",
+                                  "updated": datetime.datetime.utcnow().strftime("%Y-%m-%d")
+                              },
+                              headers={"Authorization": API_KEY},
+                              files={'upload':(friendly_resource_name + '.csv', f)})
 
         print("UPDATE RESOURCE RESULT:")
         print(r.json())
