@@ -16,6 +16,14 @@ start = 0
 
 org = "4f68d003-ac7f-4d63-b677-6a8db02d54ef"
 
+# staging
+if True:
+    BASE_URL='https://staging.resourcedata.org/'
+    org = 'noclibraryfinalprelaunch'
+if False:
+    BASE_URL='https://resourcedata.org/'
+    org = "8445b050-db86-4cac-92eb-1e233d178993"
+
 params = {
     'fq': "owner_org:%s" % org,
     'sort': 'name asc',
