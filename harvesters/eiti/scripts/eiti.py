@@ -169,6 +169,7 @@ def main():
         json.dump(list(datasets.values()), f)
 
     # delegate to the old import script for those items we want to update
+    import pdb; pdb.set_trace();
     eiti_import.main()
 
 if __name__=='__main__':

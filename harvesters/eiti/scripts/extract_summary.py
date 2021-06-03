@@ -53,6 +53,7 @@ def writeCsv(name, company_or_govt, year, data):
         try:
             writer.writerows(data)
         except Exception as msg:
+            import pdb; pdb.set_trace()
             print(msg)
             print(type(data))
             print(len(data))
