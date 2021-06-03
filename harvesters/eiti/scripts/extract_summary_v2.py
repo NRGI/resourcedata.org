@@ -97,7 +97,7 @@ def write(meta, data, company_or_govt):
 
 def sanitizeCountryName(countryName):
     normalizedCountryName = unicodedata.normalize('NFKD', countryName.lower())
-    asciiCountryName = normalizedCountryName.encode('ascii', 'ignore')
+    asciiCountryName = normalizedCountryName.encode('ascii', 'ignore').decode()
     return re.sub('[^a-z]', '-', asciiCountryName)
 
 def getSummaryData():
