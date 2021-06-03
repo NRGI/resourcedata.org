@@ -47,10 +47,10 @@ def writeCsv(name, company_or_govt, year, data):
         try:
             writer.writerows(data)
         except Exception as msg:
-            print msg
-            print type(data)
-            print len(data)
-            print data
+            print(msg)
+            print(type(data))
+            print(len(data))
+            print(data)
 
 
 def dataset_name_fromCountry(countryName):
@@ -201,7 +201,7 @@ def gatherCountry(summary):
     path = os.path.join('./out', "government" , filename)
 
     if os.path.exists(path):
-        print "%s %s exists: continuing" %(sanitizedCountryName, year)
+        print("%s %s exists: continuing" %(sanitizedCountryName, year))
         return
 
     # precache these
@@ -339,7 +339,7 @@ def main():
             "resource_title_company": "Company payments",
             "resource_title_government": "Revenues received by government agencies"
         }
-        json.dump(datasets.values(), f)
+        json.dump(list(datasets.values()), f)
 
     return 0
 

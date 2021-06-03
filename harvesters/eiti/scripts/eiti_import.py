@@ -2,7 +2,7 @@
 import os
 import json
 import requests
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import filecmp
 import datetime
 
@@ -16,15 +16,15 @@ API_KEY = os.environ['API_KEY']
 #See https://github.com/NRGI/resourcedata.org/issues/25
 #For now this is just mapping to what's in the schema (link below), but we may need to change the schema to be ISO conformant
 ckan_names = {
-    u'Democratic Republic of Congo': u'Congo, the Democratic Republic of the',
-    u'Kyrgyz Republic': u'Kyrgyzstan',
-    u'Republic of the Congo': u'Congo',
-    u'Tanzania': u'Tanzania, United Republic of',
-    u'United States of America': u'United States'
+    'Democratic Republic of Congo': 'Congo, the Democratic Republic of the',
+    'Kyrgyz Republic': 'Kyrgyzstan',
+    'Republic of the Congo': 'Congo',
+    'Tanzania': 'Tanzania, United Republic of',
+    'United States of America': 'United States'
 }
 
 def mapcountry(countryname):
-    if countryname in (u'Democratic Republic of Congo', u'Kyrgyz Republic', u'Republic of the Congo', u'Tanzania', u'United States of America'):
+    if countryname in ('Democratic Republic of Congo', 'Kyrgyz Republic', 'Republic of the Congo', 'Tanzania', 'United States of America'):
         return ckan_names[countryname]
     else:
         return countryname
@@ -47,23 +47,23 @@ def api_post(action, data={}):
 
 
 def create_org(org):
-    print "CREATING ORG " + org['name']
+    print("CREATING ORG " + org['name'])
     r = api_post("organization_create", data=org)
-    print r
+    print(r)
     return org['name']
 
 
 def update_org(org):
-    print "UPDATING ORG " + org['name']
+    print("UPDATING ORG " + org['name'])
     r = api_post("organization_create", data=org)
-    print r
+    print(r)
     return org['name']
 
 
 def upsert_org(org):
     r = api_get("organization_show", data={'id': org['name']})
     jsondata = r.json()
-    print jsondata
+    print(jsondata)
     already_exists = jsondata.get("success")
     if not already_exists:
         return create_org(org)
@@ -72,11 +72,11 @@ def upsert_org(org):
 
 
 def create_dataset(data):
-    print "CREATING DATASET " + data['name']
+    print("CREATING DATASET " + data['name'])
     r = api_post("package_create", data=data)
     jsonified = r.json()
-    print "CREATE DATASET RESULT:"
-    print jsonified
+    print("CREATE DATASET RESULT:")
+    print(jsonified)
     if ('error' in jsonified):
         failed_states.append(data['country'])
     return True, jsonified
@@ -102,26 +102,26 @@ def update_dataset(data, existing):
             data[key].sort()
             if tuple(existing[key]) != tuple(data[key]):
                 need_to_update = True
-                print "Dataset %s key: %s is different" % (data['name'],key)
+                print("Dataset %s key: %s is different" % (data['name'],key))
                 break
 
         if key not in existing or data[key] != existing[key]:
             need_to_update = True
-            print "Dataset %s key: %s is different" % (data['name'],key)
+            print("Dataset %s key: %s is different" % (data['name'],key))
             break
 
     if need_to_update:
-        print "DATASET " + data['name'] + " NEEDS UPDATE, UPDATING"
+        print("DATASET " + data['name'] + " NEEDS UPDATE, UPDATING")
         #Patch so that we don't lose resources
         data['id'] = existing['id'] #Patch needs ID
         r = api_post("package_patch", data=data).json()
-        print "PATCH DATASET RESULT:"
-        print r
+        print("PATCH DATASET RESULT:")
+        print(r)
         if ('error' in r):
             failed_states.append(data['country'])
         return False, r.get("result")
     else:
-        print "DATASET " + data['name'] + " UNCHANGED"
+        print("DATASET " + data['name'] + " UNCHANGED")
         return False, existing
 
 #Cache the datasets
@@ -141,11 +141,11 @@ def get_dataset(name):
 
 
 def upsert_dataset(data):
-    print "UPSERTING DATASET " + data['name']
+    print("UPSERTING DATASET " + data['name'])
     existing = get_dataset(data['name'])
     if existing:
-        print "DATA FROM CKAN (EXISTING):"
-        print existing
+        print("DATA FROM CKAN (EXISTING):")
+        print(existing)
         return update_dataset(data, existing)
     else:
         return create_dataset(data)
@@ -159,13 +159,13 @@ def create_resource(dataset_name, resource_path, resource_name):
             if line_count > 2:
                 break
     if line_count == 2:
-        print "NOT UPLOADING RESOURCE (EMPTY)"
+        print("NOT UPLOADING RESOURCE (EMPTY)")
         return
         
     #Nice filename - workaround needed for one country
-    friendly_resource_name = resource_name.replace(u'ô', 'o')
+    friendly_resource_name = resource_name.replace('ô', 'o')
     
-    print "UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name
+    print("UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name)
     try:
         r = requests.post('%s/api/action/resource_create' % (API_HOST),
                       data={
@@ -177,16 +177,16 @@ def create_resource(dataset_name, resource_path, resource_name):
                       headers={"Authorization": API_KEY},
                       files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
 
-        print "CREATE RESOURCE RESULT:"
-        print r.json()
+        print("CREATE RESOURCE RESULT:")
+        print(r.json())
     except Exception as msg:
-        print  "Exception uploading resource %s: %s" % (resource_path, msg)
+        print("Exception uploading resource %s: %s" % (resource_path, msg))
         
 def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
-    friendly_resource_name = resource_name.replace(u'ô', 'o')
+    friendly_resource_name = resource_name.replace('ô', 'o')
     
-    print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
+    print("UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id)
 
     try:
         r = requests.post('%s/api/action/resource_update' % (API_HOST),
@@ -200,19 +200,19 @@ def update_resource(resource_id, resource_path, resource_name):
                           headers={"Authorization": API_KEY},
                           files={'upload':(friendly_resource_name + '.csv', file(resource_path))})
 
-        print "UPDATE RESOURCE RESULT:"
-        print r.json()
+        print("UPDATE RESOURCE RESULT:")
+        print(r.json())
     except Exception as msg:
-        print  "Exception uploading resource %s: %s" % (resource_path, msg)
+        print("Exception uploading resource %s: %s" % (resource_path, msg))
 
 
 def compare(remote_file, local_file):
-    urllib.urlretrieve(remote_file, "temp.csv")
+    urllib.request.urlretrieve(remote_file, "temp.csv")
     return filecmp.cmp("temp.csv", local_file)
 
 def import_dataset(d):
-    print "DATA FROM DOWNLOAD:"
-    print d
+    print("DATA FROM DOWNLOAD:")
+    print(d)
 
     d['url'] = "https://eiti.org/api/v1.0/summary_data"
     if ('country' in d):
@@ -236,14 +236,14 @@ def import_dataset(d):
                 company_done = True
                 equal = compare(resource['url'], d['filename_company'])
                 if equal:
-                    print "RESOURCE UNCHANGED, NOT UPLOADING RESOURCE"
+                    print("RESOURCE UNCHANGED, NOT UPLOADING RESOURCE")
                 else:
                     update_resource(resource['id'], d['filename_company'], d["resource_title_company"])
             elif resource['name'] == d["resource_title_government"]:
                 government_done = True
                 equal = compare(resource['url'], d['filename_government'])
                 if equal:
-                    print "RESOURCE UNCHANGED, NOT UPLOADING RESOURCE"
+                    print("RESOURCE UNCHANGED, NOT UPLOADING RESOURCE")
                 else:
                     update_resource(resource['id'], d['filename_government'], d["resource_title_government"])
         if not company_done:
@@ -256,7 +256,7 @@ def import_dataset(d):
 
 
 def main():
-    upsert_org({u'image_display_url': u'https://eiti.org/sites/all/themes/eiti/logo.svg', u'name': u'eiti', u'title': u'EITI'})
+    upsert_org({'image_display_url': 'https://eiti.org/sites/all/themes/eiti/logo.svg', 'name': 'eiti', 'title': 'EITI'})
 
     datasets = {}
 
@@ -275,8 +275,8 @@ def main():
         import_dataset(holdover) #Do last to encourage appearing at top
 
     if failed_states:
-        print "The following or some of the following countries caused the dataset creation to fail:"
-        print failed_states
+        print("The following or some of the following countries caused the dataset creation to fail:")
+        print(failed_states)
 
 
 if __name__== '__main__':

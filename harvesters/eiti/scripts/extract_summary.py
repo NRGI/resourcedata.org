@@ -53,10 +53,10 @@ def writeCsv(name, company_or_govt, year, data):
         try:
             writer.writerows(data)
         except Exception as msg:
-            print msg
-            print type(data)
-            print len(data)
-            print data
+            print(msg)
+            print(type(data))
+            print(len(data))
+            print(data)
 
 
 def dataset_name_fromCountry(countryName):
@@ -108,7 +108,7 @@ def getSummaryData():
     data = []
 
     while True:
-        print("Getting summary page %s"% page)
+        print(("Getting summary page %s"% page))
         d = session.get(API_ENDPOINT + 'summary_data?page=%s' % page).json()['data']
         if len(d) == 0:
             break
@@ -215,12 +215,12 @@ def gatherCountry(d):
     if (d['revenue_company'] or d['revenue_government']):
 
         sanitizedCountryName = sanitizeCountryName(country)
-        print "%s %s" % (sanitizedCountryName, year)
+        print("%s %s" % (sanitizedCountryName, year))
         filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
         path = os.path.join('./out', "government" , filename)
 
         if os.path.exists(path):
-            print "%s %s exists: continuing" %(sanitizedCountryName, year)
+            print("%s %s exists: continuing" %(sanitizedCountryName, year))
             return
 
 
@@ -244,7 +244,7 @@ def gatherCountry(d):
             except KeyError:
                 continue
             except Exception as msg:
-                print msg
+                print(msg)
                 raise
                 continue
 
@@ -259,7 +259,7 @@ def gatherCountry(d):
             except KeyError:
                 continue
             except Exception as msg:
-                print msg
+                print(msg)
                 raise
                 continue
 
@@ -267,7 +267,7 @@ def gatherCountry(d):
         write(d, out_government, 'government')
         write(d, out_company, 'company')
     else:
-        print "%s %s - No revenue_company or revenue_government" % (country, year)
+        print("%s %s - No revenue_company or revenue_government" % (country, year))
 
 def setup_directories():
     # Ensure output folders exist
@@ -327,7 +327,7 @@ def main():
             "resource_title_company": "Company payments",
             "resource_title_government": "Revenues received by government agencies"
         }
-        json.dump(datasets.values(), f)
+        json.dump(list(datasets.values()), f)
 
     return 0
 

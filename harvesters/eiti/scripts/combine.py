@@ -9,7 +9,7 @@ def combine_csv(path):
                     if f.endswith('.csv') and f[-9] == '-'])
     for name, bunch in itertools.groupby(files, lambda x: x[:-9]):
         with open(os.path.join(path, '%s.csv' % name), 'w') as combined:
-            with open(os.path.join(path, bunch.next()), 'r') as source:
+            with open(os.path.join(path, next(bunch)), 'r') as source:
                 combined.write(source.read())
             for source_path in bunch:
                 with open(os.path.join(path, source_path), 'r') as source:
@@ -21,7 +21,7 @@ def combine_datasets(path):
     files = sorted([f for f in os.listdir(path) if f.endswith('.json')])
     datasets = {}
     for name, bunch in itertools.groupby(files, lambda x: x[:-10]):
-        with open(os.path.join(path, bunch.next()), 'r') as f:
+        with open(os.path.join(path, next(bunch)), 'r') as f:
             dataset = json.load(f)
         for fname in bunch:
             with open(os.path.join(path, fname), 'r') as f:
@@ -30,7 +30,7 @@ def combine_datasets(path):
                 dataset['created'] = min(dataset['created'], additional_dataset['created'])
                 dataset['last_updated'] = max(dataset['last_updated'], additional_dataset['last_updated'])
                 
-        print dataset['year']
+        print(dataset['year'])
         dataset['created'] = dataset['created'].split('T')[0]
         dataset['last_updated'] = dataset['last_updated'].split('T')[0]
         datasets[dataset['name']]=dataset

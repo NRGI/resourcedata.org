@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 
 commodities = [
-    u'Coal, volume',
-    u'Condensate, volume',
-    u'Copper, volume',
-    u'Crude oil production revenues in kind',
-    u'Gas production revenues in kind',
-    u'Gas, volume',
-    u'Gold, volume',
-    u'NGL, volume',
-    u'Oil, volume',
-    u'Total revenue received?',
-    u'Exports - all sectors',
-    u'Exports - extractive industries',
-    u'Government revenue - all sectors',
-    u'Government revenue - extractive industries',
-    u'Gross Domestic Product - all sectors',
-    u'Gross Domestic Product - extractive industries (Gross Value Added)',
+    'Coal, volume',
+    'Condensate, volume',
+    'Copper, volume',
+    'Crude oil production revenues in kind',
+    'Gas production revenues in kind',
+    'Gas, volume',
+    'Gold, volume',
+    'NGL, volume',
+    'Oil, volume',
+    'Total revenue received?',
+    'Exports - all sectors',
+    'Exports - extractive industries',
+    'Government revenue - all sectors',
+    'Government revenue - extractive industries',
+    'Gross Domestic Product - all sectors',
+    'Gross Domestic Product - extractive industries (Gross Value Added)',
 ]
 
 

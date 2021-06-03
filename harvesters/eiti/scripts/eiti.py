@@ -52,30 +52,30 @@ def checkForUpdates(summary):
 
     dataset = eiti_import.get_dataset(dataset_name)
     if not dataset:
-        print "New country spotted: %s" % (pr_safe(country))
+        print("New country spotted: %s" % (pr_safe(country)))
         return True
 
     # check if there's any point in checking this...
     if not (summary.hasRevenue()):
-        print "No company or government data, skipping %s, %s" % (pr_safe(country), year)
+        print("No company or government data, skipping %s, %s" % (pr_safe(country), year))
         return False
 
     # check changed, year
     if not (year in dataset['year']):
-        print "New year spotted for %s, %s" %(pr_safe(country), year)
+        print("New year spotted for %s, %s" %(pr_safe(country), year))
         return True
 
     dataset_modified = parseIsoTs(dataset['metadata_modified'])
 
     if summary_modified >= dataset_modified:
-        print "Summary data has been updated for %s, %s: on %s, existing %s" %(
+        print("Summary data has been updated for %s, %s: on %s, existing %s" %(
             pr_safe(country), year,
             time.strftime('%Y-%m-%d', summary_modified),
-            time.strftime('%Y-%m-%d', dataset_modified))
+            time.strftime('%Y-%m-%d', dataset_modified)))
         return True
 
-    print "No change for %s, %s last updated %s" % (
-        pr_safe(country), year, time.strftime('%Y-%m-%d', summary_modified))
+    print("No change for %s, %s last updated %s" % (
+        pr_safe(country), year, time.strftime('%Y-%m-%d', summary_modified)))
     return False
 
 
@@ -90,10 +90,10 @@ def gather_csvs(country):
     dataset = eiti_import.get_dataset(dataset_name)
     for resource in dataset['resources']:
         url = resource['url']
-        print "Getting %s" % url
+        print("Getting %s" % url)
         resp = session.get(url)
         with open(fileName_fromUrl(country, url), 'wb') as f:
-            print "Writing %s" % fileName_fromUrl(country, url)
+            print("Writing %s" % fileName_fromUrl(country, url))
             f.write(resp.content)
 
 def update_complete_dataset(filtered_summaries):
@@ -136,13 +136,13 @@ def main():
         # Check which countries to update
         countries_to_update = set([hoist_country(s) for s in summaries if checkForUpdates(s)])
 
-        print "Most recent upstream change: %s" % time.strftime('%Y-%m-%d', MOST_RECENT_CHANGE)
+        print("Most recent upstream change: %s" % time.strftime('%Y-%m-%d', MOST_RECENT_CHANGE))
 
         if len(countries_to_update):
-            print "There are %d countries that need updating" % len(countries_to_update)
-            print "\n".join(countries_to_update)
+            print("There are %d countries that need updating" % len(countries_to_update))
+            print("\n".join(countries_to_update))
         else:
-            print "There are no changes to report"
+            print("There are no changes to report")
             return
 
         # Grab all the data for each country that needs updated.
@@ -163,7 +163,7 @@ def main():
     datasets['eiti-complete-summary-table'] = update_complete_dataset(filtered_summaries)
 
     with open('./datasets.json', 'w') as f:
-        json.dump(datasets.values(), f)
+        json.dump(list(datasets.values()), f)
 
     # delegate to the old import script for those items we want to update
     eiti_import.main()

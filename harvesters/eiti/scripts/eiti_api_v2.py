@@ -172,7 +172,7 @@ def all_summary_data_obj():
     return [SummaryData(s) for s in all_summary_data().values()]
 
 def pp(item):
-    print json.dumps(item, indent=2)
+    print(json.dumps(item, indent=2))
 
 def _munge_summary(summary):
     # api returns supurious timestamps in date created/changed
