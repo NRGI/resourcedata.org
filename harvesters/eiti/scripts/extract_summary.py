@@ -15,8 +15,23 @@ API_ENDPOINT = "https://eiti.org/api/v1.0/"
 # Number of threads, 0 to disable
 MULTITHREAD = 0
 
-# Use HTTP keepalive
-session = requests.Session()
+
+class _session(object):
+    """ Had an issue where we were getting connection errors because something was closing the
+        connection, and requests wasn't handling it well. So, backup and retry once without
+        the session.
+    """
+    def __init__(self):
+        # Use HTTP keepalive
+        self._session = requests.Session()
+    def get(self, url):
+        try:
+            return self._session.get(url)
+        except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+            print "Connection error, backing off and retrying: %s" % url
+            return requests.get(url)
+
+session = _session()
 
 # 'caches'
 organisations = {}
@@ -64,7 +79,7 @@ def dataset_name_fromCountry(countryName):
 
 
 def write(meta, data, company_or_govt):
-    countryName = meta['country']['label']
+    countryName = meta['label'][:-6]
     year = meta['label'][-4:]
     sanitizedCountryName = sanitizeCountryName(countryName)
 
@@ -78,24 +93,25 @@ def write(meta, data, company_or_govt):
 
     path = '%s-%s.json' %(sanitizedCountryName, year)
     with open(os.path.join('./out/datasets', path), 'w') as f:
-        dataset = {
-            "title": dataset_title,
-            "name": dataset_name,
-            "year": [meta['label'][-4:]],
-            "notes": general_notes,
-            "owner_org": 'eiti',
-            "country_iso3": [meta['country']['iso3']],
-            "country": [countryName],
-            "license_id": "cc-by",
-            "maintainer": "Anders Pedersen",
-            "maintainer_email": "apedersen@resourcegovernance.org",
-            "category": ["Precept 2: Accountability and Transparency"],
-            "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
-            "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
-            "resource_title_company": resource_title_company,
-            "resource_title_government": resource_title_government
-        }
-        json.dump(dataset, f)
+        if 'country' in meta:
+            dataset = {
+                "title": dataset_title,
+                "name": dataset_name,
+                "year": [meta['label'][-4:]],
+                "notes": general_notes,
+                "owner_org": 'eiti',
+                "country_iso3": [meta['country']['iso3']],
+                "country": [countryName],
+                "license_id": "cc-by",
+                "maintainer": "Anders Pedersen",
+                "maintainer_email": "apedersen@resourcegovernance.org",
+                "category": ["Precept 2: Accountability and Transparency"],
+                "filename_company": './out/company/%s-company.csv' % sanitizedCountryName,
+                "filename_government": './out/government/%s-government.csv' % sanitizedCountryName,
+                "resource_title_company": resource_title_company,
+                "resource_title_government": resource_title_government
+            }
+            json.dump(dataset, f)
     return
 
 def sanitizeCountryName(countryName):
@@ -119,7 +135,7 @@ def getSummaryData():
 
 
 def getLineForRevenue(d, company, company_or_govt):
-    countryn = d['country']['label']
+    countryn = d['label'][:-6]
     ciso3 = d['country']['iso3']
     # api returns spurious timestamps in the date created/changed.
     created = "%sT00:00:00+0000" % d['created'].split('T')[0]
@@ -208,21 +224,22 @@ def gatherCountry(d):
     out_government = []
     out_company = []
 
-    country = d['country']['label']
+    country = d['label'][:-6]
 
     year = d['label'][-4:]
 
     if (d['revenue_company'] or d['revenue_government']):
 
-        sanitizedCountryName = sanitizeCountryName(country)
-        print "%s %s" % (sanitizedCountryName, year)
-        filename = "%s-%s-%s.csv" % (sanitizedCountryName, "government", year)
+        countryName = sanitizeCountryName(country)
+        if countryName.strip() == '' and year.strip()=='':
+            return
+        print "%s %s" % (countryName, year)
+        filename = "%s-%s-%s.csv" % (countryName, "government", year)
         path = os.path.join('./out', "government" , filename)
 
         if os.path.exists(path):
-            print "%s %s exists: continuing" %(sanitizedCountryName, year)
+            print "%s %s exists: continuing" %(countryName, year)
             return
-
 
         #Split files https://github.com/NRGI/resourcedata.org/issues/13
         revgovt = []
@@ -239,7 +256,10 @@ def gatherCountry(d):
                 #print out_government[-1]
             except KeyboardInterrupt:
                 raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+                print "Failed getting a revenue"
+                import inspect; print inspect.trace()
+                print msg
                 continue
             except KeyError:
                 continue
@@ -254,7 +274,9 @@ def gatherCountry(d):
                 #print out_company[-1]
             except KeyboardInterrupt:
                 raise
-            except (ssl.SSLError, requests.exceptions.SSLError) as msg:
+            except (ssl.SSLError, requests.exceptions.SSLError, requests.exceptions.ConnectionError) as msg:
+                print "Failed getting a company"
+                print msg
                 continue
             except KeyError:
                 continue

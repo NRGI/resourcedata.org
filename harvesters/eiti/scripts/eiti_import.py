@@ -20,11 +20,12 @@ ckan_names = {
     u'Kyrgyz Republic': u'Kyrgyzstan',
     u'Republic of the Congo': u'Congo',
     u'Tanzania': u'Tanzania, United Republic of',
-    u'United States of America': u'United States'
+    u'United States of America': u'United States',
+    u'S\xe3o Tom\xe9 and Pr\xedncipe': u'Sao Tome and Principe',
 }
 
 def mapcountry(countryname):
-    if countryname in (u'Democratic Republic of Congo', u'Kyrgyz Republic', u'Republic of the Congo', u'Tanzania', u'United States of America'):
+    if ckan_names.get(unicode(countryname)):
         return ckan_names[countryname]
     else:
         return countryname
@@ -161,10 +162,10 @@ def create_resource(dataset_name, resource_path, resource_name):
     if line_count == 2:
         print "NOT UPLOADING RESOURCE (EMPTY)"
         return
-        
+
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
-    
+
     print "UPLOADING RESOURCE (NEW) " + resource_path[5:] + " TO DATASET " + dataset_name
     try:
         r = requests.post('%s/api/action/resource_create' % (API_HOST),
@@ -181,11 +182,11 @@ def create_resource(dataset_name, resource_path, resource_name):
         print r.json()
     except Exception as msg:
         print  "Exception uploading resource %s: %s" % (resource_path, msg)
-        
+
 def update_resource(resource_id, resource_path, resource_name):
     #Nice filename - workaround needed for one country
     friendly_resource_name = resource_name.replace(u'ô', 'o')
-    
+
     print "UPLOADING RESOURCE (UPDATE) " + resource_path[5:] + " TO RESOURCE " + resource_id
 
     try:
@@ -207,8 +208,11 @@ def update_resource(resource_id, resource_path, resource_name):
 
 
 def compare(remote_file, local_file):
-    urllib.urlretrieve(remote_file, "temp.csv")
-    return filecmp.cmp("temp.csv", local_file)
+    if remote_file and local_file:
+        urllib.urlretrieve(remote_file, "temp.csv")
+        return filecmp.cmp("temp.csv", local_file)
+    print("Datasets cannot be compared: missing remote file or local_file.")
+    return True
 
 def import_dataset(d):
     print "DATA FROM DOWNLOAD:"
@@ -222,11 +226,12 @@ def import_dataset(d):
             #print country
             #print d['country'][count]
             #print mapcountry(country)
+
             d['country'][count] = mapcountry(country)
             count += 1
 
     new_dataset, dataset = upsert_dataset(d)
-    
+
     if not new_dataset:
         company_done = False
         government_done = False

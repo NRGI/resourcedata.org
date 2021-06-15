@@ -35,6 +35,7 @@ def combine_datasets(path):
         dataset['last_updated'] = dataset['last_updated'].split('T')[0]
         datasets[dataset['name']]=dataset
 
+
     return datasets
     #with open(os.path.join('dataset.json'), 'w') as f:
     #    json.dump(datasets, f)
