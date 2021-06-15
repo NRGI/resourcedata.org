@@ -237,6 +237,7 @@ def import_dataset(d):
         government_done = False
         for resource in dataset['resources']:
             #print resource
+            if not resource['url']: continue
             if resource['name'] == d["resource_title_company"]:
                 company_done = True
                 equal = compare(resource['url'], d['filename_company'])

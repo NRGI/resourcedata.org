@@ -12,7 +12,7 @@ import json
 import os
 
 import eiti_import
-import extract_summary
+import extract_summary_v2 as extract_summary
 
 session = requests.Session()
 MOST_RECENT_CHANGE = None
@@ -56,8 +56,7 @@ def checkForUpdates(summary):
         return True
 
     # check if there's any point in checking this...
-    if not (summary.get('revenue_government',None)
-            or summary.get('revenue_company',None)):
+    if not (summary.hasRevenue()):
         print "No company or government data, skipping %s, %s" % (pr_safe(country), year)
         return False
 
